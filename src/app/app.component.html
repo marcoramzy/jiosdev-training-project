@@ -1,17 +1,19 @@
-<!-- <router-outlet></router-outlet> -->
 
 <app-layout>
-    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-    <mat-sidenav-container>
-        <mat-sidenav #sidenav role="navigation">
-            <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
-        </mat-sidenav>
-      <mat-sidenav-content>
-        <!-- <app-header (sidenavToggle)="sidenav.toggle()"></app-header> -->
-        <!--in here all the content must reside. We will add a navigation header as well-->
-        <main>
-          <router-outlet></router-outlet>
-        </main>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+  <app-header (sidenavToggle)="snav.toggle()"></app-header>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <app-sidenav-list (sidenavClose)="snav.close()"></app-sidenav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </app-layout>
