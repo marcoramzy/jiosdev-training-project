@@ -15,8 +15,9 @@
                             [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-            <app-sidenav-list (sidenavClose)="snav.close()"></app-sidenav-list>
+            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="mobileQuery.matches ? 'false' : 'true'">
+            <app-sidenav-list ></app-sidenav-list>
+            <!-- <app-sidenav-list (sidenavClose)="snav.close()"></app-sidenav-list> -->
         </mat-sidenav>
     
         <mat-sidenav-content>

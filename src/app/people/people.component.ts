@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+// import {MatPaginator} from '@angular/material/paginator';
+// import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
 export interface UserData {
@@ -31,9 +31,10 @@ const NAMES: string[] = [
 export class PeopleComponent implements OnInit {
   displayedColumns: string[] = ['name', 'mobile', 'email']; //'id', 
   dataSource: MatTableDataSource<UserData>;
+  displayHeader: Boolean = true;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  // @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor() {
     // Create 100 users
@@ -44,18 +45,18 @@ export class PeopleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
+  //   if (this.dataSource.paginator) {
+  //     this.dataSource.paginator.firstPage();
+  //   }
+  // }
 }
 
 /** Builds and returns a new User. */

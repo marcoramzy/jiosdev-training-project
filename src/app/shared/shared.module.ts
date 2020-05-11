@@ -10,12 +10,14 @@ import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SharedTableComponent } from './shared-table/shared-table.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    SharedTableComponent
 
   ],
   imports: [
@@ -26,6 +28,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     LayoutComponent,
+    SharedTableComponent,
 
     CommonModule,
     MaterialModule,
