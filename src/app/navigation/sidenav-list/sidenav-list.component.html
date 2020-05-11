@@ -1,11 +1,11 @@
 <mat-nav-list>
-    <a mat-list-item routerLink="/dashboard" (click)="onSidenavClose()">
+    <a [routerLinkActive]="" [ngClass]="rla.isActive?'active':''" #rla="routerLinkActive" mat-list-item routerLink="/dashboard" (click)="onSidenavClose()">
         <mat-icon>home</mat-icon> <span class="nav-caption">Dashboard</span>
     </a>
-    <a mat-list-item routerLink="/people" (click)="onSidenavClose()">
+    <a [routerLinkActive]="" [ngClass]="rla2.isActive?'active':''" #rla2="routerLinkActive" mat-list-item routerLink="/people" (click)="onSidenavClose()">
         <mat-icon>person</mat-icon> <span class="nav-caption">People</span>   
     </a>
-    <a mat-list-item routerLink="/groups" (click)="onSidenavClose()">
+    <a [routerLinkActive]="" [ngClass]="rla3.isActive?'active':''" #rla3="routerLinkActive" mat-list-item routerLink="/groups" (click)="onSidenavClose()">
         <mat-icon>groups</mat-icon><span class="nav-caption">Groups</span>
     </a>
 </mat-nav-list>

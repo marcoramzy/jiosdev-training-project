@@ -5,10 +5,14 @@ a {
 }
 
 a:hover, a:active{
-    color: lightgray;
+    // color: lightgray;
+    color: aqua;
 }
 a.active{
-    color: $secondry;
+    // color: $secondry;
+    // text-shadow: 1px 1px grey;
+
+    color: aqua;
     text-shadow: 1px 1px grey;
 }
 
