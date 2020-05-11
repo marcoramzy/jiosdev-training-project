@@ -1,9 +1,28 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
+<!-- <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
     <ng-content></ng-content>
-</div>
+</div> -->
 
 <!-- <div fxLayout="row wrap" class="layout-wrapper example-container" [class.example-is-mobile]="mobileQuery.matches">
     <div fxFlex="100%" fxFlex.lt-md="100%" class="flex-wrapper">
         <ng-content></ng-content>
     </div>
 </div> -->
+
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
+        <app-header (sidenavToggle)="snav.toggle()"></app-header>
+
+        <mat-sidenav-container class="example-sidenav-container"
+                            [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+            <app-sidenav-list (sidenavClose)="snav.close()"></app-sidenav-list>
+        </mat-sidenav>
+    
+        <mat-sidenav-content>
+            <main>
+                <ng-content></ng-content>
+            </main>
+        </mat-sidenav-content>
+        </mat-sidenav-container>
+</div>

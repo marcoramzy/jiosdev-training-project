@@ -1,3 +1,4 @@
+@import "../../shared/variables";
 a {
     text-decoration: none;
     color: white;
@@ -5,6 +6,10 @@ a {
 
 a:hover, a:active{
     color: lightgray;
+}
+a.active{
+    color: $secondry;
+    text-shadow: 1px 1px grey;
 }
 
 .navigation-items{
@@ -15,11 +20,14 @@ a:hover, a:active{
 
 mat-toolbar{
     border-radius: 3px;
-    background-color: #139eab;
 }
 
 mat-icon{
     color: white;
+}
+
+.logo{
+    width: 155px;
 }
 
 .example-toolbar-mobile {
