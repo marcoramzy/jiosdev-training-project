@@ -3,6 +3,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
+import { DialogService } from '../shared/dialog.service';
+import { GroupsData } from '../shared/groups-data';
+
+
 export interface UserData {
   id ?: string;
   name: string;
@@ -10,6 +14,7 @@ export interface UserData {
   count: string;
   description: string;
 }
+
 
 /** Constants used to fill up our data base. */
 const emails: string[] = [
@@ -37,12 +42,20 @@ export class GroupsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() {
+  groupsData:GroupsData={} as GroupsData;
+
+
+  constructor(public dialogService: DialogService) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
+  }
+
+  openDialog(): void {
+
+    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,description: this.groupsData.description},{size: "sm" }, true);
   }
 
   ngOnInit() {

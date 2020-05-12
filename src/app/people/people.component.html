@@ -41,6 +41,6 @@
 </app-layout> -->
 
 <app-layout>
-    <app-shared-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [displayHeader]="displayHeader"></app-shared-table>
+    <app-shared-table (addPersonClick)="openDialog()" [displayedColumns]="displayedColumns" [dataSource]="dataSource" [displayHeader]="displayHeader"></app-shared-table>
 </app-layout>
   

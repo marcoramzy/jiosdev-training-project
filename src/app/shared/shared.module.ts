@@ -11,6 +11,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedTableComponent } from './shared-table/shared-table.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { SharedTableComponent } from './shared-table/shared-table.component';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    RouterModule 
+    RouterModule ,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     LayoutComponent,

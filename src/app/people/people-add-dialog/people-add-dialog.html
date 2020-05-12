@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Add Person</h1>
+<div id="people-add-dialog" mat-dialog-content [formGroup]="form">
+  <!-- <p>Fill Data</p> -->
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput formControlName="id" type="number" min="0">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert"  *ngIf="!form.controls.id.valid && form.touched && formSubmitted" >ID is required</p>
+  <mat-form-field>
+    <mat-label>First Name</mat-label>
+    <input matInput  formControlName="firstName">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.firstName.valid && form.touched && formSubmitted" >First name is required</p>
+  <mat-form-field>
+    <mat-label>Last Name</mat-label>
+    <input matInput  formControlName="lastName">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.lastName.valid && form.touched && formSubmitted" >Last name is required</p>
+  <mat-form-field>
+    <mat-label>Mobile</mat-label>
+    <input matInput  formControlName="mobile">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput  formControlName="email">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Bith Date</mat-label>
+    <input matInput  formControlName="birthDate" type="date">
+  </mat-form-field>
+</div>
+<div style="justify-content: space-around; display: flex; margin-top:1em;">
+  <button class="mat-raised-button" (click)="onNoClick()">Cancel</button>
+  <button class="mat-raised-button" (click)="onSaveClick()">Save</button>
+</div>

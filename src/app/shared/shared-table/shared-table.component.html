@@ -1,6 +1,6 @@
 <div class="people-header" *ngIf="displayHeader">
     <div class="add-person-container">
-        <button mat-stroked-button color="primary"><mat-icon>add_circle_outline</mat-icon> Add Person</button>
+        <button mat-stroked-button color="primary" (click)="onAddPersonClick()"><mat-icon>add_circle_outline</mat-icon> Add Person</button>
     </div>
     <div>
         <!-- fxFlex fxLayout fxLayoutAlign="end" fxHide.xs -->

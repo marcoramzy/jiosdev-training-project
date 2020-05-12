@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Add Group</h1>
+<div id="groups-add-dialog" mat-dialog-content [formGroup]="form">
+  <!-- <p>Fill Data</p> -->
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput formControlName="id" type="number" min="0">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert"  *ngIf="!form.controls.id.valid && form.touched && formSubmitted" >ID is required</p>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput  formControlName="name">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.name.valid && form.touched && formSubmitted" >Name is required</p>
+  <mat-form-field>
+    <mat-label>Leader</mat-label>
+    <input matInput  formControlName="leader">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput  formControlName="description">
+  </mat-form-field>
+</div>
+<div style="justify-content: space-around; display: flex; margin-top:1em;">
+  <button class="mat-raised-button" (click)="onNoClick()">Cancel</button>
+  <button class="mat-raised-button" (click)="onSaveClick()">Save</button>
+</div>

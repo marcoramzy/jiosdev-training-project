@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 
 import { Input } from '@angular/core';
 
+import { Output, EventEmitter } from '@angular/core';
 
 export interface UserData {
   id ?: string;
@@ -37,6 +38,9 @@ export class SharedTableComponent implements OnInit {
   @Input() dataSource: MatTableDataSource<UserData>= null;
   @Input() displayHeader: boolean= false;
 
+  @Output() addPersonClick = new EventEmitter();
+
+
   // displayedColumns: string[] = ['name', 'mobile', 'email']; //'id', 
   // dataSource: MatTableDataSource<UserData>;
 
@@ -49,6 +53,10 @@ export class SharedTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  public onAddPersonClick = () => {
+    this.addPersonClick.emit();
   }
 
   applyFilter(event: Event) {
