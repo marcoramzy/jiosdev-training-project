@@ -27,6 +27,7 @@ export class GroupsAddDialog implements OnInit {
       id: [data.id, [Validators.required,Validators.min(0)]],
       name: [data.name, [Validators.required]],
       leader: [data.leader],
+      count: [data.count],
       description: [data.description],
     });
 

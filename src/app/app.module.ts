@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { PeopleAddDialog } from './people/people-add-dialog/people-add-dialog.component';
 import { GroupsAddDialog } from './groups/groups-add-dialog/groups-add-dialog.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -20,6 +23,7 @@ import { GroupsAddDialog } from './groups/groups-add-dialog/groups-add-dialog.co
     
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -27,12 +31,12 @@ import { GroupsAddDialog } from './groups/groups-add-dialog/groups-add-dialog.co
     CoreModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
   ],
   entryComponents:[PeopleAddDialog,GroupsAddDialog],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

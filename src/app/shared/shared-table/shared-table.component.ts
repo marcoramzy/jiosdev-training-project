@@ -2,27 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-
 import { Input } from '@angular/core';
-
 import { Output, EventEmitter } from '@angular/core';
+import { PeopleService } from 'src/app/people/people.service';
+import { PeopleData } from '../people-data';
 
-export interface UserData {
-  id ?: string;
-  name: string;
-  mobile: string;
-  email: string;
-}
-
-/** Constants used to fill up our data base. */
-const emails: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -34,25 +18,38 @@ const NAMES: string[] = [
 })
 export class SharedTableComponent implements OnInit {
 
-  @Input() displayedColumns : string[] = [];
-  @Input() dataSource: MatTableDataSource<UserData>= null;
-  @Input() displayHeader: boolean= false;
+  displayedColumns : string[] = [];
+  dataSource: MatTableDataSource<PeopleData>;
 
+  @Input() isPeoplePage: boolean= false;
   @Output() addPersonClick = new EventEmitter();
-
-
-  // displayedColumns: string[] = ['name', 'mobile', 'email']; //'id', 
-  // dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() {
+  constructor(private peopleService: PeopleService) {
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if(this.isPeoplePage) //people page
+    {
+      this.displayedColumns = ['name', 'mobile', 'email'];
+      this.peopleService.getPeople().then((value) => {
+        this.dataSource = new MatTableDataSource(value);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+    }
+    else //dashboard page
+    {
+      this.displayedColumns = ['name', 'mobile', 'email','birthDate'];
+      this.peopleService.getPeopleWithBirthdaysThisMonth().then((value) => {
+        this.dataSource = new MatTableDataSource(value);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+    }
+
   }
 
   public onAddPersonClick = () => {

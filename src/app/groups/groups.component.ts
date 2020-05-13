@@ -5,26 +5,9 @@ import {MatTableDataSource} from '@angular/material/table';
 
 import { DialogService } from '../shared/dialog.service';
 import { GroupsData } from '../shared/groups-data';
+import { GroupsService } from './groups.service';
 
 
-export interface UserData {
-  id ?: string;
-  name: string;
-  leader: string;
-  count: string;
-  description: string;
-}
-
-
-/** Constants used to fill up our data base. */
-const emails: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -37,7 +20,7 @@ const NAMES: string[] = [
 })
 export class GroupsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'leader', 'count','description']; //'id', 
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<GroupsData>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -45,22 +28,20 @@ export class GroupsComponent implements OnInit {
   groupsData:GroupsData={} as GroupsData;
 
 
-  constructor(public dialogService: DialogService) {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+  constructor(public dialogService: DialogService, private groupsService: GroupsService) {
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
   }
 
   openDialog(): void {
-
-    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,description: this.groupsData.description},{size: "sm" }, true);
+    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,count: this.groupsData.count,description: this.groupsData.description},{size: "sm" }, true);
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.groupsService.getGroups().then((value) => {
+      this.dataSource = new MatTableDataSource(value);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   applyFilter(event: Event) {
@@ -73,16 +54,3 @@ export class GroupsComponent implements OnInit {
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    // id: id.toString(),
-    name: name,
-    leader: Math.round(Math.random() * 100).toString(),
-    count: emails[Math.round(Math.random() * (emails.length - 1))],
-    description: emails[Math.round(Math.random() * (emails.length - 1))]
-  };
-}

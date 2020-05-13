@@ -41,6 +41,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [],
   bootstrap: [],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas:[] //CUSTOM_ELEMENTS_SCHEMA
 })
 export class SharedModule { }
