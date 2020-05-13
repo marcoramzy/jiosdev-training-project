@@ -6,6 +6,8 @@ import { Input } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 import { PeopleService } from 'src/app/people/people.service';
 import { PeopleData } from '../people-data';
+import { Subscription } from 'rxjs';
+import { StorageService } from '../storage.service';
 
 
 /**
@@ -18,8 +20,10 @@ import { PeopleData } from '../people-data';
 })
 export class SharedTableComponent implements OnInit {
 
+  private personAddSubscription: Subscription;
   displayedColumns : string[] = [];
   dataSource: MatTableDataSource<PeopleData>;
+  people : PeopleData[] =[];
 
   @Input() isPeoplePage: boolean= false;
   @Output() addPersonClick = new EventEmitter();
@@ -27,7 +31,7 @@ export class SharedTableComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private peopleService: PeopleService) {
+  constructor(private peopleService: PeopleService, private storageService: StorageService) {
   }
 
   ngOnInit() {
@@ -35,10 +39,10 @@ export class SharedTableComponent implements OnInit {
     {
       this.displayedColumns = ['name', 'mobile', 'email'];
       this.peopleService.getPeople().then((value) => {
-        this.dataSource = new MatTableDataSource(value);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+        this.people=value;
+        this.dataSourceSetup(this.people);
+    });
+      
     }
     else //dashboard page
     {
@@ -49,6 +53,13 @@ export class SharedTableComponent implements OnInit {
         this.dataSource.sort = this.sort;
       });
     }
+
+    ///Refresh Table (Record Added)
+    this.personAddSubscription = this.storageService.personAddedSuccessfully.subscribe(      
+      (person) => {
+            this.people.push(person);
+            this.dataSourceSetup(this.people)
+    });
 
   }
 
@@ -64,4 +75,12 @@ export class SharedTableComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  dataSourceSetup(dataSource){
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(dataSource);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
 }

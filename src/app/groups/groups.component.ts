@@ -5,6 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { DialogService } from '../shared/dialog.service';
 import { GroupsData } from '../shared/groups-data';
 import { GroupsService } from './groups.service';
+import { Subscription } from 'rxjs';
+import { StorageService } from '../shared/storage.service';
 
 
 @Component({
@@ -13,8 +15,12 @@ import { GroupsService } from './groups.service';
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit {
+
+  private groupAddSubscription: Subscription;
   displayedColumns: string[] = ['name', 'leader', 'count','description']; //'id', 
   dataSource: MatTableDataSource<GroupsData>;
+  groups : GroupsData[] =[];
+
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -22,7 +28,7 @@ export class GroupsComponent implements OnInit {
   groupsData:GroupsData={} as GroupsData;
 
 
-  constructor(public dialogService: DialogService, private groupsService: GroupsService) {
+  constructor(public dialogService: DialogService, private groupsService: GroupsService, private storageService: StorageService) {
 
   }
 
@@ -32,10 +38,17 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit() {
     this.groupsService.getGroups().then((value) => {
-      this.dataSource = new MatTableDataSource(value);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+        this.groups=value;
+        this.dataSourceSetup(this.groups);
     });
+
+    ///Refresh Table (Record Added)
+    this.groupAddSubscription = this.storageService.groupAddedSuccessfully.subscribe(      
+      (group) => {
+          this.groups.push(group);
+          this.dataSourceSetup(this.groups)
+    });
+
   }
 
   applyFilter(event: Event) {
@@ -46,5 +59,13 @@ export class GroupsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  dataSourceSetup(dataSource){
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(dataSource);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
 }
 

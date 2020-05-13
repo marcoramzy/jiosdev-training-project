@@ -1,10 +1,6 @@
 <h1 mat-dialog-title>Add Group</h1>
 <div id="groups-add-dialog" mat-dialog-content [formGroup]="form">
-  <mat-form-field>
-    <mat-label>ID</mat-label>
-    <input matInput formControlName="id" type="number" min="0">
-  </mat-form-field>
-  <p class="alert alert-danger custom-alert"  *ngIf="!form.controls.id.valid && form.touched && formSubmitted" >ID is required</p>
+
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput  formControlName="name">

@@ -17,7 +17,7 @@ export class PeopleService implements OnInit {
     console.log("PeopleService async getPeople",people);
     return people;
   }
-
+  
   async getPeopleWithBirthdaysThisMonth() : Promise<PeopleData[]> {
     let people : PeopleData[] = await this.getPeopleWithBirthdaysThisMonthUtilityFn();
     console.log("PeopleService async getPeopleWithBirthdaysThisMonth",people);
@@ -28,6 +28,21 @@ export class PeopleService implements OnInit {
     let peopleCount : number = await this.getPeopleCountUtilityFn();
     console.log("PeopleService async getPeople",peopleCount);
     return peopleCount;
+  }
+
+  async addPerson(data: PeopleData){
+    let people : PeopleData[] = await this.getPeopleUtilityFn();
+    if(people != null && people!= [] ){
+      let last_id= people[people.length-1]["id"];
+      console.log("last_id",last_id);
+      console.log("data",data);
+      data["id"]= last_id+1;
+      console.log("data",data);
+    }
+    else{
+      data["id"]=1;
+    }
+    this.addPersonUtilityFn(data);
   }
 
   // UTILITY FUNCTIONS AREA
@@ -54,6 +69,10 @@ export class PeopleService implements OnInit {
 
     console.log("PeopleService getPeopleCountUtilityFn",peopleCount);
     return peopleCount;
+  }
+
+  async addPersonUtilityFn(data : PeopleData){
+    this.storageService.addPerson(data);
   }
 
 }

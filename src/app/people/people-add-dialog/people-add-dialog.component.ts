@@ -3,6 +3,7 @@ import { Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import { PeopleData } from 'src/app/shared/people-data';
+import { PeopleService } from '../people.service';
 
 @Component({
   selector: 'people-add-dialog',
@@ -17,12 +18,11 @@ export class PeopleAddDialog implements OnInit {
   }
 
   constructor(fb: FormBuilder,
-    // private companyService: CompanyService,
+    private peopleService: PeopleService,
     public dialogRef: MatDialogRef<PeopleAddDialog>,
     @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
 
     this.form = fb.group({
-      id: [data.id, [Validators.required,Validators.min(0)]],
       firstName: [data.firstName, [Validators.required]],
       lastName: [data.lastName, [Validators.required]],
       mobile: [data.mobile],
@@ -36,7 +36,8 @@ export class PeopleAddDialog implements OnInit {
         this.formSubmitted = true;
         const {value, valid} = this.form;
         if(valid){
-            // this.companyService.saveCompanyToLocalStorage(value);
+            console.log("people add form data",value)
+            this.peopleService.addPerson(value);
             this.dialogRef.close(value);
         }      
     }

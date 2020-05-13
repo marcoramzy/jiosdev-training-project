@@ -1,11 +1,5 @@
 <h1 mat-dialog-title>Add Person</h1>
 <div id="people-add-dialog" mat-dialog-content [formGroup]="form">
-  <!-- <p>Fill Data</p> -->
-  <mat-form-field>
-    <mat-label>ID</mat-label>
-    <input matInput formControlName="id" type="number" min="0">
-  </mat-form-field>
-  <p class="alert alert-danger custom-alert"  *ngIf="!form.controls.id.valid && form.touched && formSubmitted" >ID is required</p>
   <mat-form-field>
     <mat-label>First Name</mat-label>
     <input matInput  formControlName="firstName">

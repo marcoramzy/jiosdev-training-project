@@ -1,5 +1,5 @@
 export interface PeopleData {
-    id : number;
+    id ?: number;
     firstName : string;
     lastName : string;
     mobile : number;

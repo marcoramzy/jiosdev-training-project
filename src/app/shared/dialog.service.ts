@@ -15,10 +15,7 @@ interface size {
 @Injectable()
 export class DialogService {
 
-    constructor(public dialog: MatDialog,
-        // , private companyService:CompanyService, private productService:ProductService
-    ) {
-
+    constructor(public dialog: MatDialog) {
     }
 
     openPeopleDialog(data : PeopleData, size : size, disableClose : boolean) : void

@@ -3,6 +3,7 @@ import { Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import { GroupsData } from 'src/app/shared/groups-data';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'groups-add-dialog',
@@ -17,12 +18,11 @@ export class GroupsAddDialog implements OnInit {
   }
 
   constructor(fb: FormBuilder,
-    // private companyService: CompanyService,
+    private groupsService: GroupsService,
     public dialogRef: MatDialogRef<GroupsAddDialog>,
     @Inject(MAT_DIALOG_DATA) public data: GroupsData) {
 
     this.form = fb.group({
-      id: [data.id, [Validators.required,Validators.min(0)]],
       name: [data.name, [Validators.required]],
       leader: [data.leader],
       count: [data.count],
@@ -35,8 +35,8 @@ export class GroupsAddDialog implements OnInit {
         this.formSubmitted = true;
         const {value, valid} = this.form;
         if(valid){
-            // this.companyService.saveCompanyToLocalStorage(value);
-            this.dialogRef.close(value);
+          this.groupsService.addGroup(value);
+          this.dialogRef.close(value);
         }      
     }
 

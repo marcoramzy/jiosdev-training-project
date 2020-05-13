@@ -5,13 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core.module';
 import { PeopleAddDialog } from './people/people-add-dialog/people-add-dialog.component';
 import { GroupsAddDialog } from './groups/groups-add-dialog/groups-add-dialog.component';
+import { MaterialModule } from './material/material.module';
 
 
 
@@ -28,7 +28,7 @@ import { GroupsAddDialog } from './groups/groups-add-dialog/groups-add-dialog.co
     BrowserModule,
     FlexLayoutModule,
     CoreModule,
-    MatDialogModule,
+    MaterialModule,
     FormsModule,
     ReactiveFormsModule,
   ],

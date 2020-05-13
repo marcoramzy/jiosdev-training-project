@@ -11,6 +11,9 @@ import { DatePipe } from '@angular/common';
 @Injectable({ providedIn: 'root' })
 export class StorageService {
 
+    personAddedSuccessfully = new Subject<PeopleData>();
+    groupAddedSuccessfully = new Subject<GroupsData>();
+
     constructor(private http: HttpClient, private datePipe: DatePipe) {}
         
     async getPeople() : Promise<PeopleData[] >{ 
@@ -100,6 +103,30 @@ export class StorageService {
         ).toPromise();
     }
 
+    async addPerson(data : PeopleData) {
+
+      return this.http
+              .post<{ name: string }>(
+                  'http://localhost:3000/people',
+                  JSON.stringify(data),
+                  {
+                    observe: 'response',
+                    headers: new HttpHeaders({
+                      'Content-Type': 'application/json',
+                    })
+                  }
+              )
+              .subscribe(
+                  responseData => {
+                      console.log("responseData: ",responseData);
+                      this.personAddedSuccessfully.next(data);
+                  },
+                  error => {
+                      console.log("Error: ",error.message);
+                  }
+        );
+    }
+
     async getGroups() : Promise<GroupsData[] >{ 
         return this.http
           .get( 
@@ -153,6 +180,30 @@ export class StorageService {
             return throwError(errorRes);
           })
         ).toPromise();
+    }
+
+    async addGroup(data : GroupsData) {
+
+      return this.http
+              .post<{ name: string }>(
+                  'http://localhost:3000/groups',
+                  JSON.stringify(data),
+                  {
+                    observe: 'response',
+                    headers: new HttpHeaders({
+                      'Content-Type': 'application/json',
+                    })
+                  }
+              )
+              .subscribe(
+                  responseData => {
+                      console.log("responseData: ",responseData);
+                      this.groupAddedSuccessfully.next(data);
+                  },
+                  error => {
+                      console.log("Error: ",error.message);
+                  }
+        );
     }
 
 }
