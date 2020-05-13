@@ -3,19 +3,19 @@
     <mat-card class="example-card square" routerLink="/people">
       <mat-card-header class="content">
         <mat-card-title>{{peopleCount}}</mat-card-title>
-        <mat-card-subtitle>People</mat-card-subtitle>
+        <mat-card-subtitle>{{ 'people' | translate }}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
 
     <mat-card class="example-card square" routerLink="/groups">
       <mat-card-header class="content">
         <mat-card-title>{{groupsCount}}</mat-card-title>
-        <mat-card-subtitle>Groups</mat-card-subtitle>
+        <mat-card-subtitle>{{ 'groups' | translate }}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
   </div>
 
-  <h3 class="m-half-em"><span>Birthdays this month</span></h3>
+  <h3 class="m-half-em"><span>{{ 'birthdays-this-month' | translate }}</span></h3>
 
   <app-shared-table class="m-half-em" [isPeoplePage]="isPeoplePage"></app-shared-table>
 </app-layout>

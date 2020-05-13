@@ -33,7 +33,7 @@ export class GroupsComponent implements OnInit {
   }
 
   openDialog(): void {
-    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,count: this.groupsData.count,description: this.groupsData.description},{size: "sm" }, true);
+    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,count: this.groupsData.count,description: this.groupsData.description},{size: "md" }, true);
   }
 
   ngOnInit() {

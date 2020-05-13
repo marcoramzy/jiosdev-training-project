@@ -1,29 +1,29 @@
-<h1 mat-dialog-title>Add Person</h1>
+<h1 mat-dialog-title>{{ 'add-person' | translate }}</h1>
 <div id="people-add-dialog" mat-dialog-content [formGroup]="form">
   <mat-form-field>
-    <mat-label>First Name</mat-label>
+    <mat-label>{{ 'fname' | translate }}</mat-label>
     <input matInput  formControlName="firstName">
   </mat-form-field>
-  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.firstName.valid && form.touched && formSubmitted" >First name is required</p>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.firstName.valid && form.touched && formSubmitted" >{{ 'fnamereq' | translate }}</p>
   <mat-form-field>
-    <mat-label>Last Name</mat-label>
+    <mat-label>{{ 'lname' | translate }}</mat-label>
     <input matInput  formControlName="lastName">
   </mat-form-field>
-  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.lastName.valid && form.touched && formSubmitted" >Last name is required</p>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.lastName.valid && form.touched && formSubmitted" >{{ 'lname-req' | translate }}</p>
   <mat-form-field>
-    <mat-label>Mobile</mat-label>
+    <mat-label>{{ 'mobile' | translate }}</mat-label>
     <input matInput  formControlName="mobile">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Email</mat-label>
+    <mat-label>{{ 'email' | translate }}</mat-label>
     <input matInput  formControlName="email">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Birth Date</mat-label>
+    <mat-label>{{ 'birth-date' | translate }}</mat-label>
     <input matInput  formControlName="birthDate" type="date">
   </mat-form-field>
 </div>
 <div style="justify-content: space-around; display: flex; margin-top:1em;">
-  <button class="mat-raised-button" (click)="onNoClick()">Cancel</button>
-  <button class="mat-raised-button" (click)="onSaveClick()">Save</button>
+  <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+  <button class="mat-raised-button save-btn" (click)="onSaveClick()">{{ 'save' | translate }}</button>
 </div>

@@ -17,7 +17,7 @@ export class PeopleComponent implements OnInit {
   openDialog(): void {
     this.dialogService.openPeopleDialog({id: this.peopleData.id,firstName: this.peopleData.firstName
       ,lastName: this.peopleData.lastName,mobile: this.peopleData.mobile,email: this.peopleData.email
-      ,birthDate: this.peopleData.birthDate},{size: "sm" }, true);
+      ,birthDate: this.peopleData.birthDate},{size: "md" }, true);
   }
 
   ngOnInit() {

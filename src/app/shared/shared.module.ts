@@ -10,7 +10,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedTableComponent } from './shared-table/shared-table.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -26,7 +32,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     RouterModule ,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [HttpClient]
+      },
+      defaultLanguage: 'en'
+  })
   ],
   exports: [
     LayoutComponent,
@@ -34,7 +48,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   providers: [],
   bootstrap: [],

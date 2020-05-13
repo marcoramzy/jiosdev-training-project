@@ -8,13 +8,13 @@
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
             <li>
-                <a [routerLinkActive]="" [ngClass]="rla.isActive?'active':''" #rla="routerLinkActive" routerLink="/dashboard">Dashboard</a>
+                <a [routerLinkActive]="" [ngClass]="rla.isActive?'active':''" #rla="routerLinkActive" routerLink="/dashboard">{{ 'dashboard' | translate }}</a>
             </li>
             <li>
-                <a [routerLinkActive]="" [ngClass]="rla2.isActive?'active':''" #rla2="routerLinkActive" routerLink="/people">People</a>
+                <a [routerLinkActive]="" [ngClass]="rla2.isActive?'active':''" #rla2="routerLinkActive" routerLink="/people">{{ 'people' | translate }}</a>
             </li>
             <li>
-                <a [routerLinkActive]="" [ngClass]="rla3.isActive?'active':''" #rla3="routerLinkActive" routerLink="/groups">Groups</a>
+                <a [routerLinkActive]="" [ngClass]="rla3.isActive?'active':''" #rla3="routerLinkActive" routerLink="/groups">{{ 'groups' | translate }}</a>
             </li>
         </ul>
     </div>

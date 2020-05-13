@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "../src/app/shared/variables";
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -14,4 +16,39 @@ html, body {
     margin-bottom: 0em !important;
     margin-top: -1em;
     color: #f44336;
-  }
+}
+
+.mat-form-field {
+    display: unset !important;
+}
+
+.mat-dialog-content {
+    background: #ecefef;
+    padding-top: 1em!important;
+    border-top: 0.5px solid #cfd8d8;
+    border-bottom: 0.5px solid #cfd8d8;
+}
+
+.cancel-btn{
+    color: $primary !important;
+    background: transparent !important;
+    border:1px solid $primary !important;
+    min-width: 85px !important;
+}
+
+.cancel-btn:hover{
+    color: white !important;
+    background: $primary !important;
+}
+
+.save-btn{
+    color: white !important;
+    background: $primary !important;
+    min-width: 85px !important;
+}
+
+.save-btn:hover{
+    color: #fff !important;
+    background-color: #0f7e89 !important;
+    border-color: #0e747d !important;
+}

@@ -90,7 +90,7 @@
       "id": 5,
       "name": "bible study 5",
       "leader": "Janet",
-      "count": 9,
+      "count": 6,
       "description": "Daily bible study 5 @9pm"
     },
     {
@@ -124,7 +124,7 @@
     {
       "name": "bible study 10",
       "leader": "Marco",
-      "count": "10",
+      "count": "6",
       "description": "desc",
       "id": 10
     }
