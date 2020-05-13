@@ -8,7 +8,6 @@ import { GroupsService } from './groups/groups.service';
     DialogService,
     PeopleService,
     GroupsService
-    
   ]
 })
 export class CoreModule {}

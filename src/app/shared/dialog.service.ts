@@ -6,19 +6,6 @@ import { GroupsAddDialog } from '../groups/groups-add-dialog/groups-add-dialog.c
 import { PeopleData } from './people-data';
 import { GroupsData } from './groups-data';
 
-// import { CompanyAddDialog } from '../shared/company-add-dialog/company-add-dialog.component';
-// import { CompanyData } from '../shared/company-data';
-// import { ProductAddDialog } from './product-add-dialog/product-add-dialog.component';
-// import { ProductData } from './product-data';
-// import { CompanyService } from '../company/company.service';
-// import { ProductService } from '../product/product.service';
-
-export interface CompanyData {
-    id : number;
-    companyName : string;
-    productsCount ?: number;
-}
-
 type customSize = "sm" | "md" | "lg";
 
 interface size {
@@ -47,11 +34,11 @@ export class DialogService {
         dialogRef.afterClosed().subscribe(result => {
       
             if(result !== undefined){
-              console.log('Company dialog was closed - Saved Status');
+              console.log('People dialog was closed - Saved Status');
                       
             }
             else{
-              console.log('Company dialog was closed - Cancel Status');
+              console.log('People dialog was closed - Cancel Status');
             }
             
         });
@@ -70,11 +57,11 @@ export class DialogService {
         dialogRef.afterClosed().subscribe(result => {
       
             if(result !== undefined){
-              console.log('Company dialog was closed - Saved Status');
+              console.log('Groups dialog was closed - Saved Status');
                       
             }
             else{
-              console.log('Company dialog was closed - Cancel Status');
+              console.log('Groups dialog was closed - Cancel Status');
             }
             
         });

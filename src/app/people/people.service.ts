@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs';
 import { Injectable, OnInit } from '@angular/core';
 import { StorageService } from '../shared/storage.service';
 import { PeopleData } from '../shared/people-data';

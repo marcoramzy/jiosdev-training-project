@@ -4,7 +4,6 @@
             <button (click)="openDialog()" mat-stroked-button color="primary"><mat-icon>add_circle_outline</mat-icon> Add Group</button>
         </div>
         <div>
-            <!-- fxFlex fxLayout fxLayoutAlign="end" fxHide.xs -->
             <mat-form-field>
                 <mat-label>Search by name, leader, count or description</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="">
@@ -15,12 +14,6 @@
     
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
-    
-        <!-- ID Column -->
-        <!-- <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-        </ng-container> -->
     
         <!-- Name Column -->
         <ng-container matColumnDef="name">

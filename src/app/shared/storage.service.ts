@@ -10,7 +10,6 @@ import { DatePipe } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
-    // error = new Subject<string>();
 
     constructor(private http: HttpClient, private datePipe: DatePipe) {}
         

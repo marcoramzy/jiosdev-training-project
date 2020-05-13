@@ -1,10 +1,8 @@
 
 import { LayoutComponent } from '../layout/layout.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from '../navigation/header/header.component';
 import { SidenavListComponent } from '../navigation/sidenav-list/sidenav-list.component';
-////
 
 import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -33,7 +31,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     LayoutComponent,
     SharedTableComponent,
-
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
@@ -41,6 +38,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [],
   bootstrap: [],
-  schemas:[] //CUSTOM_ELEMENTS_SCHEMA
+  schemas:[]
 })
 export class SharedModule { }

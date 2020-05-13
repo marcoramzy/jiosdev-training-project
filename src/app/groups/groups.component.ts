@@ -2,16 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-
 import { DialogService } from '../shared/dialog.service';
 import { GroupsData } from '../shared/groups-data';
 import { GroupsService } from './groups.service';
 
-
-
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
 
 @Component({
   selector: 'app-groups',

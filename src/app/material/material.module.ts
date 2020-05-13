@@ -6,13 +6,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-
 import {MatDialogModule} from '@angular/material/dialog';
 
 
@@ -27,13 +25,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-
     MatTableModule,
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
     MatCardModule,
-
     MatDialogModule
   ],
   exports:[MatTabsModule,
@@ -42,13 +38,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-
     MatTableModule,
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
-    MatCardModule,
-  
+    MatCardModule, 
     MatDialogModule]
 })
 export class MaterialModule { }

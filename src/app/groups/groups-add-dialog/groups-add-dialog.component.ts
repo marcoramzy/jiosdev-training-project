@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Inject} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import { GroupsData } from 'src/app/shared/groups-data';
-// import {CompanyData} from "../../shared/company-data";
-// import { CompanyService } from 'src/app/company/company.service';
 
 @Component({
   selector: 'groups-add-dialog',
@@ -15,7 +13,7 @@ export class GroupsAddDialog implements OnInit {
   formSubmitted: boolean = false;
 
   ngOnInit(): void {
-    console.log("Company Dialog On Init");
+    console.log("Group Add Dialog On Init");
   }
 
   constructor(fb: FormBuilder,

@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Inject} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import { PeopleData } from 'src/app/shared/people-data';
-// import {CompanyData} from "../../shared/company-data";
-// import { CompanyService } from 'src/app/company/company.service';
 
 @Component({
   selector: 'people-add-dialog',
