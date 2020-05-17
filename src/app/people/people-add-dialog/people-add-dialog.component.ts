@@ -3,7 +3,9 @@ import { Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import { PeopleData } from 'src/app/shared/people-data';
+import { GroupsData } from 'src/app/shared/groups-data';
 import { PeopleService } from '../people.service';
+import { GroupsService } from '../../groups/groups.service';
 
 @Component({
   selector: 'people-add-dialog',
@@ -12,6 +14,8 @@ import { PeopleService } from '../people.service';
 export class PeopleAddDialog implements OnInit {
   form: FormGroup;
   formSubmitted: boolean = false;
+  groupsList : GroupsData[] =[];
+
 
   ngOnInit(): void {
     console.log("Company Dialog On Init");
@@ -19,8 +23,13 @@ export class PeopleAddDialog implements OnInit {
 
   constructor(fb: FormBuilder,
     private peopleService: PeopleService,
+    private groupsService: GroupsService,
     public dialogRef: MatDialogRef<PeopleAddDialog>,
     @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
+
+    this.groupsService.getGroups().then((value) => {
+        this.groupsList=value;
+    });
 
     this.form = fb.group({
       firstName: [data.firstName, [Validators.required]],
@@ -28,6 +37,7 @@ export class PeopleAddDialog implements OnInit {
       mobile: [data.mobile],
       email: [data.email],
       birthDate: [data.birthDate],
+      groups: [this.groupsList],
     });
 
     }

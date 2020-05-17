@@ -1,7 +1,6 @@
 export interface GroupsData {
     id : number;
     name : string;
-    leader : string;
-    count : number;
+    leader_id : number;
     description : string;
   }

@@ -24,8 +24,8 @@ export class GroupsAddDialog implements OnInit {
 
     this.form = fb.group({
       name: [data.name, [Validators.required]],
-      leader: [data.leader],
-      count: [data.count],
+      leader: [data.leader_id],
+      count: [],
       description: [data.description],
     });
 

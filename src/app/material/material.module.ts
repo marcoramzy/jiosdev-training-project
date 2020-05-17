@@ -13,6 +13,8 @@ import {MatInputModule} from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 
@@ -32,7 +34,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatInputModule,
     MatCardModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   exports:[MatTabsModule,
     MatSidenavModule,
@@ -46,6 +49,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatInputModule,
     MatCardModule, 
     MatDialogModule,
-    MatMenuModule]
+    MatMenuModule,
+    MatSelectModule]
 })
 export class MaterialModule { }
