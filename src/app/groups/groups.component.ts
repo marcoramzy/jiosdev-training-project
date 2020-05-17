@@ -17,7 +17,7 @@ import { StorageService } from '../shared/storage.service';
 export class GroupsComponent implements OnInit {
 
   private groupAddSubscription: Subscription;
-  displayedColumns: string[] = ['name', 'leader', 'count','description']; //'id', 
+  displayedColumns: string[] = ['name', 'leader', 'count','description','actions']; //'id', 
   dataSource: MatTableDataSource<GroupsData>;
   groups : GroupsData[] =[];
 
@@ -32,8 +32,8 @@ export class GroupsComponent implements OnInit {
 
   }
 
-  openDialog(): void {
-    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,count: this.groupsData.count,description: this.groupsData.description},{size: "md" }, true);
+  openDialog(editMode: boolean): void {
+    this.dialogService.openGroupsDialog({id: this.groupsData.id,name: this.groupsData.name,leader: this.groupsData.leader,count: this.groupsData.count,description: this.groupsData.description},{size: "md" }, true, editMode);
   }
 
   ngOnInit() {
@@ -65,6 +65,15 @@ export class GroupsComponent implements OnInit {
     this.dataSource = new MatTableDataSource(dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  onEditGroup(data){
+    this.groupsData=data;
+    this.openDialog(true);
+  }
+  
+  onDeleteGroup(id: number){
+    
   }
 
 }

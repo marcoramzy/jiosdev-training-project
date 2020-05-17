@@ -41,7 +41,7 @@ export class DialogService {
         });
     }
 
-    openGroupsDialog(data : GroupsData, size : size, disableClose : boolean) : void
+    openGroupsDialog(data : GroupsData, size : size, disableClose : boolean, editMode: boolean) : void
     {
         let width : string = this.returnWidth(size.size);
 

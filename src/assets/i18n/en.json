@@ -21,5 +21,9 @@
     "lname-req":"Last name is required",
     "birth-date":"Birthdate",
     "cancel":"Cancel",
-    "save":"Save"
+    "save":"Save",
+
+    "actions":"Actions",
+    "edit":"Edit",
+    "delete":"Delete"
 }
