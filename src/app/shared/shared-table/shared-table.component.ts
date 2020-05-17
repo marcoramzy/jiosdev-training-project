@@ -5,9 +5,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Input } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 import { PeopleService } from 'src/app/people/people.service';
-import { PeopleData } from '../people-data';
+import { PeopleData } from '../models/people-data';
 import { Subscription } from 'rxjs';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../services/storage.service';
 
 
 /**
@@ -21,11 +21,11 @@ import { StorageService } from '../storage.service';
 export class SharedTableComponent implements OnInit {
 
   private personAddSubscription: Subscription;
-  displayedColumns : string[] = [];
+  displayedColumns: string[] = [];
   dataSource: MatTableDataSource<PeopleData>;
-  people : PeopleData[] =[];
+  people: PeopleData[] = [];
 
-  @Input() isPeoplePage: boolean= false;
+  @Input() isPeoplePage = false;
   @Output() addPersonClick = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -35,18 +35,18 @@ export class SharedTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.isPeoplePage) //people page
+    if (this.isPeoplePage) // people page
     {
       this.displayedColumns = ['name', 'mobile', 'email'];
       this.peopleService.getPeople().then((value) => {
-        this.people=value;
+        this.people = value;
         this.dataSourceSetup(this.people);
     });
-      
+
     }
-    else //dashboard page
+    else // dashboard page
     {
-      this.displayedColumns = ['name', 'mobile', 'email','birthDate'];
+      this.displayedColumns = ['name', 'mobile', 'email', 'birthDate'];
       this.peopleService.getPeopleWithBirthdaysThisMonth().then((value) => {
         this.dataSource = new MatTableDataSource(value);
         this.dataSource.paginator = this.paginator;
@@ -54,11 +54,11 @@ export class SharedTableComponent implements OnInit {
       });
     }
 
-    ///Refresh Table (Record Added)
-    this.personAddSubscription = this.storageService.personAddedSuccessfully.subscribe(      
+    /// Refresh Table (Record Added)
+    this.personAddSubscription = this.storageService.personAddedSuccessfully.subscribe(
       (person) => {
             this.people.push(person);
-            this.dataSourceSetup(this.people)
+            this.dataSourceSetup(this.people);
     });
 
   }

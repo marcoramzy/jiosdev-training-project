@@ -9,10 +9,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedTableComponent } from './shared-table/shared-table.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { DialogService } from './services/dialog.service';
+import { PeopleService } from '../people/people.service';
+import { GroupsService } from '../groups/groups.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,8 +55,11 @@ export function createTranslateLoader(http: HttpClient) {
     RouterModule,
     TranslateModule
   ],
-  providers: [],
+  providers: [
+    DialogService,
+    PeopleService,
+    GroupsService],
   bootstrap: [],
-  schemas:[]
+  schemas: []
 })
 export class SharedModule { }

@@ -10,9 +10,9 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core.module';
-import { PeopleAddDialog } from './people/people-add-dialog/people-add-dialog.component';
-import { GroupsAddDialog } from './groups/groups-add-dialog/groups-add-dialog.component';
+import { CoreModule } from './core/core.module';
+import { PeopleAddDialogComponent } from './people/people-add-dialog/people-add-dialog.component';
+import { GroupsAddDialogComponent } from './groups/groups-add-dialog/groups-add-dialog.component';
 import { MaterialModule } from './material/material.module';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -22,8 +22,8 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    PeopleAddDialog,
-    GroupsAddDialog, 
+    PeopleAddDialogComponent,
+    GroupsAddDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -43,12 +43,10 @@ export function createTranslateLoader(http: HttpClient) {
         },
         defaultLanguage: 'en'
     })
-    
   ],
   exports: [
     TranslateModule
   ],
-  entryComponents:[PeopleAddDialog,GroupsAddDialog],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

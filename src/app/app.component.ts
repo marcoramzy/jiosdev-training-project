@@ -15,7 +15,7 @@ export class AppComponent implements OnDestroy {
         // the lang to use, if the lang isn't available, it will use the current loader to get them
         translate.use('en');
   }
-  
+
 
   ngOnDestroy(): void {
   }

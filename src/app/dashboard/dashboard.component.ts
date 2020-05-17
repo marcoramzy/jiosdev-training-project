@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { PeopleData } from '../shared/people-data';
+import { PeopleData } from '../shared/models/people-data';
 import { PeopleService } from '../people/people.service';
 import { GroupsService } from '../groups/groups.service';
 
@@ -10,9 +10,9 @@ import { GroupsService } from '../groups/groups.service';
 })
 export class DashboardComponent implements OnInit {
 
-  isPeoplePage: Boolean = false;
-  peopleCount : number= 0;
-  groupsCount : number= 0;
+  isPeoplePage = false;
+  peopleCount = 0;
+  groupsCount = 0;
 
   constructor(private peopleService: PeopleService, private groupsService: GroupsService) {
   }

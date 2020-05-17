@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { DialogService } from '../shared/dialog.service';
-import { PeopleData } from '../shared/people-data';
+import { DialogService } from '../shared/services/dialog.service';
+import { PeopleData } from '../shared/models/people-data';
 
 @Component({
   selector: 'app-people',
@@ -8,16 +8,15 @@ import { PeopleData } from '../shared/people-data';
   styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent implements OnInit {
-  isPeoplePage: Boolean = true;
-  peopleData:PeopleData={} as PeopleData;
+  isPeoplePage = true;
+  peopleData: PeopleData = {} as PeopleData;
 
   constructor( public dialogService: DialogService) {
   }
-  
-  openDialog(): void {
-    this.dialogService.openPeopleDialog({id: this.peopleData.id,firstName: this.peopleData.firstName
-      ,lastName: this.peopleData.lastName,mobile: this.peopleData.mobile,email: this.peopleData.email
-      ,birthDate: this.peopleData.birthDate},{size: "md" }, true);
+  openDialog(editMode: boolean): void {
+    this.dialogService.openDialog('people', {id: this.peopleData.id, firstName: this.peopleData.firstName
+      , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
+      , birthDate: this.peopleData.birthDate}, {size: 'md' }, true, editMode);
   }
 
   ngOnInit() {

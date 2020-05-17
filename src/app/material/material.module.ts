@@ -37,7 +37,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatMenuModule,
     MatSelectModule
   ],
-  exports:[MatTabsModule,
+  exports: [MatTabsModule,
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
@@ -47,7 +47,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
-    MatCardModule, 
+    MatCardModule,
     MatDialogModule,
     MatMenuModule,
     MatSelectModule]
