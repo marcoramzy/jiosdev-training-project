@@ -57,6 +57,7 @@ export class AppListPeopleComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes) {
     if (changes.dataSourceInput) {
+      this.people = this.dataSourceInput;
       this.dataSourceSetup(this.dataSourceInput);
     }
   }

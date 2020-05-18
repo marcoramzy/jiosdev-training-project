@@ -11,7 +11,7 @@ import { Injectable } from '@angular/core';
 export class StorageService {
 
   personAddedSuccessfully = new Subject<PeopleData>();
-  groupAddedSuccessfully = new Subject<GroupsData>();
+  groupAddedSuccessfully = new Subject<GroupsData[]>();
 
   constructor(private http: HttpClient) { }
 
@@ -139,11 +139,27 @@ export class StorageService {
         }
       )
       .pipe(
-        map(responseData => {
+        map(async responseData => {
           console.log('responseData', responseData);
           const groupsArray: GroupsData[] = [];
-          for (const key of Object.keys(responseData)) {
+          const people: PeopleData[] = await this.getPeople();
+          const peopleGroupsRelation: any = await this.getPeopleGroupsRelation();
 
+          for (const key of Object.keys(responseData)) {
+            for (const personKey of Object.keys(people)) {
+                if ( people[personKey].id === responseData[key].leader_id) {
+                  responseData[key].leader = people[personKey].firstName + ' ' + people[personKey].lastName;
+                  break;
+                }
+            }
+
+            let count = 0;
+            for (const pGRKey of Object.keys(peopleGroupsRelation)) {
+                if ( peopleGroupsRelation[pGRKey].people_id === responseData[key].id) {
+                  count++;
+                }
+            }
+            responseData[key].count = count;
             groupsArray.push(responseData[key]);
           }
           console.log('groupsArray', groupsArray);
@@ -197,14 +213,83 @@ export class StorageService {
         }
       )
       .subscribe(
-        responseData => {
-          console.log('responseData: ', responseData);
-          this.groupAddedSuccessfully.next(data);
+        async responseData => {
+          const groups: GroupsData[] = await this.getGroups();
+          this.groupAddedSuccessfully.next(groups);
         },
         error => {
           console.log('Error: ', error.message);
         }
       );
+  }
+
+  async editGroup(id: number, data: GroupsData) {
+
+    return this.http
+      .put<{ name: string }>(
+        'http://localhost:3000/groups/' + id,
+        JSON.stringify(data),
+        {
+          observe: 'response',
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        }
+      )
+      .subscribe(
+        async responseData => {
+          const groups: GroupsData[] = await this.getGroups();
+          this.groupAddedSuccessfully.next(groups);
+        },
+        error => {
+          console.log('Error: ', error.message);
+        }
+      );
+  }
+
+  async deleteGroup(id: number) {
+
+    return this.http
+      .delete<{ name: string }>(
+        'http://localhost:3000/groups/' + id,
+      )
+      .subscribe(
+        async responseData => {
+          const groups: GroupsData[] = await this.getGroups();
+          this.groupAddedSuccessfully.next(groups);
+        },
+        error => {
+          console.log('Error: ', error.message);
+        }
+      );
+  }
+
+  async getPeopleGroupsRelation(): Promise<any> {
+    return this.http
+      .get(
+        'http://localhost:3000/people-groups',
+        {
+          responseType: 'json',
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        }
+      )
+      .pipe(
+        map(responseData => {
+          console.log('responseData', responseData);
+          const peopleArray: PeopleData[] = [];
+          for (const key of Object.keys(responseData)) {
+            peopleArray.push(responseData[key]);
+          }
+          console.log('PeopleGroupsArray', peopleArray);
+          return peopleArray;
+        }),
+        catchError(errorRes => {
+          return throwError(errorRes);
+        })
+      ).toPromise();
+
   }
 
 }

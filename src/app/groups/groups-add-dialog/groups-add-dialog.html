@@ -1,19 +1,31 @@
-<h1 mat-dialog-title>{{ 'add-group' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!editMode">{{ 'add-group' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="editMode">{{ 'edit-group' | translate }}</h1>
 <form id="groups-add-dialog" mat-dialog-content [formGroup]="form">
+
+  <mat-form-field class="display-none">
+    <mat-label>{{ 'id' | translate }}</mat-label>
+    <input matInput formControlName="id" type="number" min="0" >
+  </mat-form-field>
 
   <mat-form-field>
     <mat-label> {{ 'name' | translate }}</mat-label>
     <input matInput  formControlName="name">
   </mat-form-field>
   <p class="alert alert-danger custom-alert" *ngIf="!form.controls.name.valid && form.touched && formSubmitted" > {{ 'namereq' | translate }}</p>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <mat-label>{{ 'leader' | translate }}</mat-label>
     <input matInput  formControlName="leader">
-  </mat-form-field>
+  </mat-form-field> -->
+
   <mat-form-field>
-    <mat-label>{{ 'people-count' | translate }}</mat-label>
-    <input matInput  formControlName="count">
+    <mat-label>{{ 'leader' | translate }}</mat-label>
+    <mat-select formControlName="leader_id">
+      <mat-option *ngFor="let person of peopleList" [value]="person.id">
+        {{person.firstName}} {{person.lastName}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
+
   <mat-form-field>
     <mat-label>{{ 'desc' | translate }}</mat-label>
     <input matInput  formControlName="description">

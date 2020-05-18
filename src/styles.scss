@@ -52,3 +52,25 @@ html, body {
     background-color: #0f7e89 !important;
     border-color: #0e747d !important;
 }
+
+.display-none{
+    display: none !important;
+}
+
+.delete-btn{
+    color: white !important;
+    min-width: 85px !important;
+    background-color: #dc3545!important;
+    border-color: #dc3545!important;
+}
+
+.delete-btn:hover{
+    color: #fff !important;
+    background-color: #c82333!important;
+    border-color: #bd2130!important;
+}
+
+.delete-mat-dialog-title{
+    display: flex !important;
+    align-items: center !important;
+}

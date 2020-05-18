@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { PeopleAddDialogComponent } from './people/people-add-dialog/people-add-dialog.component';
 import { GroupsAddDialogComponent } from './groups/groups-add-dialog/groups-add-dialog.component';
+import { GroupsDeleteDialogComponent } from './groups/groups-delete-dialog/groups-delete-dialog.component';
 import { MaterialModule } from './material/material.module';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -24,6 +25,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     PeopleAddDialogComponent,
     GroupsAddDialogComponent,
+    GroupsDeleteDialogComponent
   ],
   imports: [
     HttpClientModule,

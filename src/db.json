@@ -23,15 +23,6 @@
       "mobile": "0123456789",
       "email": "besho@jiosdev.com",
       "birthDate": "Wed Jan 15 2020 02:36:28 GMT+0200 (Eastern European Standard Time)"
-    },
-    {
-      "firstName": "sad",
-      "lastName": "sadas",
-      "mobile": null,
-      "email": null,
-      "birthDate": null,
-      "groups": [],
-      "id": 4
     }
   ],
   "groups": [
@@ -52,6 +43,12 @@
       "name": "bible study 3",
       "leader_id": 3,
       "description": "Daily bible study 3 @9pm"
+    },
+    {
+      "id": 4,
+      "name": "bible study 10",
+      "leader_id": 2,
+      "description": "Daily bible study 1 @8m"
     }
   ],
   "people-groups": [
@@ -68,6 +65,16 @@
     {
       "id": 3,
       "people_id": 3,
+      "groups_id": 3
+    },
+    {
+      "id": 4,
+      "people_id": 1,
+      "groups_id": 2
+    },
+    {
+      "id": 5,
+      "people_id": 1,
       "groups_id": 3
     }
   ]

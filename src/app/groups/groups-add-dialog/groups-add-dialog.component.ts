@@ -4,6 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { GroupsData } from 'src/app/shared/models/groups-data';
 import { GroupsService } from '../groups.service';
+import { PeopleService } from 'src/app/people/people.service';
+import { PeopleData } from 'src/app/shared/models/people-data';
 
 @Component({
   selector: 'app-groups-add-dialog',
@@ -12,13 +14,18 @@ import { GroupsService } from '../groups.service';
 export class GroupsAddDialogComponent implements OnInit {
   form: FormGroup;
   formSubmitted = false;
+  peopleList: PeopleData[] = [];
+  editMode = false;
+
 
   constructor(
       fb: FormBuilder,
       private groupsService: GroupsService,
+      private peopleService: PeopleService,
       public dialogRef: MatDialogRef<GroupsAddDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: GroupsData) {
 
+      this.getPeople();
       this.initForm(fb, data);
   }
 
@@ -28,11 +35,21 @@ export class GroupsAddDialogComponent implements OnInit {
 
 
   initForm(fb: FormBuilder, data: GroupsData) {
+    console.log('hereeee', data.id);
+    if (data.id !== undefined){
+      this.editMode = true;
+    }
     this.form = fb.group({
+      id: [data.id],
       name: [data.name, [Validators.required]],
-      leader: [data.leader_id],
-      count: [],
+      leader_id: [data.leader_id],
       description: [data.description],
+    });
+  }
+
+  getPeople(){
+    this.peopleService.getPeople().then((value) => {
+        this.peopleList = value;
     });
   }
 
@@ -40,7 +57,14 @@ export class GroupsAddDialogComponent implements OnInit {
     this.formSubmitted = true;
     const { value, valid } = this.form;
     if (valid) {
-      this.groupsService.addGroup(value);
+      if (this.editMode === false) // Add
+      {
+        this.groupsService.addGroup(value);
+      }
+      else // Edit
+      {
+        this.groupsService.editGroup( value.id , value);
+      }
       this.dialogRef.close(value);
     }
   }

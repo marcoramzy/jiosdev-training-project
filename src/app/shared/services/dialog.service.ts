@@ -5,6 +5,7 @@ import { PeopleAddDialogComponent } from '../../people/people-add-dialog/people-
 import { GroupsAddDialogComponent } from '../../groups/groups-add-dialog/groups-add-dialog.component';
 import { PeopleData } from '../models/people-data';
 import { GroupsData } from '../models/groups-data';
+import { GroupsDeleteDialogComponent } from 'src/app/groups/groups-delete-dialog/groups-delete-dialog.component';
 
 type customSize = 'sm' | 'md' | 'lg';
 
@@ -18,37 +19,36 @@ export class DialogService {
     constructor(public dialog: MatDialog) {
     }
 
-    openDialog(dialogName: string, data: PeopleData | GroupsData, size: Size, disableClose: boolean, editMode: boolean): void
-    {
+    openDialog(dialogName: string, data: PeopleData | GroupsData, size: Size, disableClose: boolean, editMode: boolean): void {
         const width: string = this.returnWidth(size.size);
 
-        if (dialogName === 'people'){
+        if (dialogName === 'people') {
             const dialogRef = this.dialog.open(PeopleAddDialogComponent, {
                 width,
-                data: {data},
+                data,
                 disableClose
             });
             dialogRef.afterClosed().subscribe(result => {
-                if (result !== undefined){
-                  console.log('people dialog was closed - Saved Status');
+                if (result !== undefined) {
+                    console.log('people dialog was closed - Saved Status');
                 }
-                else{
-                  console.log('people dialog was closed - Cancel Status');
+                else {
+                    console.log('people dialog was closed - Cancel Status');
                 }
             });
         }
-        else if (dialogName === 'groups'){
+        else if (dialogName === 'groups') {
             const dialogRef = this.dialog.open(GroupsAddDialogComponent, {
                 width,
-                data: {data},
-                disableClose
+                data,
+                disableClose,
             });
             dialogRef.afterClosed().subscribe(result => {
-                if (result !== undefined){
-                  console.log('groups dialog was closed - Saved Status');
+                if (result !== undefined) {
+                    console.log('groups dialog was closed - Saved Status');
                 }
-                else{
-                  console.log('groups dialog was closed - Cancel Status');
+                else {
+                    console.log('groups dialog was closed - Cancel Status');
                 }
             });
         }
@@ -56,12 +56,33 @@ export class DialogService {
 
     }
 
-    returnWidth(size: customSize){
+    openDeleteDialog(dialogName: string, data: number, size: Size, disableClose: boolean) {
+
+        const width: string = this.returnWidth(size.size);
+
+        const dialogRef = this.dialog.open(GroupsDeleteDialogComponent, {
+            width,
+            data,
+            disableClose
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                console.log('delete dialog was closed - Saved Status');
+            }
+            else {
+                console.log('delete dialog was closed - Cancel Status');
+            }
+        });
+
+
+    }
+
+    returnWidth(size: customSize) {
         let width: string;
         switch (size) {
             case 'sm': {
-               width = '250px';
-               break;
+                width = '250px';
+                break;
             }
             case 'md': {
                 width = '350px';
@@ -70,7 +91,7 @@ export class DialogService {
             case 'lg': {
                 width = '450px';
                 break;
-             }
+            }
             default: {
                 width = '250px';
                 break;

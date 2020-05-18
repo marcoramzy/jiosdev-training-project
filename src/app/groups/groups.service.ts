@@ -35,6 +35,14 @@ export class GroupsService {
     this.addGroupUtilityFn(data);
   }
 
+  async editGroup(id: number, data: GroupsData){
+    this.editGroupUtilityFn(id, data);
+  }
+
+  async deleteGroup(id: number){
+    this.deleteGroupUtilityFn(id);
+  }
+
   // UTILITY FUNCTIONS AREA (Storage)
   async getGroupsUtilityFn(): Promise<GroupsData[]> {
     let groups: any = await this.storageService.getGroups();
@@ -54,6 +62,14 @@ export class GroupsService {
 
   async addGroupUtilityFn(data: GroupsData){
     this.storageService.addGroup(data);
+  }
+
+  async editGroupUtilityFn(id: number, data: GroupsData){
+    this.storageService.editGroup(id, data);
+  }
+
+  async deleteGroupUtilityFn(id: number){
+    this.storageService.deleteGroup(id);
   }
 
 }
