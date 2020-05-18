@@ -1,4 +1,10 @@
 <app-layout>
-    <app-shared-table (addPersonClick)="openDialog()" [isPeoplePage]="isPeoplePage"></app-shared-table>
+    <div class="people-header">
+        <div class="add-person-container">
+            <button mat-stroked-button color="primary" (click)="openDialog(false)"><mat-icon>add_circle_outline</mat-icon> {{ 'add-person' | translate }}</button>
+        </div>
+    </div>
+
+    <app-list-people [dataSourceInput]="dataSourceInput" [isPeoplePage]="isPeoplePage"></app-list-people>
 </app-layout>
   

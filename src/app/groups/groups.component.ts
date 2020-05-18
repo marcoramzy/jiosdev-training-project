@@ -1,12 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { DialogService } from '../shared/services/dialog.service';
 import { GroupsData } from '../shared/models/groups-data';
 import { GroupsService } from './groups.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { StorageService } from '../shared/services/storage.service';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -14,9 +15,9 @@ import { StorageService } from '../shared/services/storage.service';
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss']
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent implements OnInit, OnDestroy{
 
-  private groupAddSubscription: Subscription;
+  destroyed = new Subject();
   displayedColumns: string[] = ['name', 'leader', 'count', 'description', 'actions']; // 'id',
   dataSource: MatTableDataSource<GroupsData>;
   groups: GroupsData[] = [];
@@ -31,6 +32,10 @@ export class GroupsComponent implements OnInit {
   constructor(public dialogService: DialogService, private groupsService: GroupsService, private storageService: StorageService) {
 
   }
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
 
   openDialog(editMode: boolean): void {
     this.dialogService.openDialog('groups', {id: this.groupsData.id, name: this.groupsData.name,
@@ -44,7 +49,7 @@ export class GroupsComponent implements OnInit {
     });
 
     /// Refresh Table (Record Added)
-    this.groupAddSubscription = this.storageService.groupAddedSuccessfully.subscribe(
+    this.storageService.groupAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
       (group) => {
           this.groups.push(group);
           this.dataSourceSetup(this.groups);

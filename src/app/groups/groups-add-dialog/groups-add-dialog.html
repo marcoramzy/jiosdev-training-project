@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ 'add-group' | translate }}</h1>
-<div id="groups-add-dialog" mat-dialog-content [formGroup]="form">
+<form id="groups-add-dialog" mat-dialog-content [formGroup]="form">
 
   <mat-form-field>
     <mat-label> {{ 'name' | translate }}</mat-label>
@@ -18,7 +18,7 @@
     <mat-label>{{ 'desc' | translate }}</mat-label>
     <input matInput  formControlName="description">
   </mat-form-field>
-</div>
+</form>
 <div style="justify-content: space-around; display: flex; margin-top:1em;">
   <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
   <button class="mat-raised-button save-btn" (click)="onSaveClick()">{{ 'save' | translate }}</button>

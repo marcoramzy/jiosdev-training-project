@@ -38,7 +38,7 @@ export class DialogService {
             });
         }
         else if (dialogName === 'groups'){
-            const dialogRef = this.dialog.open(PeopleAddDialogComponent, {
+            const dialogRef = this.dialog.open(GroupsAddDialogComponent, {
                 width,
                 data: {data},
                 disableClose

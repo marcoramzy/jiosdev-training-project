@@ -8,26 +8,25 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  mobileQuery: MediaQueryList;
+  @Output() public sidenavToggle = new EventEmitter();
+  private mobileQueryListener: () => void; ngOnInit(): void {}
+
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change', this.mobileQueryListener);
   }
 
-  @Output() public sidenavToggle = new EventEmitter();
-
-  mobileQuery: MediaQueryList;
-
-  private mobileQueryListener: () => void;
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
   }
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
   }
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
-  }
+
+
 
 }

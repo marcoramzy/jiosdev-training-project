@@ -6,7 +6,6 @@ import { Subject, throwError } from 'rxjs';
 import { PeopleData } from '../models/people-data';
 import { GroupsData } from '../models/groups-data';
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -14,7 +13,7 @@ export class StorageService {
   personAddedSuccessfully = new Subject<PeopleData>();
   groupAddedSuccessfully = new Subject<GroupsData>();
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
+  constructor(private http: HttpClient) { }
 
   async getPeople(): Promise<PeopleData[]> {
     return this.http

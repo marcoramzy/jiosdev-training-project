@@ -8,7 +8,7 @@ import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SharedTableComponent } from './shared-table/shared-table.component';
+import { AppListPeopleComponent } from './list-people/list-people.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -27,7 +27,7 @@ export function createTranslateLoader(http: HttpClient) {
     LayoutComponent,
     HeaderComponent,
     SidenavListComponent,
-    SharedTableComponent
+    AppListPeopleComponent
 
   ],
   imports: [
@@ -48,7 +48,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   exports: [
     LayoutComponent,
-    SharedTableComponent,
+    AppListPeopleComponent,
     CommonModule,
     MaterialModule,
     FlexLayoutModule,

@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import { DialogService } from '../shared/services/dialog.service';
 import { PeopleData } from '../shared/models/people-data';
+import { MatTableDataSource } from '@angular/material/table';
+import { PeopleService } from './people.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-people',
@@ -10,8 +13,10 @@ import { PeopleData } from '../shared/models/people-data';
 export class PeopleComponent implements OnInit {
   isPeoplePage = true;
   peopleData: PeopleData = {} as PeopleData;
+  dataSourceInput: PeopleData[];
 
-  constructor( public dialogService: DialogService) {
+  constructor( public dialogService: DialogService, private peopleService: PeopleService){
+
   }
   openDialog(editMode: boolean): void {
     this.dialogService.openDialog('people', {id: this.peopleData.id, firstName: this.peopleData.firstName
@@ -20,6 +25,11 @@ export class PeopleComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.peopleService.getPeople().then((value) => {
+        this.dataSourceInput = value;
+    });
+
   }
 
 }

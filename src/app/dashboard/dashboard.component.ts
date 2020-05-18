@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   isPeoplePage = false;
   peopleCount = 0;
   groupsCount = 0;
+  dataSourceInput: PeopleData[];
 
   constructor(private peopleService: PeopleService, private groupsService: GroupsService) {
   }
@@ -24,6 +25,10 @@ export class DashboardComponent implements OnInit {
 
     this.groupsService.getGroupsCount().then((value) => {
       this.groupsCount = value;
+    });
+
+    this.peopleService.getPeopleWithBirthdaysThisMonth().then((value) => {
+      this.dataSourceInput = value;
     });
 
   }

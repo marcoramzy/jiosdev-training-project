@@ -1,14 +1,12 @@
+
+
 <div class="people-header" *ngIf="isPeoplePage">
-    <div class="add-person-container">
-        <button mat-stroked-button color="primary" (click)="onAddPersonClick()"><mat-icon>add_circle_outline</mat-icon> {{ 'add-person' | translate }}</button>
-    </div>
-    <div>
+    <div class="search-person-container">
         <mat-form-field>
             <mat-label>{{ 'search-people' | translate }}</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="">
-        </mat-form-field>
+        </mat-form-field>   
     </div>
-
 </div>  
 
 <div class="mat-elevation-z8">

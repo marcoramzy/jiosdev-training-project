@@ -16,30 +16,35 @@ export class PeopleAddDialogComponent implements OnInit {
   formSubmitted = false;
   groupsList: GroupsData[] = [];
 
-
-  ngOnInit(): void {
-    console.log('Company Dialog On Init');
-  }
-
   constructor(fb: FormBuilder,
               private peopleService: PeopleService,
               private groupsService: GroupsService,
               public dialogRef: MatDialogRef<PeopleAddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
 
-    this.groupsService.getGroups().then((value) => {
-        this.groupsList = value;
-    });
+        this.getGroups();
+        this.initForm(fb, data);
+    }
 
-    this.form = fb.group({
-      firstName: [data.firstName, [Validators.required]],
-      lastName: [data.lastName, [Validators.required]],
-      mobile: [data.mobile],
-      email: [data.email],
-      birthDate: [data.birthDate],
-      groups: [this.groupsList],
-    });
+    ngOnInit(): void {
+      console.log('Company Dialog On Init');
+    }
 
+    getGroups(){
+      this.groupsService.getGroups().then((value) => {
+          this.groupsList = value;
+      });
+    }
+
+    initForm(fb: FormBuilder, data: PeopleData){
+      this.form = fb.group({
+        firstName: [data.firstName, [Validators.required]],
+        lastName: [data.lastName, [Validators.required]],
+        mobile: [data.mobile],
+        email: [data.email],
+        birthDate: [data.birthDate],
+        groups: [this.groupsList],
+      });
     }
 
     onSaveClick() {

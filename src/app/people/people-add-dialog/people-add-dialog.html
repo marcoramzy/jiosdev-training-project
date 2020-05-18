@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ 'add-person' | translate }}</h1>
-<div id="people-add-dialog" mat-dialog-content [formGroup]="form">
+<form id="people-add-dialog" mat-dialog-content [formGroup]="form">
   <mat-form-field>
     <mat-label>{{ 'fname' | translate }}</mat-label>
     <input matInput  formControlName="firstName">
@@ -22,7 +22,6 @@
     <mat-label>{{ 'birth-date' | translate }}</mat-label>
     <input matInput  formControlName="birthDate" type="date">
   </mat-form-field>
-
   <mat-form-field>
     <mat-label>{{'groups' | translate}}</mat-label>
     <mat-select formControlName="groups" multiple>
@@ -31,8 +30,8 @@
         </mat-option>
     </mat-select>
   </mat-form-field>
+</form>
 
-</div>
 <div style="justify-content: space-around; display: flex; margin-top:1em;">
   <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
   <button class="mat-raised-button save-btn" (click)="onSaveClick()">{{ 'save' | translate }}</button>
