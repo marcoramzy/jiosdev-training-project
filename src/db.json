@@ -8,8 +8,7 @@
       "email": "mina@jiosdev.com",
       "birthDate": "2020-05-14",
       "groups": [
-        1,
-        2
+        1
       ]
     },
     {
@@ -45,13 +44,27 @@
         1,
         4
       ]
+    },
+    {
+      "id": 5,
+      "firstName": "Waleed",
+      "lastName": "Adel JIOS",
+      "mobile": "0123123123",
+      "email": "Waleed@yahoo.com",
+      "birthDate": "2020-05-13",
+      "groups": [
+        1,
+        2,
+        3,
+        4
+      ]
     }
   ],
   "groups": [
     {
       "id": 1,
       "name": "bible study 1",
-      "leader_id": 1,
+      "leader_id": 2,
       "description": "Daily bible study 1 @9m"
     },
     {
@@ -70,7 +83,7 @@
       "id": 4,
       "name": "bible study 10",
       "leader_id": 2,
-      "description": "Daily bible study 1 @8m"
+      "description": "Daily bible study 1 @10m"
     }
   ]
 }
