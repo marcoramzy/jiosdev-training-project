@@ -71,8 +71,8 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
     this.dataSource.sort = this.sort;
   }
 
-  openDialog(editMode: boolean, peopleData?): void {
-    this.dialogService.openDialog('people', {id: peopleData.id, firstName: peopleData.firstName
+  openDialog(dialogName: string, editMode: boolean, peopleData?): void {
+    this.dialogService.openDialog(dialogName, {id: peopleData.id, firstName: peopleData.firstName
       , lastName: peopleData.lastName, mobile: peopleData.mobile, email: peopleData.email
       , birthDate: peopleData.birthDate, groups: peopleData.groups}, {size: 'md' }, true, editMode);
   }
@@ -84,11 +84,15 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
 
   onEditPerson(data) {
     console.log('my data', data);
-    this.openDialog(true, data);
+    this.openDialog('people', true, data);
   }
 
   onDeletePerson(id: number) {
     this.openDeleteDialog(id);
+  }
+
+  onViewPerson(data){
+    this.openDialog('peopleView', true, data);
   }
 
 }

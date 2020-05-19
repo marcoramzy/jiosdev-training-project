@@ -72,6 +72,9 @@ export class PeopleAddDialogComponent implements OnInit {
     this.formSubmitted = true;
     const { value, valid } = this.form;
     if (valid) {
+      if (value.groups == null){
+        value.groups = [];
+      }
       if (this.editMode === false) // Add
       {
         console.log('people add form data', value);

@@ -1,0 +1,48 @@
+<h1 mat-dialog-title >{{ personName }}</h1>
+<form id="people-view-dialog" mat-dialog-content [formGroup]="form">
+  <mat-form-field class="display-none">
+    <mat-label>{{ 'id' | translate }}</mat-label>
+    <input matInput formControlName="id" type="number" min="0" >
+  </mat-form-field>
+  <!-- <mat-form-field>
+    <mat-label>{{ 'fname' | translate }}</mat-label>
+    <input matInput  formControlName="firstName" type="text">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.firstName.valid && form.touched && formSubmitted" >{{ 'fnamereq' | translate }}</p>
+  <mat-form-field>
+    <mat-label>{{ 'lname' | translate }}</mat-label>
+    <input matInput  formControlName="lastName">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.lastName.valid && form.touched && formSubmitted" >{{ 'lname-req' | translate }}</p> -->
+  <mat-label>{{ 'mobile' | translate }}</mat-label>
+  <mat-form-field>
+    <input [ngClass]="form.controls.mobile.value?'':'display-none'" matInput formControlName="mobile" >
+    <p *ngIf="!form.controls.mobile.value" class="empty-value">ــــــــ</p>
+  </mat-form-field>
+
+  <mat-label>{{ 'email' | translate }}</mat-label>
+  <mat-form-field>
+    <input  [ngClass]="form.controls.email.value?'':'display-none'" matInput  formControlName="email">
+    <p *ngIf="!form.controls.email.value" class="empty-value">ــــــــ</p>
+  </mat-form-field>
+
+  <mat-label>{{ 'birth-date' | translate }}</mat-label>
+  <mat-form-field>
+    <input [ngClass]="form.controls.birthDate.value?'':'display-none'" matInput  formControlName="birthDate" type="date">
+    <p *ngIf="!form.controls.birthDate.value" class="empty-value">ــــــــ</p>
+  </mat-form-field>
+
+  <mat-label>{{'groups' | translate}}</mat-label>
+  <mat-form-field>
+    <mat-select formControlName="groups" multiple>
+        <mat-option *ngFor="let g of groupsList" [value]="g.id">
+            {{g.name}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<div style="justify-content: space-around; display: flex; margin-top:1em;">
+  <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+  <button class="mat-raised-button save-btn" (click)="onEditClick()">{{ 'edit' | translate }}</button>
+</div>

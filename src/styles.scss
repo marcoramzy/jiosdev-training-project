@@ -57,6 +57,11 @@ html, body {
     display: none !important;
 }
 
+.empty-value{
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
 .delete-btn{
     color: white !important;
     min-width: 85px !important;
@@ -78,4 +83,20 @@ html, body {
 .clickable-link{
     color: $primary !important;
     text-decoration: none;
+    cursor: pointer;
+}
+
+#people-view-dialog .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-select-disabled .mat-select-value {
+    color: black !important;
+}
+
+#people-view-dialog mat-label {
+    color: black !important;
+    font-weight: 500 !important;
+    margin-bottom: -0.7em !important;
+    display: flex !important;
+}
+
+#people-view-dialog .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
+    display: none!important;
 }

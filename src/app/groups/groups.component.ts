@@ -56,13 +56,23 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.destroyed.complete();
   }
 
-  openDialog(editMode: boolean, groupsData?): void {
-    this.dialogService.openDialog('groups', {
-      id: groupsData?.id,
-      name: groupsData?.name,
-      leader_id: groupsData?.leader_id,
-      description: groupsData?.description
-    }, { size: 'md' }, true, editMode);
+  openDialog(dialogName: string, editMode: boolean, groupsData?): void {
+    if (dialogName === 'peopleView'){
+        this.dialogService.openDialog(dialogName, {
+          id: groupsData?.id,
+          name: groupsData?.name,
+          leader_id: groupsData,
+          description: groupsData?.description
+        }, { size: 'md' }, true, editMode);
+    }
+    else{
+        this.dialogService.openDialog(dialogName, {
+          id: groupsData?.id,
+          name: groupsData?.name,
+          leader_id: groupsData?.leader_id,
+          description: groupsData?.description
+        }, { size: 'md' }, true, editMode);
+    }
   }
 
   openDeleteDialog(id: number): void {
@@ -86,9 +96,13 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  onViewPerson(leaderId: number){
+    this.openDialog('peopleView', true, leaderId);
+  }
+
   onEditGroup(data) {
     console.log('my data', data);
-    this.openDialog(true, data);
+    this.openDialog('groups', true, data);
   }
 
   onDeleteGroup(id: number) {

@@ -14,8 +14,8 @@ export class PeopleService {
     return people;
   }
 
-  async getPeopleById(id: number): Promise<PeopleData[]> {
-    const people: PeopleData[] = await this.getPeopleByIdUtilityFn(id);
+  async getPeopleById(id: number): Promise<PeopleData> {
+    const people: PeopleData = await this.getPeopleByIdUtilityFn(id);
     console.log('PeopleService async getPeopleById', people);
     return people;
   }
@@ -71,10 +71,10 @@ export class PeopleService {
     return people;
   }
 
-  async getPeopleByIdUtilityFn(id: number): Promise<PeopleData[]> {
+  async getPeopleByIdUtilityFn(id: number): Promise<PeopleData> {
     let people: any = await this.storageService.getPeopleById(id);
     if (people === null) {
-      people = [];
+      people = {};
     }
     console.log('PeopleService getPeopleByIdUtilityFn', people);
     return people;

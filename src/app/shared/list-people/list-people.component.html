@@ -15,7 +15,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'name' | translate | uppercase}} </th>
-        <td mat-cell *matCellDef="let row"> {{row.firstName}} {{row.lastName}} </td>
+        <td mat-cell *matCellDef="let row"> <a class="clickable-link" (click)="onViewPerson(row)">{{row.firstName}} {{row.lastName}}</a> </td>
     </ng-container>
 
     <!-- mobile Column -->

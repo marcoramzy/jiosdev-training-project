@@ -7,6 +7,7 @@ import { PeopleData } from '../models/people-data';
 import { GroupsData } from '../models/groups-data';
 import { GroupsDeleteDialogComponent } from 'src/app/groups/groups-delete-dialog/groups-delete-dialog.component';
 import { PeopleDeleteDialogComponent } from 'src/app/people/people-delete-dialog/people-delete-dialog.component';
+import { PeopleViewDialogComponent } from 'src/app/people/people-view-dialog/people-view-dialog.component';
 
 type customSize = 'sm' | 'md' | 'lg';
 
@@ -20,7 +21,7 @@ export class DialogService {
     constructor(public dialog: MatDialog) {
     }
 
-    openDialog(dialogName: string, data: PeopleData | GroupsData, size: Size, disableClose: boolean, editMode: boolean): void {
+    openDialog(dialogName: string, data: PeopleData | GroupsData | number, size: Size, disableClose: boolean, editMode: boolean): void {
         const width: string = this.returnWidth(size.size);
 
         if (dialogName === 'people') {
@@ -50,6 +51,21 @@ export class DialogService {
                 }
                 else {
                     console.log('groups dialog was closed - Cancel Status');
+                }
+            });
+        }
+        else if (dialogName === 'peopleView') {
+            const dialogRef = this.dialog.open(PeopleViewDialogComponent, {
+                width,
+                data,
+                disableClose
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result !== undefined) {
+                    console.log('people dialog was closed - Saved Status');
+                }
+                else {
+                    console.log('people dialog was closed - Cancel Status');
                 }
             });
         }

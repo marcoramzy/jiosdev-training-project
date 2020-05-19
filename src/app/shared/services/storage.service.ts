@@ -56,8 +56,8 @@ export class StorageService {
       )
       .pipe(
         map(responseData => {
-          const peopleArray: any = responseData;
-          return peopleArray;
+          const people: any = responseData;
+          return people;
         }),
         catchError(errorRes => {
           return throwError(errorRes);
