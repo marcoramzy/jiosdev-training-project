@@ -35,7 +35,6 @@ export class GroupsAddDialogComponent implements OnInit {
 
 
   initForm(fb: FormBuilder, data: GroupsData) {
-    console.log('hereeee', data.id);
     if (data.id !== undefined){
       this.editMode = true;
     }

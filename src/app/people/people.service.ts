@@ -14,6 +14,18 @@ export class PeopleService {
     return people;
   }
 
+  async getPeopleById(id: number): Promise<PeopleData[]> {
+    const people: PeopleData[] = await this.getPeopleByIdUtilityFn(id);
+    console.log('PeopleService async getPeopleById', people);
+    return people;
+  }
+
+  async getPeopleByGorupId(id: number): Promise<PeopleData[]> {
+    const people: PeopleData[] = await this.getPeopleByGorupIdUtilityFn(id);
+    console.log('PeopleService async getPeopleByGorupId', people);
+    return people;
+  }
+
   async getPeopleWithBirthdaysThisMonth(): Promise<PeopleData[]> {
     const people: PeopleData[] = await this.getPeopleWithBirthdaysThisMonthUtilityFn();
     console.log('PeopleService async getPeopleWithBirthdaysThisMonth', people);
@@ -41,6 +53,14 @@ export class PeopleService {
     this.addPersonUtilityFn(data);
   }
 
+  async editPerson(id: number, data: PeopleData){
+    this.editPersonUtilityFn(id, data);
+  }
+
+  async deletePerson(id: number){
+    this.deletePersonUtilityFn(id);
+  }
+
   // UTILITY FUNCTIONS AREA
   async getPeopleUtilityFn(): Promise<PeopleData[]> {
     let people: any = await this.storageService.getPeople();
@@ -48,6 +68,24 @@ export class PeopleService {
       people = [];
     }
     console.log('PeopleService getPeopleUtilityFn', people);
+    return people;
+  }
+
+  async getPeopleByIdUtilityFn(id: number): Promise<PeopleData[]> {
+    let people: any = await this.storageService.getPeopleById(id);
+    if (people === null) {
+      people = [];
+    }
+    console.log('PeopleService getPeopleByIdUtilityFn', people);
+    return people;
+  }
+
+  async getPeopleByGorupIdUtilityFn(id: number): Promise<PeopleData[]> {
+    let people: any = await this.storageService.getPeopleByGorupId(id);
+    if (people === null) {
+      people = [];
+    }
+    console.log('PeopleService getPeopleByGorupIdUtilityFn', people);
     return people;
   }
 
@@ -69,6 +107,14 @@ export class PeopleService {
 
   async addPersonUtilityFn(data: PeopleData){
     this.storageService.addPerson(data);
+  }
+
+  async editPersonUtilityFn(id: number, data: PeopleData){
+    this.storageService.editPerson(id, data);
+  }
+
+  async deletePersonUtilityFn(id: number){
+    this.storageService.deletePerson(id);
   }
 
 }

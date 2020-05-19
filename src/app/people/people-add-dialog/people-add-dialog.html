@@ -1,5 +1,10 @@
-<h1 mat-dialog-title>{{ 'add-person' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="!editMode">{{ 'add-person' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="editMode">{{ 'edit-person' | translate }}</h1>
 <form id="people-add-dialog" mat-dialog-content [formGroup]="form">
+  <mat-form-field class="display-none">
+    <mat-label>{{ 'id' | translate }}</mat-label>
+    <input matInput formControlName="id" type="number" min="0" >
+  </mat-form-field>
   <mat-form-field>
     <mat-label>{{ 'fname' | translate }}</mat-label>
     <input matInput  formControlName="firstName">

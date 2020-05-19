@@ -5,4 +5,5 @@ export interface PeopleData {
     mobile: number;
     email: string;
     birthDate: Date;
+    groups: number[];
 }

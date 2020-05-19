@@ -8,6 +8,7 @@ import { PeopleData } from '../models/people-data';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { StorageService } from '../services/storage.service';
 import { takeUntil } from 'rxjs/operators';
+import { DialogService } from '../services/dialog.service';
 
 
 /**
@@ -18,9 +19,8 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './list-people.component.html',
   styleUrls: ['./list-people.component.scss']
 })
-export class AppListPeopleComponent implements OnInit, OnDestroy, OnChanges {
+export class AppListPeopleComponent implements OnInit, OnChanges {
 
-  destroyed = new Subject();
   displayedColumns: string[] = [];
   dataSource: MatTableDataSource<PeopleData>;
   people: PeopleData[] = [];
@@ -32,26 +32,18 @@ export class AppListPeopleComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private peopleService: PeopleService, private storageService: StorageService) {
+  constructor(private dialogService: DialogService, private storageService: StorageService) {
   }
 
   ngOnInit() {
       if (this.isPeoplePage) // people page
       {
-        this.displayedColumns = ['name', 'mobile', 'email'];
+        this.displayedColumns = ['name', 'mobile', 'email', 'actions'];
       }
       else // dashboard page
       {
         this.displayedColumns = ['name', 'mobile', 'email', 'birthDate'];
       }
-
-      /// Refresh Table (Record Added)
-      this.storageService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
-        (person) => {
-          this.people.push(person);
-          this.dataSourceSetup(this.people);
-        }
-      );
 
   }
 
@@ -60,11 +52,6 @@ export class AppListPeopleComponent implements OnInit, OnDestroy, OnChanges {
       this.people = this.dataSourceInput;
       this.dataSourceSetup(this.dataSourceInput);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete();
   }
 
   applyFilter(event: Event) {
@@ -82,6 +69,26 @@ export class AppListPeopleComponent implements OnInit, OnDestroy, OnChanges {
     this.dataSource = new MatTableDataSource(dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  openDialog(editMode: boolean, peopleData?): void {
+    this.dialogService.openDialog('people', {id: peopleData.id, firstName: peopleData.firstName
+      , lastName: peopleData.lastName, mobile: peopleData.mobile, email: peopleData.email
+      , birthDate: peopleData.birthDate, groups: peopleData.groups}, {size: 'md' }, true, editMode);
+  }
+
+  openDeleteDialog(id: number): void {
+    this.dialogService.openDeleteDialog('people',
+      id, { size: 'md' }, true);
+  }
+
+  onEditPerson(data) {
+    console.log('my data', data);
+    this.openDialog(true, data);
+  }
+
+  onDeletePerson(id: number) {
+    this.openDeleteDialog(id);
   }
 
 }

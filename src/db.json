@@ -6,7 +6,10 @@
       "lastName": "Ramzy",
       "mobile": "0123456789",
       "email": "mina@jiosdev.com",
-      "birthDate": "Wed May 13 2020 02:36:28 GMT+0200 (Eastern European Standard Time)"
+      "birthDate": "2020-05-14",
+      "groups": [
+        1
+      ]
     },
     {
       "id": 2,
@@ -14,15 +17,33 @@
       "lastName": "Ramzy",
       "mobile": "0123456789",
       "email": "michael@jiosdev.com",
-      "birthDate": "Wed May 21 2020 02:36:28 GMT+0200 (Eastern European Standard Time)"
+      "birthDate": "2020-05-07",
+      "groups": [
+        1
+      ]
     },
     {
       "id": 3,
-      "firstName": "besho",
+      "firstName": "beshoy",
       "lastName": "Ramzy",
-      "mobile": "0123456789",
+      "mobile": "0123456786",
       "email": "besho@jiosdev.com",
-      "birthDate": "Wed Jan 15 2020 02:36:28 GMT+0200 (Eastern European Standard Time)"
+      "birthDate": "2020-06-19",
+      "groups": [
+        4
+      ]
+    },
+    {
+      "id": 4,
+      "firstName": "Michel",
+      "lastName": "Mina",
+      "mobile": "01213534535",
+      "email": "Michel@yahoo.com",
+      "birthDate": "2020-05-07",
+      "groups": [
+        1,
+        4
+      ]
     }
   ],
   "groups": [
@@ -49,33 +70,6 @@
       "name": "bible study 10",
       "leader_id": 2,
       "description": "Daily bible study 1 @8m"
-    }
-  ],
-  "people-groups": [
-    {
-      "id": 1,
-      "people_id": 1,
-      "groups_id": 1
-    },
-    {
-      "id": 2,
-      "people_id": 2,
-      "groups_id": 2
-    },
-    {
-      "id": 3,
-      "people_id": 3,
-      "groups_id": 3
-    },
-    {
-      "id": 4,
-      "people_id": 1,
-      "groups_id": 2
-    },
-    {
-      "id": 5,
-      "people_id": 1,
-      "groups_id": 3
     }
   ]
 }

@@ -1,35 +1,75 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { DialogService } from '../shared/services/dialog.service';
 import { PeopleData } from '../shared/models/people-data';
-import { MatTableDataSource } from '@angular/material/table';
 import { PeopleService } from './people.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { StorageService } from '../shared/services/storage.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
   styleUrls: ['./people.component.scss']
 })
-export class PeopleComponent implements OnInit {
+export class PeopleComponent implements OnInit, OnDestroy {
+
+  destroyed = new Subject();
   isPeoplePage = true;
   peopleData: PeopleData = {} as PeopleData;
   dataSourceInput: PeopleData[];
 
-  constructor( public dialogService: DialogService, private peopleService: PeopleService){
+  constructor(
+    public dialogService: DialogService,
+    private peopleService: PeopleService,
+    private storageService: StorageService,
+    private route: ActivatedRoute) {
 
-  }
-  openDialog(editMode: boolean): void {
-    this.dialogService.openDialog('people', {id: this.peopleData.id, firstName: this.peopleData.firstName
-      , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate}, {size: 'md' }, true, editMode);
   }
 
   ngOnInit() {
+    let groupId: string = null;
 
-    this.peopleService.getPeople().then((value) => {
-        this.dataSourceInput = value;
+    this.route.queryParams.subscribe(params => {
+        groupId = params.group_id;
+        console.log('groupId', groupId);
     });
 
+    if ( (groupId === undefined) || (groupId === null) ) // People Normal list data
+    {
+        this.peopleService.getPeople().then((value) => {
+          this.dataSourceInput = value;
+        });
+    }
+    else // People list data filtered by groupId
+    {
+        this.peopleService.getPeopleByGorupId(+groupId).then((value) => {
+          console.log('get data from Query Params', value);
+          this.dataSourceInput = value;
+        });
+    }
+
+    /// Refresh Table (Record Added)
+    this.storageService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
+      (people) => {
+        this.dataSourceInput = people;
+      }
+    );
+
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
+  openDialog(editMode: boolean): void {
+    this.dialogService.openDialog('people', {
+      id: this.peopleData.id, firstName: this.peopleData.firstName
+      , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
+      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
+    }, { size: 'md' }, true, editMode);
   }
 
 }

@@ -74,3 +74,8 @@ html, body {
     display: flex !important;
     align-items: center !important;
 }
+
+.clickable-link{
+    color: $primary !important;
+    text-decoration: none;
+}

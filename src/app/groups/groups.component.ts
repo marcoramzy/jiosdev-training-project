@@ -88,13 +88,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   onEditGroup(data) {
     console.log('my data', data);
-    // this.groupsData = data;
     this.openDialog(true, data);
   }
 
   onDeleteGroup(id: number) {
     this.openDeleteDialog(id);
-    // this.groupsService.deleteGroup(id);
   }
 
 }

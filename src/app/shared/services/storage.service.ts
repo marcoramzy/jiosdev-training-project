@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class StorageService {
 
-  personAddedSuccessfully = new Subject<PeopleData>();
+  personAddedSuccessfully = new Subject<PeopleData[]>();
   groupAddedSuccessfully = new Subject<GroupsData[]>();
 
   constructor(private http: HttpClient) { }
@@ -32,6 +32,63 @@ export class StorageService {
           const peopleArray: PeopleData[] = [];
           for (const key of Object.keys(responseData)) {
             peopleArray.push(responseData[key]);
+          }
+          console.log('peopleArray', peopleArray);
+          return peopleArray;
+        }),
+        catchError(errorRes => {
+          return throwError(errorRes);
+        })
+      ).toPromise();
+
+  }
+
+  async getPeopleById(id: number): Promise<PeopleData> {
+    return this.http
+      .get(
+        'http://localhost:3000/people/' + id,
+        {
+          responseType: 'json',
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        }
+      )
+      .pipe(
+        map(responseData => {
+          const peopleArray: any = responseData;
+          return peopleArray;
+        }),
+        catchError(errorRes => {
+          return throwError(errorRes);
+        })
+      ).toPromise();
+
+  }
+
+  async getPeopleByGorupId(id: number): Promise<PeopleData[]> {
+    return this.http
+      .get(
+        'http://localhost:3000/people',
+        {
+          responseType: 'json',
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        }
+      )
+      .pipe(
+        map(responseData => {
+          console.log('responseData', responseData);
+          const peopleArray: PeopleData[] = [];
+          for (const key of Object.keys(responseData)) {
+
+            for (const group in responseData[key].groups) {
+              if (responseData[key].groups[group].toString() === id.toString()) {
+                peopleArray.push(responseData[key]);
+                // break;
+              }
+            }
           }
           console.log('peopleArray', peopleArray);
           return peopleArray;
@@ -117,9 +174,11 @@ export class StorageService {
         }
       )
       .subscribe(
-        responseData => {
-          console.log('responseData: ', responseData);
-          this.personAddedSuccessfully.next(data);
+        async responseData => {
+          // console.log('responseData: ', responseData);
+          // this.personAddedSuccessfully.next(data);
+          const people: PeopleData[] = await this.getPeople();
+          this.personAddedSuccessfully.next(people);
         },
         error => {
           console.log('Error: ', error.message);
@@ -143,22 +202,20 @@ export class StorageService {
           console.log('responseData', responseData);
           const groupsArray: GroupsData[] = [];
           const people: PeopleData[] = await this.getPeople();
-          const peopleGroupsRelation: any = await this.getPeopleGroupsRelation();
-
           for (const key of Object.keys(responseData)) {
-            for (const personKey of Object.keys(people)) {
-                if ( people[personKey].id === responseData[key].leader_id) {
-                  responseData[key].leader = people[personKey].firstName + ' ' + people[personKey].lastName;
-                  break;
-                }
-            }
-
             let count = 0;
-            for (const pGRKey of Object.keys(peopleGroupsRelation)) {
-                if ( peopleGroupsRelation[pGRKey].people_id === responseData[key].id) {
+            for (const personKey of Object.keys(people)) {
+              if (people[personKey].id === responseData[key].leader_id) {
+                responseData[key].leader = people[personKey].firstName + ' ' + people[personKey].lastName;
+              }
+
+              for (const pKey of Object.keys(people[personKey].groups)) {
+                if (people[personKey].groups[pKey] === responseData[key].id) {
                   count++;
                 }
+              }
             }
+
             responseData[key].count = count;
             groupsArray.push(responseData[key]);
           }
@@ -247,6 +304,30 @@ export class StorageService {
       );
   }
 
+  async editPerson(id: number, data: PeopleData) {
+
+    return this.http
+      .put<{ name: string }>(
+        'http://localhost:3000/people/' + id,
+        JSON.stringify(data),
+        {
+          observe: 'response',
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+          })
+        }
+      )
+      .subscribe(
+        async responseData => {
+          const people: PeopleData[] = await this.getPeople();
+          this.personAddedSuccessfully.next(people);
+        },
+        error => {
+          console.log('Error: ', error.message);
+        }
+      );
+  }
+
   async deleteGroup(id: number) {
 
     return this.http
@@ -264,32 +345,21 @@ export class StorageService {
       );
   }
 
-  async getPeopleGroupsRelation(): Promise<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/people-groups',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      )
-      .pipe(
-        map(responseData => {
-          console.log('responseData', responseData);
-          const peopleArray: PeopleData[] = [];
-          for (const key of Object.keys(responseData)) {
-            peopleArray.push(responseData[key]);
-          }
-          console.log('PeopleGroupsArray', peopleArray);
-          return peopleArray;
-        }),
-        catchError(errorRes => {
-          return throwError(errorRes);
-        })
-      ).toPromise();
+  async deletePerson(id: number) {
 
+    return this.http
+      .delete<{ name: string }>(
+        'http://localhost:3000/people/' + id,
+      )
+      .subscribe(
+        async responseData => {
+          const people: PeopleData[] = await this.getPeople();
+          this.personAddedSuccessfully.next(people);
+        },
+        error => {
+          console.log('Error: ', error.message);
+        }
+      );
   }
 
 }

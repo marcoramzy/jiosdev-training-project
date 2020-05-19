@@ -8,6 +8,7 @@
     "mobile":"Mobile" ,
     "email":"Email" ,
     "add-person":"Add Person" ,
+    "edit-person":"Edit Person" ,
     "search-group":"Search by name, leader, count or description" ,
     "search-people":"Search by name, email or mobile" ,
     "add-group":"Add Group" ,

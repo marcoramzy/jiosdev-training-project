@@ -6,6 +6,7 @@ import { GroupsAddDialogComponent } from '../../groups/groups-add-dialog/groups-
 import { PeopleData } from '../models/people-data';
 import { GroupsData } from '../models/groups-data';
 import { GroupsDeleteDialogComponent } from 'src/app/groups/groups-delete-dialog/groups-delete-dialog.component';
+import { PeopleDeleteDialogComponent } from 'src/app/people/people-delete-dialog/people-delete-dialog.component';
 
 type customSize = 'sm' | 'md' | 'lg';
 
@@ -60,19 +61,20 @@ export class DialogService {
 
         const width: string = this.returnWidth(size.size);
 
-        const dialogRef = this.dialog.open(GroupsDeleteDialogComponent, {
-            width,
-            data,
-            disableClose
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result !== undefined) {
-                console.log('delete dialog was closed - Saved Status');
-            }
-            else {
-                console.log('delete dialog was closed - Cancel Status');
-            }
-        });
+        if (dialogName === 'people') {
+            this.dialog.open(PeopleDeleteDialogComponent, {
+                width,
+                data
+            });
+        }
+        else if (dialogName === 'groups')
+        {
+            this.dialog.open(GroupsDeleteDialogComponent, {
+                width,
+                data
+            });
+        }
+
 
 
     }
