@@ -19,6 +19,7 @@ export class PeopleViewDialogComponent implements OnInit {
   peopleData: PeopleData = {} as PeopleData;
   personName: string;
   fromGroupsPage = false;
+  groupsExists = false;
 
 
   constructor(
@@ -52,6 +53,14 @@ export class PeopleViewDialogComponent implements OnInit {
     if (this.fromGroupsPage){
         this.personName = data.firstName + ' ' + data.lastName;
         this.peopleData = data;
+
+        if (data.groups === [] || data.groups === undefined || data.groups === null || data.groups.length === 0){
+          this.groupsExists = false;
+        }
+        else{
+          this.groupsExists = true;
+        }
+
         this.form = fb.group({
           id: [data.id],
           firstName: [data.firstName],
@@ -75,6 +84,14 @@ export class PeopleViewDialogComponent implements OnInit {
         this.peopleService.getPeopleById(data.leader_id).then((res) => {
             this.personName = res.firstName + ' ' + res.lastName;
             this.peopleData = res;
+
+            if (res.groups === [] || res.groups === undefined || res.groups === null || res.groups.length === 0){
+              this.groupsExists = false;
+            }
+            else{
+              this.groupsExists = true;
+            }
+
             this.form = fb.group({
               id: [res.id],
               firstName: [res.firstName],

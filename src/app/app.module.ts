@@ -17,6 +17,7 @@ import { GroupsDeleteDialogComponent } from './groups/groups-delete-dialog/group
 import { MaterialModule } from './material/material.module';
 import { PeopleDeleteDialogComponent } from './people/people-delete-dialog/people-delete-dialog.component';
 import { PeopleViewDialogComponent } from './people/people-view-dialog/people-view-dialog.component';
+import { GroupsViewDialogComponent } from './groups/groups-view-dialog/groups-view-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,7 +30,8 @@ export function createTranslateLoader(http: HttpClient) {
     GroupsAddDialogComponent,
     GroupsDeleteDialogComponent,
     PeopleDeleteDialogComponent,
-    PeopleViewDialogComponent
+    PeopleViewDialogComponent,
+    GroupsViewDialogComponent
   ],
   imports: [
     HttpClientModule,

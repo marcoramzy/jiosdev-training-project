@@ -1,19 +1,11 @@
 <h1 mat-dialog-title >{{ personName }}</h1>
 <form id="people-view-dialog" mat-dialog-content [formGroup]="form">
+  
   <mat-form-field class="display-none">
     <mat-label>{{ 'id' | translate }}</mat-label>
     <input matInput formControlName="id" type="number" min="0" >
   </mat-form-field>
-  <!-- <mat-form-field>
-    <mat-label>{{ 'fname' | translate }}</mat-label>
-    <input matInput  formControlName="firstName" type="text">
-  </mat-form-field>
-  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.firstName.valid && form.touched && formSubmitted" >{{ 'fnamereq' | translate }}</p>
-  <mat-form-field>
-    <mat-label>{{ 'lname' | translate }}</mat-label>
-    <input matInput  formControlName="lastName">
-  </mat-form-field>
-  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.lastName.valid && form.touched && formSubmitted" >{{ 'lname-req' | translate }}</p> -->
+
   <mat-label>{{ 'mobile' | translate }}</mat-label>
   <mat-form-field>
     <input [ngClass]="form.controls.mobile.value?'':'display-none'" matInput formControlName="mobile" >
@@ -34,11 +26,12 @@
 
   <mat-label>{{'groups' | translate}}</mat-label>
   <mat-form-field>
-    <mat-select formControlName="groups" multiple>
+    <mat-select [ngClass]="groupsExists?'':'display-none'" formControlName="groups" multiple>
         <mat-option *ngFor="let g of groupsList" [value]="g.id">
             {{g.name}}
         </mat-option>
     </mat-select>
+    <p *ngIf="!groupsExists" class="empty-value">ــــــــ</p>
   </mat-form-field>
 </form>
 

@@ -1,0 +1,35 @@
+<h1 mat-dialog-title >{{ groupName }}</h1>
+<form id="groups-view-dialog" mat-dialog-content [formGroup]="form">
+
+  <mat-form-field class="display-none">
+    <mat-label>{{ 'id' | translate }}</mat-label>
+    <input matInput formControlName="id" type="number" min="0" >
+  </mat-form-field>
+
+  <!-- <mat-form-field>
+    <mat-label> {{ 'name' | translate }}</mat-label>
+    <input matInput  formControlName="name">
+  </mat-form-field>
+  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.name.valid && form.touched && formSubmitted" > {{ 'namereq' | translate }}</p> -->
+
+  <mat-label>{{ 'leader' | translate }}</mat-label>
+  <mat-form-field>
+    <mat-select [ngClass]="leaderExists?'':'display-none'" formControlName="leader_id">
+      <mat-option *ngFor="let person of peopleList" [value]="person.id">
+        {{person.firstName}} {{person.lastName}}
+      </mat-option>
+    </mat-select>
+    <p *ngIf="!leaderExists" class="empty-value">ــــــــ</p>
+  </mat-form-field>
+  
+
+  <mat-label>{{ 'desc' | translate }}</mat-label>
+  <mat-form-field>
+    <input [ngClass]="form.controls.description.value?'':'display-none'" matInput  formControlName="description">
+    <p *ngIf="!form.controls.description.value" class="empty-value">ــــــــ</p>
+  </mat-form-field>
+</form>
+<div style="justify-content: space-around; display: flex; margin-top:1em;">
+  <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+  <button class="mat-raised-button save-btn" (click)="onEditClick()">{{ 'edit' | translate }}</button>
+</div>

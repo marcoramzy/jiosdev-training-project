@@ -100,3 +100,18 @@ html, body {
 #people-view-dialog .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
     display: none!important;
 }
+
+#groups-view-dialog .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-select-disabled .mat-select-value {
+    color: black !important;
+}
+
+#groups-view-dialog mat-label {
+    color: black !important;
+    font-weight: 500 !important;
+    margin-bottom: -0.7em !important;
+    display: flex !important;
+}
+
+#groups-view-dialog .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
+    display: none!important;
+}

@@ -105,6 +105,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.openDialog('groups', true, data);
   }
 
+  onViewGroup(data) {
+    console.log('my data', data);
+    this.openDialog('groupsView', true, data);
+  }
+
   onDeleteGroup(id: number) {
     this.openDeleteDialog(id);
   }

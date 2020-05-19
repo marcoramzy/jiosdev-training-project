@@ -8,6 +8,7 @@ import { GroupsData } from '../models/groups-data';
 import { GroupsDeleteDialogComponent } from 'src/app/groups/groups-delete-dialog/groups-delete-dialog.component';
 import { PeopleDeleteDialogComponent } from 'src/app/people/people-delete-dialog/people-delete-dialog.component';
 import { PeopleViewDialogComponent } from 'src/app/people/people-view-dialog/people-view-dialog.component';
+import { GroupsViewDialogComponent } from 'src/app/groups/groups-view-dialog/groups-view-dialog.component';
 
 type customSize = 'sm' | 'md' | 'lg';
 
@@ -66,6 +67,21 @@ export class DialogService {
                 }
                 else {
                     console.log('people dialog was closed - Cancel Status');
+                }
+            });
+        }
+        else if (dialogName === 'groupsView') {
+            const dialogRef = this.dialog.open(GroupsViewDialogComponent, {
+                width,
+                data,
+                disableClose,
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result !== undefined) {
+                    console.log('groups dialog was closed - Saved Status');
+                }
+                else {
+                    console.log('groups dialog was closed - Cancel Status');
                 }
             });
         }
