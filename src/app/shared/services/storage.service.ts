@@ -2,7 +2,7 @@ import {
   HttpClient, HttpHeaders
 } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { Subject, throwError, Observable } from 'rxjs';
 import { PeopleData } from '../models/people-data';
 import { GroupsData } from '../models/groups-data';
 import { Injectable } from '@angular/core';
@@ -133,7 +133,7 @@ export class StorageService {
       ).toPromise();
   }
 
-  async getPeopleCount(): Promise<number> {
+  getPeopleCount(): Observable<any> {
     return this.http
       .get(
         'http://localhost:3000/people',
@@ -145,19 +145,11 @@ export class StorageService {
         }
       )
       .pipe(
-        map(responseData => {
-          console.log('responseData', responseData);
-          let peopleCount = 0;
-          for (const key of Object.keys(responseData)) {
-            peopleCount++;
-          }
-          console.log('peopleCount', peopleCount);
-          return peopleCount;
-        }),
         catchError(errorRes => {
           return throwError(errorRes);
         })
-      ).toPromise();
+      );
+      // .toPromise();
   }
 
   async addPerson(data: PeopleData) {
@@ -321,6 +313,9 @@ export class StorageService {
         async responseData => {
           const people: PeopleData[] = await this.getPeople();
           this.personAddedSuccessfully.next(people);
+
+          const groups: GroupsData[] = await this.getGroups();
+          this.groupAddedSuccessfully.next(groups);
         },
         error => {
           console.log('Error: ', error.message);

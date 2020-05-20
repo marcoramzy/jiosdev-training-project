@@ -1,10 +1,12 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Input } from '@angular/core';
 import { PeopleData } from '../models/people-data';
 import { StorageService } from '../services/storage.service';
 import { DialogService } from '../services/dialog.service';
 import { AppListPeopleModel } from './list-people.model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 
 /**
@@ -19,6 +21,8 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   model: AppListPeopleModel;
   @Input() isPeoplePage = false;
   @Input() dataSourceInput: PeopleData[];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private dialogService: DialogService, private storageService: StorageService) {
     this.initModel();
@@ -56,8 +60,8 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
     console.log(dataSource);
     // Assign the data to the data source for the table to render
     this.model.dataSource = new MatTableDataSource(dataSource);
-    this.model.dataSource.paginator = this.model.paginator;
-    this.model.dataSource.sort = this.model.sort;
+    this.model.dataSource.paginator = this.paginator;
+    this.model.dataSource.sort = this.sort;
   }
 
   openDialog(dialogName: string, editMode: boolean, peopleData?): void {

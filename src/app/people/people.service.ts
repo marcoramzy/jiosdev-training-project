@@ -1,6 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import { StorageService } from '../shared/services/storage.service';
 import { PeopleData } from '../shared/models/people-data';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -32,10 +34,25 @@ export class PeopleService {
     return people;
   }
 
-  async getPeopleCount(): Promise<number> {
-    const peopleCount: number = await this.getPeopleCountUtilityFn();
-    console.log('PeopleService async getPeople', peopleCount);
-    return peopleCount;
+  getPeopleCount(): Observable<number> {
+    // const peopleCount: number = await this.getPeopleCountUtilityFn();
+    // const peopleCount: number = await this.getPeopleCountUtilityFn();
+    return this.storageService.getPeopleCount().pipe(
+        map(responseData => {
+          console.log('responseData', responseData);
+          let peopleCount = 0;
+          for (const key of Object.keys(responseData)) {
+            peopleCount++;
+          }
+          console.log('peopleCount', peopleCount);
+          return peopleCount;
+        }),
+        catchError(errorRes => {
+          return throwError(errorRes);
+        })
+      );
+    // console.log('PeopleService async getPeople', peopleCount);
+    // return peopleCount;
   }
 
   async addPerson(data: PeopleData){
@@ -96,13 +113,6 @@ export class PeopleService {
     }
     console.log('PeopleService getPeopleWithBirthdaysThisMonthUtilityFn', people);
     return people;
-  }
-
-  async getPeopleCountUtilityFn(): Promise<number> {
-    const peopleCount: any = await this.storageService.getPeopleCount();
-
-    console.log('PeopleService getPeopleCountUtilityFn', peopleCount);
-    return peopleCount;
   }
 
   async addPersonUtilityFn(data: PeopleData){
