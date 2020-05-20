@@ -3,18 +3,20 @@ import { BaseDataService } from '../shared/services/base-data.service';
 import { GroupsData } from '../shared/models/groups-data';
 import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Injectable()
 export class GroupsService {
 
+  apiUrl = `${environment.apiBaseUrl}groups`;
   groupAddedSuccessfully = new Subject<boolean>();
 
   constructor(private baseDataService: BaseDataService) {
   }
 
   getGroups(): Observable<GroupsData[]> {
-    return this.baseDataService.getGroups()
+    return this.baseDataService.get(this.apiUrl)
       .pipe(
         map(responseData => {
           return responseData;
@@ -27,10 +29,12 @@ export class GroupsService {
 
   getGroupsWithCountComputed(responseData): Observable<GroupsData[]> {
 
-    return this.baseDataService.getPeople()
+    const peopleUrl  = `${environment.apiBaseUrl}people`;
+    return this.baseDataService.get(peopleUrl)
       .pipe(
         map(people => {
           console.log('responseData', responseData);
+          console.log('people', people);
           const groupsArray: GroupsData[] = [];
           // const people: PeopleData[] = await this.getPeople();
           for (const key of Object.keys(responseData)) {
@@ -61,7 +65,8 @@ export class GroupsService {
   }
 
   getGroupsCount(): Observable<number> {
-    return this.baseDataService.getGroupsCount()
+
+    return this.baseDataService.get(this.apiUrl)
       .pipe(
         map(responseData => {
           console.log('responseData', responseData);
@@ -90,7 +95,7 @@ export class GroupsService {
           data.id = 1;
         }
 
-        this.baseDataService.addGroup(data)
+        this.baseDataService.create(this.apiUrl, data)
           .subscribe(
             responseData => {
               this.groupAddedSuccessfully.next(true);
@@ -106,8 +111,9 @@ export class GroupsService {
   }
 
   editGroup(id: number, data: GroupsData) {
+    const url = `${this.apiUrl}/${id}`;
 
-    this.baseDataService.editGroup(id, data)
+    this.baseDataService.edit(url, data)
       .subscribe(
         responseData => {
           this.groupAddedSuccessfully.next(true);
@@ -120,8 +126,8 @@ export class GroupsService {
   }
 
   deleteGroup(id: number) {
-
-    this.baseDataService.deleteGroup(id)
+    const url = `${this.apiUrl}/${id}`;
+    this.baseDataService.delete(url)
     .subscribe(
       responseData => {
         this.groupAddedSuccessfully.next(true);

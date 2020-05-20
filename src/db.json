@@ -67,7 +67,7 @@
     {
       "id": 1,
       "name": "bible study 1",
-      "leader_id": 3,
+      "leader_id": 2,
       "description": "Daily bible study 1 @9m"
     },
     {
@@ -87,6 +87,12 @@
       "name": "bible study 11",
       "leader_id": 5,
       "description": "Daily bible study 1 @10m"
+    },
+    {
+      "id": 5,
+      "name": "Bible Study 12",
+      "leader_id": 1,
+      "description": "Daily bible study 12 @9pm"
     }
   ]
 }

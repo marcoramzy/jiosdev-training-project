@@ -1,10 +1,8 @@
 import {
-  HttpClient, HttpHeaders
+  HttpClient, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { Subject, throwError, Observable } from 'rxjs';
-import { PeopleData } from '../models/people-data';
-import { GroupsData } from '../models/groups-data';
+import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
@@ -12,179 +10,48 @@ export class BaseDataService {
 
   constructor(private http: HttpClient) { }
 
-  getPeople(): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/people',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
+  getHttpOptions() {
+    const httpsOptions =  {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return httpsOptions;
   }
 
-  getPeopleById(id: number): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/people/' + id,
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
-
+  get(url: string): Observable<any> {
+    return this.http.get<any>(url, this.getHttpOptions())
+    .pipe(catchError(this.handleError));
   }
 
-  getPeopleByGorupId(id: number): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/people',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
+  create(url: string, data: any): Observable<any> {
+    return this.http.post(url, data, this.getHttpOptions())
+    .pipe(catchError(this.handleError));
   }
 
-  getPeopleWithBirthdaysThisMonth(): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/people',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
+  edit(url: string, data: any): Observable<any> {
+    return this.http.put(url, data, this.getHttpOptions())
+    .pipe(catchError(this.handleError));
   }
 
-  getPeopleCount(): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/people',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      )
-      .pipe(
-        catchError(errorRes => {
-          return throwError(errorRes);
-        })
-      );
-    // ;
+  delete(url: string): Observable<any> {
+    return this.http.delete(url, this.getHttpOptions())
+    .pipe(catchError(this.handleError));
   }
 
-  addPerson(data: PeopleData) {
-
-    return this.http
-      .post<{ name: string }>(
-        'http://localhost:3000/people',
-        JSON.stringify(data),
-        {
-          observe: 'response',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
+  getById(url: string): Observable<any> {
+    return this.http.get<any>(url, this.getHttpOptions())
+    .pipe(catchError(this.handleError));
   }
 
-  getGroups(): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/groups',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
-
-  }
-
-  getGroupsCount(): Observable<any> {
-    return this.http
-      .get(
-        'http://localhost:3000/groups',
-        {
-          responseType: 'json',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
-  }
-
-  addGroup(data: GroupsData) {
-
-    return this.http
-      .post<{ name: string }>(
-        'http://localhost:3000/groups',
-        JSON.stringify(data),
-        {
-          observe: 'response',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
-  }
-
-  editGroup(id: number, data: GroupsData) {
-
-    return this.http
-      .put<{ name: string }>(
-        'http://localhost:3000/groups/' + id,
-        JSON.stringify(data),
-        {
-          observe: 'response',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
-  }
-
-  editPerson(id: number, data: PeopleData) {
-
-    return this.http
-      .put<{ name: string }>(
-        'http://localhost:3000/people/' + id,
-        JSON.stringify(data),
-        {
-          observe: 'response',
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        }
-      );
-  }
-
-  deleteGroup(id: number) {
-
-    return this.http
-      .delete<{ name: string }>(
-        'http://localhost:3000/groups/' + id,
-      );
-  }
-
-  deletePerson(id: number) {
-
-    return this.http
-      .delete<{ name: string }>(
-        'http://localhost:3000/people/' + id,
-      );
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
   }
 
 }

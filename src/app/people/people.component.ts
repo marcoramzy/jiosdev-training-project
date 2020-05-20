@@ -33,9 +33,8 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
         groupId = params.group_id;
         console.log('groupId', groupId);
+        this.getPeopleData(groupId);
     });
-
-    this.getPeopleData(groupId);
 
     /// Refresh Table (Record Added)
     this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
@@ -60,6 +59,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
       }
       else // People list data filtered by groupId
       {
+          console.log('hereeeeee gid', groupId);
           this.peopleService.getPeopleByGorupId(+groupId).subscribe((value) => {
             console.log('get data from Query Params', value);
             this.dataSourceInput = value;

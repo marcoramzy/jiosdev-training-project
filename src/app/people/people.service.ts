@@ -3,18 +3,20 @@ import { BaseDataService } from '../shared/services/base-data.service';
 import { PeopleData } from '../shared/models/people-data';
 import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Injectable()
 export class PeopleService {
 
+  apiUrl = `${environment.apiBaseUrl}people`;
   personAddedSuccessfully = new Subject<boolean>();
 
   constructor(private baseDataService: BaseDataService) {
   }
 
   getPeople(): Observable<PeopleData[]> {
-    return this.baseDataService.getPeople().pipe(
+    return this.baseDataService.get(this.apiUrl).pipe(
       map(responseData => {
         console.log('responseData', responseData);
         const peopleArray: PeopleData[] = [];
@@ -31,7 +33,8 @@ export class PeopleService {
   }
 
   getPeopleById(id: number): Observable<PeopleData> {
-    return this.baseDataService.getPeopleById(id)
+    const url = `${this.apiUrl}/${id}`;
+    return this.baseDataService.getById(url)
       .pipe(
         map(responseData => {
           let people: any = responseData;
@@ -47,7 +50,9 @@ export class PeopleService {
   }
 
   getPeopleByGorupId(id: number): Observable<PeopleData[]> {
-    return this.baseDataService.getPeopleByGorupId(id)
+    // const url = `${this.apiUrl}/${id}`;
+    const groupsUrl  = `${environment.apiBaseUrl}groups`;
+    return this.baseDataService.getById(groupsUrl)
       .pipe(
         map(responseData => {
           console.log('responseData', responseData);
@@ -71,7 +76,7 @@ export class PeopleService {
   }
 
   getPeopleWithBirthdaysThisMonth(): Observable<PeopleData[]> {
-    return this.baseDataService.getPeopleWithBirthdaysThisMonth()
+    return this.baseDataService.get(this.apiUrl)
       .pipe(
         map(responseData => {
 
@@ -95,7 +100,7 @@ export class PeopleService {
   }
 
   getPeopleCount(): Observable<number> {
-    return this.baseDataService.getPeopleCount().pipe(
+    return this.baseDataService.get(this.apiUrl).pipe(
       map(responseData => {
         console.log('responseData', responseData);
         let peopleCount = 0;
@@ -123,7 +128,7 @@ export class PeopleService {
           data.id = 1;
         }
 
-        this.baseDataService.addPerson(data)
+        this.baseDataService.create(this.apiUrl, data)
         .subscribe(
           responseData => {
             this.personAddedSuccessfully.next(true);
@@ -139,7 +144,8 @@ export class PeopleService {
   }
 
   editPerson(id: number, data: PeopleData) {
-    this.baseDataService.editPerson(id, data)
+    const url = `${this.apiUrl}/${id}`;
+    this.baseDataService.edit(url, data)
     .subscribe(
       responseData => {
         this.personAddedSuccessfully.next(true);
@@ -151,7 +157,8 @@ export class PeopleService {
   }
 
   deletePerson(id: number) {
-    this.baseDataService.deletePerson(id)
+    const url = `${this.apiUrl}/${id}`;
+    this.baseDataService.delete(url)
     .subscribe(
       responseData => {
         this.personAddedSuccessfully.next(true);
