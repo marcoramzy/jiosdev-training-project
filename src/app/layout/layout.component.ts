@@ -10,10 +10,7 @@ export class LayoutComponent implements OnDestroy {
 
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addEventListener('change', this.mobileQueryListener);
-
+    this.initMobileQuery(changeDetectorRef, media);
   }
 
   mobileQuery: MediaQueryList;
@@ -22,7 +19,12 @@ export class LayoutComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
+  }
 
+  initMobileQuery(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher){
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addEventListener('change', this.mobileQueryListener);
   }
 
 }

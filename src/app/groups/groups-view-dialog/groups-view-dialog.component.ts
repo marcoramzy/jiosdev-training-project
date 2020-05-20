@@ -63,7 +63,7 @@ export class GroupsViewDialogComponent implements OnInit {
       name: this.groupsData?.name,
       leader_id: this.groupsData?.leader_id,
       description: this.groupsData?.description
-    }, { size: 'md' }, true, true);
+    }, { size: 'md' }, true);
 
   }
 

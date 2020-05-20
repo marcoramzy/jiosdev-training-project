@@ -50,9 +50,7 @@ export class PeopleService {
   }
 
   getPeopleByGorupId(id: number): Observable<PeopleData[]> {
-    // const url = `${this.apiUrl}/${id}`;
-    const groupsUrl  = `${environment.apiBaseUrl}groups`;
-    return this.baseDataService.getById(groupsUrl)
+    return this.baseDataService.getById(this.apiUrl)
       .pipe(
         map(responseData => {
           console.log('responseData', responseData);

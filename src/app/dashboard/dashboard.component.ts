@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isPeoplePage = false;
   peopleCount = 0;
   groupsCount = 0;
-  dataSourceInput: PeopleData[];
+  peopleBirthDateDataSource: PeopleData[];
 
   constructor(private peopleService: PeopleService, private groupsService: GroupsService, private baseDataService: BaseDataService) {
   }
@@ -32,14 +32,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.peopleService.getPeopleWithBirthdaysThisMonth().subscribe((value) => {
-      this.dataSourceInput = value;
+      this.peopleBirthDateDataSource = value;
     });
 
     /// Refresh Table (Record Added)
     this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
       () => {
         this.peopleService.getPeopleWithBirthdaysThisMonth().subscribe((value) => {
-          this.dataSourceInput = value;
+          this.peopleBirthDateDataSource = value;
         });
       }
     );

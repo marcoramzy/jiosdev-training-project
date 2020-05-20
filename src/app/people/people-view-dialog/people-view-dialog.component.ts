@@ -109,7 +109,7 @@ export class PeopleViewDialogComponent implements OnInit {
   openDialog(dialogName: string, fromGroupsPage: boolean): void {
     this.dialogService.openDialog(dialogName, {id: this.peopleData.id, firstName: this.peopleData.firstName
       , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups}, {size: 'md' }, true, fromGroupsPage);
+      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups}, {size: 'md' }, true);
   }
 
   onEditClick() {

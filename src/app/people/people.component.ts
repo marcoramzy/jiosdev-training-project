@@ -18,7 +18,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
   destroyed = new Subject();
   isPeoplePage = true;
   peopleData: PeopleData = {} as PeopleData;
-  dataSourceInput: PeopleData[];
+  peopleDataSource: PeopleData[];
 
   constructor(
     public dialogService: DialogService,
@@ -54,15 +54,13 @@ export class PeopleComponent implements OnInit, OnDestroy {
       if ( (groupId === undefined) || (groupId === null) ) // People Normal list data
       {
           this.peopleService.getPeople().subscribe((value) => {
-            this.dataSourceInput = value;
+            this.peopleDataSource = value;
           });
       }
       else // People list data filtered by groupId
       {
-          console.log('hereeeeee gid', groupId);
           this.peopleService.getPeopleByGorupId(+groupId).subscribe((value) => {
-            console.log('get data from Query Params', value);
-            this.dataSourceInput = value;
+            this.peopleDataSource = value;
           });
       }
   }
@@ -72,7 +70,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
       id: this.peopleData.id, firstName: this.peopleData.firstName
       , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
       , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
-    }, { size: 'md' }, true, editMode);
+    }, { size: 'md' }, true);
   }
 
 }

@@ -69,7 +69,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
           name: groupsData?.name,
           leader_id: groupsData,
           description: groupsData?.description
-        }, { size: 'md' }, true, editMode);
+        }, { size: 'md' }, true);
     }
     else{
         this.dialogService.openDialog(dialogName, {
@@ -77,7 +77,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
           name: groupsData?.name,
           leader_id: groupsData?.leader_id,
           description: groupsData?.description
-        }, { size: 'md' }, true, editMode);
+        }, { size: 'md' }, true);
     }
   }
 

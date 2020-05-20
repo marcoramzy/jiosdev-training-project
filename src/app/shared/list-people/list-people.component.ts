@@ -20,7 +20,7 @@ import { MatSort } from '@angular/material/sort';
 export class AppListPeopleComponent implements OnInit, OnChanges {
   model: AppListPeopleModel;
   @Input() isPeoplePage = false;
-  @Input() dataSourceInput: PeopleData[];
+  @Input() peopleDataSource: PeopleData[];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -41,9 +41,9 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    if (changes.dataSourceInput) {
-      this.model.people = this.dataSourceInput;
-      this.dataSourceSetup(this.dataSourceInput);
+    if (changes.peopleDataSource) {
+      this.model.people = this.peopleDataSource;
+      this.dataSourceSetup(this.peopleDataSource);
     }
   }
 
@@ -69,7 +69,7 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
       id: peopleData.id, firstName: peopleData.firstName
       , lastName: peopleData.lastName, mobile: peopleData.mobile, email: peopleData.email
       , birthDate: peopleData.birthDate, groups: peopleData.groups
-    }, { size: 'md' }, true, editMode);
+    }, { size: 'md' }, true);
   }
 
   openDeleteDialog(id: number): void {

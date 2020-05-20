@@ -22,7 +22,7 @@ export class DialogService {
     constructor(public dialog: MatDialog) {
     }
 
-    openDialog(dialogName: string, data: PeopleData | GroupsData | number, size: Size, disableClose: boolean, editMode: boolean): void {
+    openDialog(dialogName: string, data: PeopleData | GroupsData | number, size: Size, disableClose: boolean): void {
         const width: string = this.returnWidth(size.size);
 
         if (dialogName === 'people') {
@@ -106,8 +106,6 @@ export class DialogService {
                 data
             });
         }
-
-
 
     }
 

@@ -18,6 +18,15 @@ import { DialogService } from './services/dialog.service';
 import { PeopleService } from '../people/people.service';
 import { GroupsService } from '../groups/groups.service';
 
+import { PeopleAddDialogComponent } from '../people/people-add-dialog/people-add-dialog.component';
+import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-view-dialog.component';
+import { PeopleDeleteDialogComponent } from '../people/people-delete-dialog/people-delete-dialog.component';
+
+import { GroupsViewDialogComponent } from '../groups/groups-view-dialog/groups-view-dialog.component';
+import { GroupsAddDialogComponent } from '../groups/groups-add-dialog/groups-add-dialog.component';
+import { GroupsDeleteDialogComponent } from '../groups/groups-delete-dialog/groups-delete-dialog.component';
+
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -27,7 +36,16 @@ export function createTranslateLoader(http: HttpClient) {
     LayoutComponent,
     HeaderComponent,
     SidenavListComponent,
-    AppListPeopleComponent
+    AppListPeopleComponent,
+
+    PeopleAddDialogComponent,
+    PeopleDeleteDialogComponent,
+    PeopleViewDialogComponent,
+
+    GroupsViewDialogComponent,
+    GroupsAddDialogComponent,
+    GroupsDeleteDialogComponent,
+
 
   ],
   imports: [

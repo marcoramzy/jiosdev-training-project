@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -21,7 +20,6 @@ import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     MatTabsModule,
     MatSidenavModule,
     MatToolbarModule,
