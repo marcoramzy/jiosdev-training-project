@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, TemplateRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Input } from '@angular/core';
 import { PeopleData } from '../models/people-data';
@@ -7,6 +7,10 @@ import { DialogService } from '../services/dialog.service';
 import { AppListPeopleModel } from './list-people.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ComponentType } from '@angular/cdk/portal';
+import { PeopleAddDialogComponent } from 'src/app/people/people-add-dialog/people-add-dialog.component';
+import { PeopleViewDialogComponent } from 'src/app/people/people-view-dialog/people-view-dialog.component';
+import { PeopleDeleteDialogComponent } from 'src/app/people/people-delete-dialog/people-delete-dialog.component';
 
 
 /**
@@ -64,8 +68,8 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
     this.model.dataSource.sort = this.sort;
   }
 
-  openDialog(dialogName: string, editMode: boolean, peopleData?): void {
-    this.dialogService.openDialog(dialogName, {
+  openDialog(dialogComponent: ComponentType<any> | TemplateRef<any>, peopleData?): void {
+    this.dialogService.openDialog(dialogComponent, {
       id: peopleData.id, firstName: peopleData.firstName
       , lastName: peopleData.lastName, mobile: peopleData.mobile, email: peopleData.email
       , birthDate: peopleData.birthDate, groups: peopleData.groups
@@ -73,13 +77,13 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   }
 
   openDeleteDialog(id: number): void {
-    this.dialogService.openDeleteDialog('people',
-      id, { size: 'md' }, true);
+    this.dialogService.openDialog(PeopleDeleteDialogComponent,
+      id, { size: 'md' }, false);
   }
 
   onEditPerson(data) {
     console.log('my data', data);
-    this.openDialog('people', true, data);
+    this.openDialog(PeopleAddDialogComponent, data);
   }
 
   onDeletePerson(id: number) {
@@ -87,7 +91,7 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   }
 
   onViewPerson(data) {
-    this.openDialog('peopleView', true, data);
+    this.openDialog(PeopleViewDialogComponent, data);
   }
 
   private initModel() {

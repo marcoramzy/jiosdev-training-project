@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,11 @@ import { GroupsService } from './groups.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PeopleService } from '../people/people.service';
+import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-view-dialog.component';
+import { GroupsAddDialogComponent } from './groups-add-dialog/groups-add-dialog.component';
+import { GroupsViewDialogComponent } from './groups-view-dialog/groups-view-dialog.component';
+import { ComponentType } from '@angular/cdk/portal';
+import { GroupsDeleteDialogComponent } from './groups-delete-dialog/groups-delete-dialog.component';
 
 
 @Component({
@@ -62,28 +67,18 @@ export class GroupsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDialog(dialogName: string, editMode: boolean, groupsData?): void {
-    if (dialogName === 'peopleView'){
-        this.dialogService.openDialog(dialogName, {
+  openDialog( dialogComponent: ComponentType<any> | TemplateRef<any>, groupsData, peopleViewFlag: boolean): void {
+        this.dialogService.openDialog(dialogComponent, {
           id: groupsData?.id,
           name: groupsData?.name,
-          leader_id: groupsData,
+          leader_id: peopleViewFlag ? groupsData : groupsData?.leader_id,
           description: groupsData?.description
         }, { size: 'md' }, true);
-    }
-    else{
-        this.dialogService.openDialog(dialogName, {
-          id: groupsData?.id,
-          name: groupsData?.name,
-          leader_id: groupsData?.leader_id,
-          description: groupsData?.description
-        }, { size: 'md' }, true);
-    }
   }
 
   openDeleteDialog(id: number): void {
-    this.dialogService.openDeleteDialog('groups',
-      id, { size: 'md' }, true);
+    this.dialogService.openDialog(GroupsDeleteDialogComponent,
+      id, { size: 'md' }, false);
   }
 
   applyFilter(event: Event) {
@@ -103,21 +98,26 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   onViewPerson(leaderId: number){
-    this.openDialog('peopleView', true, leaderId);
+    this.openDialog(PeopleViewDialogComponent, leaderId, true);
   }
 
   onEditGroup(data) {
     console.log('my data', data);
-    this.openDialog('groups', true, data);
+    this.openDialog(GroupsAddDialogComponent, data, false);
   }
 
   onViewGroup(data) {
     console.log('my data', data);
-    this.openDialog('groupsView', true, data);
+    this.openDialog(GroupsViewDialogComponent, data, false);
   }
 
   onDeleteGroup(id: number) {
     this.openDeleteDialog(id);
+  }
+
+  openAddGroupDialog(){
+    this.openDialog(GroupsAddDialogComponent, null, false);
+
   }
 
 }

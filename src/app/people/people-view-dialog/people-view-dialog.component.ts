@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -7,6 +7,8 @@ import { GroupsData } from 'src/app/shared/models/groups-data';
 import { PeopleService } from '../people.service';
 import { GroupsService } from '../../groups/groups.service';
 import { DialogService } from 'src/app/shared/services/dialog.service';
+import { ComponentType } from '@angular/cdk/portal';
+import { PeopleAddDialogComponent } from '../people-add-dialog/people-add-dialog.component';
 
 @Component({
   selector: 'app-people-view-dialog',
@@ -106,8 +108,8 @@ export class PeopleViewDialogComponent implements OnInit {
 
   }
 
-  openDialog(dialogName: string, fromGroupsPage: boolean): void {
-    this.dialogService.openDialog(dialogName, {id: this.peopleData.id, firstName: this.peopleData.firstName
+  openDialog(dialogComponent: ComponentType<any> | TemplateRef<any>): void {
+    this.dialogService.openDialog(dialogComponent, {id: this.peopleData.id, firstName: this.peopleData.firstName
       , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
       , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups}, {size: 'md' }, true);
   }
@@ -116,7 +118,7 @@ export class PeopleViewDialogComponent implements OnInit {
     this.formSubmitted = true;
     const { value, valid } = this.form;
     if (valid) {
-        this.openDialog('people' , false);
+        this.openDialog(PeopleAddDialogComponent);
         this.dialogRef.close(value);
     }
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -6,6 +6,8 @@ import { GroupsData } from 'src/app/shared/models/groups-data';
 import { PeopleService } from 'src/app/people/people.service';
 import { PeopleData } from 'src/app/shared/models/people-data';
 import { DialogService } from 'src/app/shared/services/dialog.service';
+import { ComponentType } from '@angular/cdk/portal';
+import { GroupsAddDialogComponent } from '../groups-add-dialog/groups-add-dialog.component';
 
 @Component({
   selector: 'app-groups-view-dialog',
@@ -57,8 +59,8 @@ export class GroupsViewDialogComponent implements OnInit {
     });
   }
 
-  openDialog(dialogName: string): void {
-    this.dialogService.openDialog(dialogName, {
+  openDialog(dialogComponent: ComponentType<any> | TemplateRef<any>): void {
+    this.dialogService.openDialog(dialogComponent, {
       id: this.groupsData?.id,
       name: this.groupsData?.name,
       leader_id: this.groupsData?.leader_id,
@@ -72,7 +74,7 @@ export class GroupsViewDialogComponent implements OnInit {
     this.formSubmitted = true;
     const { value, valid } = this.form;
     if (valid) {
-      this.openDialog('groups');
+      this.openDialog(GroupsAddDialogComponent);
       this.dialogRef.close(value);
     }
   }

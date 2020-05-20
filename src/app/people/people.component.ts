@@ -6,6 +6,7 @@ import { BaseDataService } from '../shared/services/base-data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import { PeopleAddDialogComponent } from './people-add-dialog/people-add-dialog.component';
 
 
 @Component({
@@ -65,8 +66,8 @@ export class PeopleComponent implements OnInit, OnDestroy {
       }
   }
 
-  openDialog(editMode: boolean): void {
-    this.dialogService.openDialog('people', {
+  openDialog(): void {
+    this.dialogService.openDialog(PeopleAddDialogComponent, {
       id: this.peopleData.id, firstName: this.peopleData.firstName
       , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
       , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
