@@ -10,7 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { ComponentType } from '@angular/cdk/portal';
 import { PeopleAddDialogComponent } from 'src/app/people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from 'src/app/people/people-view-dialog/people-view-dialog.component';
-import { PeopleDeleteDialogComponent } from 'src/app/people/people-delete-dialog/people-delete-dialog.component';
+import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
 
 
 /**
@@ -77,8 +77,8 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   }
 
   openDeleteDialog(id: number): void {
-    this.dialogService.openDialog(PeopleDeleteDialogComponent,
-      id, { size: 'md' }, false);
+    this.dialogService.openDialog(DeleteDialogComponent,
+      {id: (id), type: 'people'}, { size: 'md' }, false);
   }
 
   onEditPerson(data) {

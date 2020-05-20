@@ -12,8 +12,7 @@ import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-v
 import { GroupsAddDialogComponent } from './groups-add-dialog/groups-add-dialog.component';
 import { GroupsViewDialogComponent } from './groups-view-dialog/groups-view-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
-import { GroupsDeleteDialogComponent } from './groups-delete-dialog/groups-delete-dialog.component';
-
+import { DeleteDialogComponent } from '../shared/components/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-groups',
@@ -77,8 +76,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog(id: number): void {
-    this.dialogService.openDialog(GroupsDeleteDialogComponent,
-      id, { size: 'md' }, false);
+    this.dialogService.openDialog(DeleteDialogComponent,
+      { id: (id), type: 'groups'}, { size: 'md' }, false);
   }
 
   applyFilter(event: Event) {

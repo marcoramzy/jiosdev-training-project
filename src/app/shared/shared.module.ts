@@ -20,11 +20,10 @@ import { GroupsService } from '../groups/groups.service';
 
 import { PeopleAddDialogComponent } from '../people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-view-dialog.component';
-import { PeopleDeleteDialogComponent } from '../people/people-delete-dialog/people-delete-dialog.component';
 
 import { GroupsViewDialogComponent } from '../groups/groups-view-dialog/groups-view-dialog.component';
 import { GroupsAddDialogComponent } from '../groups/groups-add-dialog/groups-add-dialog.component';
-import { GroupsDeleteDialogComponent } from '../groups/groups-delete-dialog/groups-delete-dialog.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -39,13 +38,12 @@ export function createTranslateLoader(http: HttpClient) {
     AppListPeopleComponent,
 
     PeopleAddDialogComponent,
-    PeopleDeleteDialogComponent,
     PeopleViewDialogComponent,
 
     GroupsViewDialogComponent,
     GroupsAddDialogComponent,
-    GroupsDeleteDialogComponent,
 
+    DeleteDialogComponent,
 
   ],
   imports: [
