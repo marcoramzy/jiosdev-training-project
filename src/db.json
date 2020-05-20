@@ -58,7 +58,8 @@
         1,
         2,
         3,
-        4
+        4,
+        5
       ]
     }
   ],
@@ -83,7 +84,7 @@
     },
     {
       "id": 4,
-      "name": "bible study 10",
+      "name": "bible study 11",
       "leader_id": 5,
       "description": "Daily bible study 1 @10m"
     }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Input } from '@angular/core';
 import { PeopleData } from '../models/people-data';
-import { StorageService } from '../services/storage.service';
+import { BaseDataService } from '../services/base-data.service';
 import { DialogService } from '../services/dialog.service';
 import { AppListPeopleModel } from './list-people.model';
 import { MatPaginator } from '@angular/material/paginator';
@@ -24,7 +24,7 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialogService: DialogService, private storageService: StorageService) {
+  constructor(private dialogService: DialogService, private baseDataService: BaseDataService) {
     this.initModel();
   }
 

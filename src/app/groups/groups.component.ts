@@ -6,8 +6,8 @@ import { DialogService } from '../shared/services/dialog.service';
 import { GroupsData } from '../shared/models/groups-data';
 import { GroupsService } from './groups.service';
 import { Subject } from 'rxjs';
-import { StorageService } from '../shared/services/storage.service';
 import { takeUntil } from 'rxjs/operators';
+import { PeopleService } from '../people/people.service';
 
 
 @Component({
@@ -26,27 +26,24 @@ export class GroupsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  // groupsData: GroupsData = {} as GroupsData;
-
-
-  constructor(public dialogService: DialogService, private groupsService: GroupsService, private storageService: StorageService) {
+  constructor(public dialogService: DialogService, private groupsService: GroupsService, private peopleService: PeopleService) {
 
   }
 
   ngOnInit() {
-    this.groupsService.getGroups().then((value) => {
-      this.groups = value;
-      this.dataSourceSetup(this.groups);
-    });
+    this.getGroupsData();
 
     /// Refresh Table (Record Added)
-    this.storageService.groupAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
-      (groups) => {
-        this.groups = groups;
-        this.dataSourceSetup(this.groups);
+    this.groupsService.groupAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
+      () => {
+        this.getGroupsData();
       }
-      // (group) => {this.groups.push(group);this.dataSourceSetup(this.groups);}
+    );
 
+    this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
+      () => {
+        this.getGroupsData();
+      }
     );
 
   }
@@ -54,6 +51,15 @@ export class GroupsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed.next();
     this.destroyed.complete();
+  }
+
+  getGroupsData(){
+    this.groupsService.getGroups().subscribe((value) => {
+      this.groupsService.getGroupsWithCountComputed(value).subscribe( (res) => {
+        this.groups = res;
+        this.dataSourceSetup(this.groups);
+      });
+    });
   }
 
   openDialog(dialogName: string, editMode: boolean, groupsData?): void {

@@ -34,7 +34,7 @@ export class PeopleAddDialogComponent implements OnInit {
   }
 
   getGroups() {
-    this.groupsService.getGroups().then((value) => {
+    this.groupsService.getGroups().subscribe((value) => {
       this.groupsList = value;
     });
   }

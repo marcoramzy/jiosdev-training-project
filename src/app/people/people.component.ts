@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/cor
 import { DialogService } from '../shared/services/dialog.service';
 import { PeopleData } from '../shared/models/people-data';
 import { PeopleService } from './people.service';
-import { StorageService } from '../shared/services/storage.service';
+import { BaseDataService } from '../shared/services/base-data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
@@ -23,7 +23,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
   constructor(
     public dialogService: DialogService,
     private peopleService: PeopleService,
-    private storageService: StorageService,
     private route: ActivatedRoute) {
 
   }
@@ -36,24 +35,12 @@ export class PeopleComponent implements OnInit, OnDestroy {
         console.log('groupId', groupId);
     });
 
-    if ( (groupId === undefined) || (groupId === null) ) // People Normal list data
-    {
-        this.peopleService.getPeople().then((value) => {
-          this.dataSourceInput = value;
-        });
-    }
-    else // People list data filtered by groupId
-    {
-        this.peopleService.getPeopleByGorupId(+groupId).then((value) => {
-          console.log('get data from Query Params', value);
-          this.dataSourceInput = value;
-        });
-    }
+    this.getPeopleData(groupId);
 
     /// Refresh Table (Record Added)
-    this.storageService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
-      (people) => {
-        this.dataSourceInput = people;
+    this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
+      () => {
+        this.getPeopleData(groupId);
       }
     );
 
@@ -62,6 +49,22 @@ export class PeopleComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed.next();
     this.destroyed.complete();
+  }
+
+  getPeopleData(groupId){
+      if ( (groupId === undefined) || (groupId === null) ) // People Normal list data
+      {
+          this.peopleService.getPeople().subscribe((value) => {
+            this.dataSourceInput = value;
+          });
+      }
+      else // People list data filtered by groupId
+      {
+          this.peopleService.getPeopleByGorupId(+groupId).subscribe((value) => {
+            console.log('get data from Query Params', value);
+            this.dataSourceInput = value;
+          });
+      }
   }
 
   openDialog(editMode: boolean): void {

@@ -1,130 +1,165 @@
 import { Injectable, OnInit } from '@angular/core';
-import { StorageService } from '../shared/services/storage.service';
+import { BaseDataService } from '../shared/services/base-data.service';
 import { PeopleData } from '../shared/models/people-data';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
 export class PeopleService {
-  constructor(private storageService: StorageService){
+
+  personAddedSuccessfully = new Subject<boolean>();
+
+  constructor(private baseDataService: BaseDataService) {
   }
 
-  async getPeople(): Promise<PeopleData[]> {
-    const people: PeopleData[] = await this.getPeopleUtilityFn();
-    console.log('PeopleService async getPeople', people);
-    return people;
+  getPeople(): Observable<PeopleData[]> {
+    return this.baseDataService.getPeople().pipe(
+      map(responseData => {
+        console.log('responseData', responseData);
+        const peopleArray: PeopleData[] = [];
+        for (const key of Object.keys(responseData)) {
+          peopleArray.push(responseData[key]);
+        }
+        console.log('peopleArray', peopleArray);
+        return peopleArray;
+      }),
+      catchError(errorRes => {
+        return throwError(errorRes);
+      })
+    );
   }
 
-  async getPeopleById(id: number): Promise<PeopleData> {
-    const people: PeopleData = await this.getPeopleByIdUtilityFn(id);
-    console.log('PeopleService async getPeopleById', people);
-    return people;
-  }
-
-  async getPeopleByGorupId(id: number): Promise<PeopleData[]> {
-    const people: PeopleData[] = await this.getPeopleByGorupIdUtilityFn(id);
-    console.log('PeopleService async getPeopleByGorupId', people);
-    return people;
-  }
-
-  async getPeopleWithBirthdaysThisMonth(): Promise<PeopleData[]> {
-    const people: PeopleData[] = await this.getPeopleWithBirthdaysThisMonthUtilityFn();
-    console.log('PeopleService async getPeopleWithBirthdaysThisMonth', people);
-    return people;
-  }
-
-  getPeopleCount(): Observable<number> {
-    // const peopleCount: number = await this.getPeopleCountUtilityFn();
-    // const peopleCount: number = await this.getPeopleCountUtilityFn();
-    return this.storageService.getPeopleCount().pipe(
+  getPeopleById(id: number): Observable<PeopleData> {
+    return this.baseDataService.getPeopleById(id)
+      .pipe(
         map(responseData => {
-          console.log('responseData', responseData);
-          let peopleCount = 0;
-          for (const key of Object.keys(responseData)) {
-            peopleCount++;
+          let people: any = responseData;
+          if (people === null) {
+            people = {};
           }
-          console.log('peopleCount', peopleCount);
-          return peopleCount;
+          return people;
         }),
         catchError(errorRes => {
           return throwError(errorRes);
         })
       );
-    // console.log('PeopleService async getPeople', peopleCount);
-    // return peopleCount;
   }
 
-  async addPerson(data: PeopleData){
-    const people: PeopleData[] = await this.getPeopleUtilityFn();
-    if (people != null && people !== [] ){
-      const lastId = people[people.length - 1].id;
-      console.log('last_id', lastId);
-      console.log('data', data);
-      data.id = lastId + 1;
-      console.log('data', data);
-    }
-    else{
-      data.id = 1;
-    }
-    this.addPersonUtilityFn(data);
+  getPeopleByGorupId(id: number): Observable<PeopleData[]> {
+    return this.baseDataService.getPeopleByGorupId(id)
+      .pipe(
+        map(responseData => {
+          console.log('responseData', responseData);
+          const peopleArray: PeopleData[] = [];
+          for (const key of Object.keys(responseData)) {
+
+            for (const group in responseData[key].groups) {
+              if (responseData[key].groups[group].toString() === id.toString()) {
+                peopleArray.push(responseData[key]);
+                // break;
+              }
+            }
+          }
+          console.log('peopleArray', peopleArray);
+          return peopleArray;
+        }),
+        catchError(errorRes => {
+          return throwError(errorRes);
+        })
+      );
   }
 
-  async editPerson(id: number, data: PeopleData){
-    this.editPersonUtilityFn(id, data);
+  getPeopleWithBirthdaysThisMonth(): Observable<PeopleData[]> {
+    return this.baseDataService.getPeopleWithBirthdaysThisMonth()
+      .pipe(
+        map(responseData => {
+
+          const now = new Date().getMonth();
+          const peopleArray: PeopleData[] = [];
+          for (const key of Object.keys(responseData)) {
+
+            let sameMonth = false;
+            const birthDate = new Date(responseData[key].birthDate).getMonth();
+            sameMonth = birthDate === now;
+            if (sameMonth) {
+              peopleArray.push(responseData[key]);
+            }
+          }
+          return peopleArray;
+        }),
+        catchError(errorRes => {
+          return throwError(errorRes);
+        })
+      );
   }
 
-  async deletePerson(id: number){
-    this.deletePersonUtilityFn(id);
+  getPeopleCount(): Observable<number> {
+    return this.baseDataService.getPeopleCount().pipe(
+      map(responseData => {
+        console.log('responseData', responseData);
+        let peopleCount = 0;
+        for (const key of Object.keys(responseData)) {
+          peopleCount++;
+        }
+        console.log('peopleCount', peopleCount);
+        return peopleCount;
+      }),
+      catchError(errorRes => {
+        return throwError(errorRes);
+      })
+    );
   }
 
-  // UTILITY FUNCTIONS AREA
-  async getPeopleUtilityFn(): Promise<PeopleData[]> {
-    let people: any = await this.storageService.getPeople();
-    if (people === null) {
-      people = [];
-    }
-    console.log('PeopleService getPeopleUtilityFn', people);
-    return people;
+  addPerson(data: PeopleData) {
+
+    this.getPeople().subscribe(
+      (people) => {
+        if (people != null && people !== []) {
+          const lastId = people[people.length - 1].id;
+          data.id = lastId + 1;
+        }
+        else {
+          data.id = 1;
+        }
+
+        this.baseDataService.addPerson(data)
+        .subscribe(
+          responseData => {
+            this.personAddedSuccessfully.next(true);
+          },
+          error => {
+            console.log('Error: ', error.message);
+          }
+        );
+
+      }
+    );
+
   }
 
-  async getPeopleByIdUtilityFn(id: number): Promise<PeopleData> {
-    let people: any = await this.storageService.getPeopleById(id);
-    if (people === null) {
-      people = {};
-    }
-    console.log('PeopleService getPeopleByIdUtilityFn', people);
-    return people;
+  editPerson(id: number, data: PeopleData) {
+    this.baseDataService.editPerson(id, data)
+    .subscribe(
+      responseData => {
+        this.personAddedSuccessfully.next(true);
+      },
+      error => {
+        console.log('Error: ', error.message);
+      }
+    );
   }
 
-  async getPeopleByGorupIdUtilityFn(id: number): Promise<PeopleData[]> {
-    let people: any = await this.storageService.getPeopleByGorupId(id);
-    if (people === null) {
-      people = [];
-    }
-    console.log('PeopleService getPeopleByGorupIdUtilityFn', people);
-    return people;
-  }
-
-  async getPeopleWithBirthdaysThisMonthUtilityFn(): Promise<PeopleData[]> {
-    let people: any = await this.storageService.getPeopleWithBirthdaysThisMonth();
-    if (people === null) {
-      people = [];
-    }
-    console.log('PeopleService getPeopleWithBirthdaysThisMonthUtilityFn', people);
-    return people;
-  }
-
-  async addPersonUtilityFn(data: PeopleData){
-    this.storageService.addPerson(data);
-  }
-
-  async editPersonUtilityFn(id: number, data: PeopleData){
-    this.storageService.editPerson(id, data);
-  }
-
-  async deletePersonUtilityFn(id: number){
-    this.storageService.deletePerson(id);
+  deletePerson(id: number) {
+    this.baseDataService.deletePerson(id)
+    .subscribe(
+      responseData => {
+        this.personAddedSuccessfully.next(true);
+      },
+      error => {
+        console.log('Error: ', error.message);
+      }
+    );
   }
 
 }

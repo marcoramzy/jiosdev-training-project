@@ -39,7 +39,7 @@ export class PeopleViewDialogComponent implements OnInit {
   }
 
   getGroups() {
-    this.groupsService.getGroups().then((value) => {
+    this.groupsService.getGroups().subscribe((value) => {
       this.groupsList = value;
     });
   }
@@ -81,7 +81,7 @@ export class PeopleViewDialogComponent implements OnInit {
           birthDate: [{value: '', disabled: true}],
           groups: [{value: [], disabled: true}],
         });
-        this.peopleService.getPeopleById(data.leader_id).then((res) => {
+        this.peopleService.getPeopleById(data.leader_id).subscribe((res) => {
             this.personName = res.firstName + ' ' + res.lastName;
             this.peopleData = res;
 
