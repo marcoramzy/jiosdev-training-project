@@ -24,6 +24,7 @@ import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-v
 import { GroupsViewDialogComponent } from '../groups/groups-view-dialog/groups-view-dialog.component';
 import { GroupsAddDialogComponent } from '../groups/groups-add-dialog/groups-add-dialog.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { CustomDatePipe } from './pipes/custom-date.pipe';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -44,6 +45,8 @@ export function createTranslateLoader(http: HttpClient) {
     GroupsAddDialogComponent,
 
     DeleteDialogComponent,
+
+    CustomDatePipe,
 
   ],
   imports: [

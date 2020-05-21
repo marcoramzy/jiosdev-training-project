@@ -61,15 +61,6 @@
         4,
         5
       ]
-    },
-    {
-      "id": 6,
-      "firstName": "ss",
-      "lastName": "sss",
-      "mobile": null,
-      "email": null,
-      "birthDate": null,
-      "groups": []
     }
   ],
   "groups": [
