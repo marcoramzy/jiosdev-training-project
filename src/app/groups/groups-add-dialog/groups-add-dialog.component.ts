@@ -7,6 +7,18 @@ import { GroupsService } from '../groups.service';
 import { PeopleService } from 'src/app/people/people.service';
 import { PeopleData } from 'src/app/shared/models/people-data';
 
+import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (isSubmitted)); // control.dirty || control.touched ||
+  }
+}
+
 @Component({
   selector: 'app-groups-add-dialog',
   templateUrl: './groups-add-dialog.html',
@@ -16,7 +28,7 @@ export class GroupsAddDialogComponent implements OnInit {
   formSubmitted = false;
   peopleList: PeopleData[] = [];
   editMode = false;
-
+  matcher = new MyErrorStateMatcher();
 
   constructor(
       fb: FormBuilder,

@@ -5,16 +5,23 @@
     <mat-label>{{ 'id' | translate }}</mat-label>
     <input matInput formControlName="id" type="number" min="0" >
   </mat-form-field>
+
   <mat-form-field>
     <mat-label>{{ 'fname' | translate }}</mat-label>
-    <input matInput  formControlName="firstName">
+    <input matInput  formControlName="firstName" [errorStateMatcher]="matcher">
   </mat-form-field>
-  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.firstName.valid && form.touched && formSubmitted" >{{ 'fnamereq' | translate }}</p>
+  <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.firstName.hasError('required') && form.touched && formSubmitted">
+    {{ 'fnamereq' | translate }}
+  </mat-error>
+  
   <mat-form-field>
     <mat-label>{{ 'lname' | translate }}</mat-label>
-    <input matInput  formControlName="lastName">
+    <input matInput  formControlName="lastName" [errorStateMatcher]="matcher">
   </mat-form-field>
-  <p class="alert alert-danger custom-alert" *ngIf="!form.controls.lastName.valid && form.touched && formSubmitted" >{{ 'lname-req' | translate }}</p>
+  <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.lastName.hasError('required') && form.touched && formSubmitted">
+    {{ 'lname-req' | translate }}
+  </mat-error>
+  
   <mat-form-field>
     <mat-label>{{ 'mobile' | translate }}</mat-label>
     <input matInput  formControlName="mobile">
