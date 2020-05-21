@@ -7,17 +7,6 @@ import { GroupsService } from '../groups.service';
 import { PeopleService } from 'src/app/people/people.service';
 import { PeopleData } from 'src/app/shared/models/people-data';
 
-import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (isSubmitted)); // control.dirty || control.touched ||
-  }
-}
 
 @Component({
   selector: 'app-groups-add-dialog',
@@ -28,17 +17,16 @@ export class GroupsAddDialogComponent implements OnInit {
   formSubmitted = false;
   peopleList: PeopleData[] = [];
   editMode = false;
-  matcher = new MyErrorStateMatcher();
 
   constructor(
-      fb: FormBuilder,
+      private fb: FormBuilder,
       private groupsService: GroupsService,
       private peopleService: PeopleService,
-      public dialogRef: MatDialogRef<GroupsAddDialogComponent>,
+      private dialogRef: MatDialogRef<GroupsAddDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: GroupsData) {
 
       this.getPeople();
-      this.initForm(fb, data);
+      this.initForm();
   }
 
   ngOnInit(): void {
@@ -46,15 +34,15 @@ export class GroupsAddDialogComponent implements OnInit {
   }
 
 
-  initForm(fb: FormBuilder, data: GroupsData) {
-    if (data.id !== undefined){
+  initForm() {
+    if (this.data.id !== undefined){
       this.editMode = true;
     }
-    this.form = fb.group({
-      id: [data.id],
-      name: [data.name, [Validators.required]],
-      leader_id: [data.leader_id],
-      description: [data.description],
+    this.form = this.fb.group({
+      id: [this.data.id],
+      name: [this.data.name, [Validators.required]],
+      leader_id: [this.data.leader_id],
+      description: [this.data.description],
     });
   }
 

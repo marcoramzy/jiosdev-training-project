@@ -1,6 +1,8 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Injectable, TemplateRef } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
+import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
+
 
 type customSize = 'sm' | 'md' | 'lg';
 
@@ -30,6 +32,27 @@ export class DialogService {
             }
             else {
                 console.log('dialog was closed - Cancel Status');
+            }
+        });
+
+    }
+
+    openDeleteDialog(
+        data: any, size: Size, disableClose: boolean , deleteActionCallback: () => void): void {
+
+        const width: string = this.returnWidth(size.size);
+        const dialogRef = this.dialog.open(DeleteDialogComponent, {
+            width,
+            data,
+            disableClose
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                deleteActionCallback();
+                console.log('delete dialog was closed - Saved Status');
+            }
+            else {
+                console.log('delete dialog was closed - Cancel Status');
             }
         });
 

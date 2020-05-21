@@ -3,7 +3,7 @@ import { BaseDataService } from '../shared/services/base-data.service';
 import { PeopleData } from '../shared/models/people-data';
 import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()

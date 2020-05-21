@@ -1,6 +1,6 @@
 <h1 mat-dialog-title *ngIf="!editMode">{{ 'add-group' | translate }}</h1>
 <h1 mat-dialog-title *ngIf="editMode">{{ 'edit-group' | translate }}</h1>
-<form id="groups-add-dialog" mat-dialog-content [formGroup]="form">
+<form id="groups-add-dialog" mat-dialog-content [formGroup]="form" (ngSubmit)="onSaveClick()">
 
   <mat-form-field class="display-none">
     <mat-label>{{ 'id' | translate }}</mat-label>
@@ -9,11 +9,13 @@
 
   <mat-form-field>
     <mat-label> {{ 'name' | translate }}</mat-label>
-    <input matInput  formControlName="name" [errorStateMatcher]="matcher">
+    <input matInput  formControlName="name">
+    <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.name.hasError('required')">
+    <!-- <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.name.hasError('required') && form.touched && formSubmitted"> -->
+      {{ 'namereq' | translate }}
+    </mat-error>
   </mat-form-field>
-  <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.name.hasError('required') && form.touched && formSubmitted">
-    {{ 'namereq' | translate }}
-  </mat-error>
+ 
 
   <mat-form-field>
     <mat-label>{{ 'leader' | translate }}</mat-label>
@@ -28,8 +30,9 @@
     <mat-label>{{ 'desc' | translate }}</mat-label>
     <input matInput  formControlName="description">
   </mat-form-field>
+
+  <div class="modal-actions-container">
+    <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+    <button class="mat-raised-button save-btn" type="submit">{{ 'save' | translate }}</button>
+  </div>
 </form>
-<div style="justify-content: space-around; display: flex; margin-top:1em;">
-  <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
-  <button class="mat-raised-button save-btn" (click)="onSaveClick()">{{ 'save' | translate }}</button>
-</div>

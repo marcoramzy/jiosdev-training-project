@@ -76,8 +76,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog(id: number): void {
-    this.dialogService.openDialog(DeleteDialogComponent,
-      { id: (id), type: 'groups'}, { size: 'md' }, false);
+    this.dialogService.openDeleteDialog(null, { size: 'md' }, false, () => { this.deleteActionCallback(id); } );
+  }
+
+  deleteActionCallback(id: number){
+    this.groupsService.deleteGroup(id);
   }
 
   applyFilter(event: Event) {

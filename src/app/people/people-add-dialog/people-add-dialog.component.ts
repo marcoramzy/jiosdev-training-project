@@ -9,17 +9,6 @@ import { GroupsService } from '../../groups/groups.service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/components/format-datepicker/format-datepicker.component';
 
-import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (isSubmitted)); // control.dirty || control.touched ||
-  }
-}
-
 @Component({
   selector: 'app-people-add-dialog',
   templateUrl: './people-add-dialog.html',
@@ -33,7 +22,6 @@ export class PeopleAddDialogComponent implements OnInit {
   formSubmitted = false;
   groupsList: GroupsData[] = [];
   editMode = false;
-  matcher = new MyErrorStateMatcher();
 
   constructor(
     fb: FormBuilder,

@@ -1,6 +1,6 @@
 <h1 mat-dialog-title *ngIf="!editMode">{{ 'add-person' | translate }}</h1>
 <h1 mat-dialog-title *ngIf="editMode">{{ 'edit-person' | translate }}</h1>
-<form id="people-add-dialog" mat-dialog-content [formGroup]="form">
+<form id="people-add-dialog" mat-dialog-content [formGroup]="form" (ngSubmit)="onSaveClick()">
   <mat-form-field class="display-none">
     <mat-label>{{ 'id' | translate }}</mat-label>
     <input matInput formControlName="id" type="number" min="0" >
@@ -8,19 +8,21 @@
 
   <mat-form-field>
     <mat-label>{{ 'fname' | translate }}</mat-label>
-    <input matInput  formControlName="firstName" [errorStateMatcher]="matcher">
+    <input matInput  formControlName="firstName">
+    <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.firstName.hasError('required')">
+      {{ 'fnamereq' | translate }}
+    </mat-error>
   </mat-form-field>
-  <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.firstName.hasError('required') && form.touched && formSubmitted">
-    {{ 'fnamereq' | translate }}
-  </mat-error>
+
   
   <mat-form-field>
     <mat-label>{{ 'lname' | translate }}</mat-label>
-    <input matInput  formControlName="lastName" [errorStateMatcher]="matcher">
+    <input matInput  formControlName="lastName">
+    <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.lastName.hasError('required')">
+      {{ 'lname-req' | translate }}
+    </mat-error>
   </mat-form-field>
-  <mat-error class="alert alert-danger custom-alert" *ngIf="form.controls.lastName.hasError('required') && form.touched && formSubmitted">
-    {{ 'lname-req' | translate }}
-  </mat-error>
+
   
   <mat-form-field>
     <mat-label>{{ 'mobile' | translate }}</mat-label>
@@ -46,9 +48,10 @@
         </mat-option>
     </mat-select>
   </mat-form-field>
-</form>
 
-<div style="justify-content: space-around; display: flex; margin-top:1em;">
-  <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
-  <button class="mat-raised-button save-btn" (click)="onSaveClick()">{{ 'save' | translate }}</button>
-</div>
+  <div class="modal-actions-container">
+    <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+    <button class="mat-raised-button save-btn" type="submit">{{ 'save' | translate }}</button>
+  </div>
+
+</form>

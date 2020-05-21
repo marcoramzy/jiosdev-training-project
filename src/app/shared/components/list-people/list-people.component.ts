@@ -10,7 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { ComponentType } from '@angular/cdk/portal';
 import { PeopleAddDialogComponent } from 'src/app/people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from 'src/app/people/people-view-dialog/people-view-dialog.component';
-import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { PeopleService } from 'src/app/people/people.service';
 
 
 /**
@@ -28,7 +28,7 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialogService: DialogService, private baseDataService: BaseDataService) {
+  constructor(private dialogService: DialogService, private baseDataService: BaseDataService, private peopleService: PeopleService) {
     this.initModel();
   }
 
@@ -76,9 +76,12 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
     }, { size: 'md' }, true);
   }
 
-  openDeleteDialog(id: number): void {
-    this.dialogService.openDialog(DeleteDialogComponent,
-      {id: (id), type: 'people'}, { size: 'md' }, false);
+  openDeleteDialog(id: number  ): void {
+    this.dialogService.openDeleteDialog( null, { size: 'md' }, false, () => { this.deleteActionCallback(id); } );
+  }
+
+  deleteActionCallback(id: number){
+    this.peopleService.deletePerson(id);
   }
 
   onEditPerson(data) {

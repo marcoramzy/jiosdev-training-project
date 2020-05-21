@@ -8,7 +8,6 @@ import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AppListPeopleComponent } from './components/list-people/list-people.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -26,9 +25,21 @@ import { GroupsAddDialogComponent } from '../groups/groups-add-dialog/groups-add
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 
+import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+import { AppListPeopleComponent } from './components/list-people/list-people.component';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (isSubmitted)); // control.dirty || control.touched ||
+  }
 }
 
 @NgModule({
@@ -77,7 +88,9 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     DialogService,
     PeopleService,
-    GroupsService],
+    GroupsService,
+    {provide: ErrorStateMatcher, useClass: MyErrorStateMatcher},
+    ],
   bootstrap: [],
   schemas: []
 })
