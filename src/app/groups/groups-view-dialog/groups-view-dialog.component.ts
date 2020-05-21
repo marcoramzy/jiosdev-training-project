@@ -18,9 +18,7 @@ export class GroupsViewDialogComponent implements OnInit {
   formSubmitted = false;
   peopleList: PeopleData[] = [];
   groupsData: GroupsData = {} as GroupsData;
-
   groupName: string;
-  leaderExists = false;
 
 
   constructor(
@@ -31,26 +29,17 @@ export class GroupsViewDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: GroupsData) {
 
     this.getPeople();
-    this.initForm(fb, data);
+    this.initData(fb, data);
   }
 
   ngOnInit(): void {
-    console.log('Group Add Dialog On Init');
+    console.log('Group View Dialog On Init');
   }
 
 
-  initForm(fb: FormBuilder, data: GroupsData) {
+  initData(fb: FormBuilder, data: GroupsData) {
     this.groupName = data.name;
     this.groupsData =  data;
-    if (data.leader_id !== null && data.leader_id !== undefined && data.leader_id.toString() !== '') {
-      this.leaderExists = true;
-    }
-    this.form = fb.group({
-      id: [data.id],
-      name: [{ value: data.name, disabled: true }, [Validators.required]],
-      leader_id: [{ value: data.leader_id, disabled: true }],
-      description: [{ value: data.description, disabled: true }],
-    });
   }
 
   getPeople() {
@@ -71,12 +60,8 @@ export class GroupsViewDialogComponent implements OnInit {
 
 
   onEditClick() {
-    this.formSubmitted = true;
-    const { value, valid } = this.form;
-    if (valid) {
       this.openDialog(GroupsAddDialogComponent);
-      this.dialogRef.close(value);
-    }
+      this.dialogRef.close();
   }
 
   onNoClick(): void {

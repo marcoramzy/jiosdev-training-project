@@ -22,6 +22,7 @@ export class PeopleViewDialogComponent implements OnInit {
   personName: string;
   fromGroupsPage = false;
   groupsExists = false;
+  personId: number;
 
 
   constructor(
@@ -33,11 +34,11 @@ export class PeopleViewDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
 
     this.getGroups();
-    this.initForm(fb, data);
+    this.initData(fb, data);
   }
 
   ngOnInit(): void {
-    console.log('Company Dialog On Init');
+    console.log('Groups View Dialog On Init');
   }
 
   getGroups() {
@@ -46,81 +47,47 @@ export class PeopleViewDialogComponent implements OnInit {
     });
   }
 
-  initForm(fb: FormBuilder, data: PeopleData | any) {
+  initData(fb: FormBuilder, data: PeopleData | any) {
 
-    if (data.id !== undefined) {
-      this.fromGroupsPage = true;
-    }
+    this.getPersonId(data);
+    this.peopleService.getPeopleById(this.personId).subscribe((res) => {
+      this.personName = res.firstName + ' ' + res.lastName;
+      this.peopleData = res;
+      this.checkGroupsExistance(res.groups);
 
-    if (this.fromGroupsPage){
-        this.personName = data.firstName + ' ' + data.lastName;
-        this.peopleData = data;
-
-        if (data.groups === [] || data.groups === undefined || data.groups === null || data.groups.length === 0){
-          this.groupsExists = false;
-        }
-        else{
-          this.groupsExists = true;
-        }
-
-        this.form = fb.group({
-          id: [data.id],
-          firstName: [data.firstName],
-          lastName: [data.lastName],
-          mobile: [{value: data.mobile, disabled: true}],
-          email: [{value: data.email, disabled: true}],
-          birthDate: [{value: data.birthDate, disabled: true}],
-          groups: [{value: data.groups, disabled: true}],
-        });
-    }
-    else{
-        this.form = fb.group({
-          id: [],
-          firstName: [],
-          lastName: [],
-          mobile: [{value: '', disabled: true}],
-          email: [{value: '', disabled: true}],
-          birthDate: [{value: '', disabled: true}],
-          groups: [{value: [], disabled: true}],
-        });
-        this.peopleService.getPeopleById(data.leader_id).subscribe((res) => {
-            this.personName = res.firstName + ' ' + res.lastName;
-            this.peopleData = res;
-
-            if (res.groups === [] || res.groups === undefined || res.groups === null || res.groups.length === 0){
-              this.groupsExists = false;
-            }
-            else{
-              this.groupsExists = true;
-            }
-
-            this.form = fb.group({
-              id: [res.id],
-              firstName: [res.firstName],
-              lastName: [res.lastName],
-              mobile: [{value: res.mobile, disabled: true}],
-              email: [{value: res.email, disabled: true}],
-              birthDate: [{value: res.birthDate, disabled: true}],
-              groups: [{value: res.groups, disabled: true}],
-            });
-        });
-    }
+    });
 
   }
 
   openDialog(dialogComponent: ComponentType<any> | TemplateRef<any>): void {
-    this.dialogService.openDialog(dialogComponent, {id: this.peopleData.id, firstName: this.peopleData.firstName
+    this.dialogService.openDialog(dialogComponent, {
+      id: this.peopleData.id, firstName: this.peopleData.firstName
       , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups}, {size: 'md' }, true);
+      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
+    }, { size: 'md' }, true);
+  }
+
+  getPersonId(data: PeopleData | any){
+    if (data.id !== undefined) {
+      this.personId = data.id;
+    }
+    else if (data.leader_id !== undefined) {
+      this.personId = data.leader_id;
+    }
+  }
+
+  checkGroupsExistance(groups: number[]){
+    if (groups === [] || groups === undefined || groups === null || groups.length === 0) {
+      this.groupsExists = false;
+    }
+    else {
+      this.groupsExists = true;
+    }
   }
 
   onEditClick() {
-    this.formSubmitted = true;
-    const { value, valid } = this.form;
-    if (valid) {
-        this.openDialog(PeopleAddDialogComponent);
-        this.dialogRef.close(value);
-    }
+      this.openDialog(PeopleAddDialogComponent);
+      this.dialogRef.close();
   }
 
   onNoClick(): void {

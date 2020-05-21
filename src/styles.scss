@@ -115,3 +115,7 @@ html, body {
 #groups-view-dialog .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
     display: none!important;
 }
+
+.mat-form-field .mat-select.mat-select-disabled .mat-select-arrow{
+    color: transparent !important;
+}

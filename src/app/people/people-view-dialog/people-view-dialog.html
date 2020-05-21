@@ -1,39 +1,35 @@
 <h1 mat-dialog-title >{{ personName }}</h1>
-<form id="people-view-dialog" mat-dialog-content [formGroup]="form">
+<div id="people-view-dialog" mat-dialog-content>
   
-  <mat-form-field class="display-none">
-    <mat-label>{{ 'id' | translate }}</mat-label>
-    <input matInput formControlName="id" type="number" min="0" >
-  </mat-form-field>
 
   <mat-label>{{ 'mobile' | translate }}</mat-label>
   <mat-form-field>
-    <input [ngClass]="form.controls.mobile.value?'':'display-none'" matInput formControlName="mobile" >
-    <p *ngIf="!form.controls.mobile.value" class="empty-value">ــــــــ</p>
+    <input [ngClass]="peopleData.mobile?'':'display-none'" matInput [(ngModel)]="peopleData.mobile" disabled>
+    <p *ngIf="!peopleData.mobile" class="empty-value">ــــــــ</p>
   </mat-form-field>
 
   <mat-label>{{ 'email' | translate }}</mat-label>
   <mat-form-field>
-    <input  [ngClass]="form.controls.email.value?'':'display-none'" matInput  formControlName="email">
-    <p *ngIf="!form.controls.email.value" class="empty-value">ــــــــ</p>
+    <input  [ngClass]="peopleData.email?'':'display-none'" matInput  [(ngModel)]="peopleData.email" disabled>
+    <p *ngIf="!peopleData.email" class="empty-value">ــــــــ</p>
   </mat-form-field>
 
   <mat-label>{{ 'birth-date' | translate }}</mat-label>
   <mat-form-field>
-    <input [ngClass]="form.controls.birthDate.value?'':'display-none'" matInput  formControlName="birthDate" type="date">
-    <p *ngIf="!form.controls.birthDate.value" class="empty-value">ــــــــ</p>
+    <input [ngClass]="peopleData.birthDate?'':'display-none'" matInput  [(ngModel)]="peopleData.birthDate" type="date" disabled>
+    <p *ngIf="!peopleData.birthDate" class="empty-value">ــــــــ</p>
   </mat-form-field>
 
   <mat-label>{{'groups' | translate}}</mat-label>
   <mat-form-field>
-    <mat-select [ngClass]="groupsExists?'':'display-none'" formControlName="groups" multiple>
+    <mat-select [ngClass]="groupsExists?'':'display-none'" [(ngModel)]="peopleData.groups" multiple disabled>
         <mat-option *ngFor="let g of groupsList" [value]="g.id">
             {{g.name}}
         </mat-option>
     </mat-select>
     <p *ngIf="!groupsExists" class="empty-value">ــــــــ</p>
   </mat-form-field>
-</form>
+</div>
 
 <div style="justify-content: space-around; display: flex; margin-top:1em;">
   <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
