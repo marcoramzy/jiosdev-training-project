@@ -6,12 +6,8 @@ import { DatePipe } from '@angular/common';
 })
 export class CustomDatePipe implements PipeTransform {
 
-  // transform(value: Date): unknown {
-  //   return '1/1/2020';
-  // }
-
   transform(date: Date | string): string {
-    date = new Date(date);
+    // date = new Date(date);
     const format = 'dd/MM/y';
     return new DatePipe('en-US').transform(date, format);
   }

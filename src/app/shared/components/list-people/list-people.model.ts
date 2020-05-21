@@ -1,5 +1,5 @@
 import { MatTableDataSource } from '@angular/material/table';
-import { PeopleData } from '../models/people-data';
+import { PeopleData } from '../../models/people-data';
 
 export class AppListPeopleModel {
     displayedColumns: string[] = [];

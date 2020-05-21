@@ -86,36 +86,41 @@ html, body {
     cursor: pointer;
 }
 
-#people-view-dialog .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-select-disabled .mat-select-value {
-    color: black !important;
-}
-
-#people-view-dialog mat-label {
-    color: black !important;
-    font-weight: 500 !important;
-    margin-bottom: -0.7em !important;
-    display: flex !important;
-}
-
-#people-view-dialog .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
-    display: none!important;
-}
-
-#groups-view-dialog .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-select-disabled .mat-select-value {
-    color: black !important;
-}
-
-#groups-view-dialog mat-label {
-    color: black !important;
-    font-weight: 500 !important;
-    margin-bottom: -0.7em !important;
-    display: flex !important;
-}
-
-#groups-view-dialog .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
-    display: none!important;
-}
-
 .mat-form-field .mat-select.mat-select-disabled .mat-select-arrow{
     color: transparent !important;
+}
+
+.view-dialog {
+
+    padding-bottom: 1em !important;
+
+    .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-select-disabled .mat-select-value {
+        color: black !important;
+    }
+    
+    mat-label {
+        color: black !important;
+        font-weight: 500 !important;
+        margin-bottom: .3em !important;
+        display: flex !important;
+    }
+    
+    .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
+        display: none!important;
+    }
+    
+    .mat-form-field-infix{
+        padding: 0!important;
+        margin: 0!important;
+        border: 0!important;
+    }
+    
+    .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        padding-bottom: 0 !important;
+    }
+    
+    .row{
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
 }

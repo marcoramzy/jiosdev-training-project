@@ -1,34 +1,38 @@
-<h1 mat-dialog-title >{{ personName }}</h1>
-<div id="people-view-dialog" mat-dialog-content>
-  
+<h1 mat-dialog-title>{{ personName }}</h1>
+<div id="people-view-dialog" class="view-dialog" mat-dialog-content>
 
-  <mat-label>{{ 'mobile' | translate }}</mat-label>
-  <mat-form-field>
-    <input [ngClass]="peopleData.mobile?'':'display-none'" matInput [(ngModel)]="peopleData.mobile" disabled>
+  <div class="row">
+    <mat-label>{{ 'mobile' | translate }}</mat-label>
+    <div [ngClass]="peopleData.mobile?'':'display-none'">
+      {{peopleData.mobile}}
+    </div>
     <p *ngIf="!peopleData.mobile" class="empty-value">ــــــــ</p>
-  </mat-form-field>
+  </div>
 
-  <mat-label>{{ 'email' | translate }}</mat-label>
-  <mat-form-field>
-    <input  [ngClass]="peopleData.email?'':'display-none'" matInput  [(ngModel)]="peopleData.email" disabled>
+  <div class="row">
+    <mat-label>{{ 'email' | translate }}</mat-label>
+    <div [ngClass]="peopleData.email?'':'display-none'">{{peopleData.email}}</div>
     <p *ngIf="!peopleData.email" class="empty-value">ــــــــ</p>
-  </mat-form-field>
+  </div>
 
-  <mat-label>{{ 'birth-date' | translate }}</mat-label>
-  <mat-form-field>
-    <input [ngClass]="peopleData.birthDate?'':'display-none'" matInput  [(ngModel)]="peopleData.birthDate" type="date" disabled>
+  <div class="row">
+    <mat-label>{{ 'birth-date' | translate }}</mat-label>
+    <div [ngClass]="peopleData.birthDate?'':'display-none'">{{peopleData.birthDate | customDate}}</div>
     <p *ngIf="!peopleData.birthDate" class="empty-value">ــــــــ</p>
-  </mat-form-field>
+  </div>
 
-  <mat-label>{{'groups' | translate}}</mat-label>
-  <mat-form-field>
-    <mat-select [ngClass]="groupsExists?'':'display-none'" [(ngModel)]="peopleData.groups" multiple disabled>
+  <div class="row">
+    <mat-label>{{'groups' | translate}}</mat-label>
+    <mat-form-field>
+      <mat-select [ngClass]="groupsExists?'':'display-none'" [(ngModel)]="peopleData.groups" multiple disabled>
         <mat-option *ngFor="let g of groupsList" [value]="g.id">
-            {{g.name}}
+          {{g.name}}
         </mat-option>
-    </mat-select>
-    <p *ngIf="!groupsExists" class="empty-value">ــــــــ</p>
-  </mat-form-field>
+      </mat-select>
+      <p *ngIf="!groupsExists" class="empty-value">ــــــــ</p>
+    </mat-form-field>
+  </div>
+
 </div>
 
 <div style="justify-content: space-around; display: flex; margin-top:1em;">

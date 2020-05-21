@@ -6,10 +6,16 @@ import { PeopleData } from 'src/app/shared/models/people-data';
 import { GroupsData } from 'src/app/shared/models/groups-data';
 import { PeopleService } from '../people.service';
 import { GroupsService } from '../../groups/groups.service';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/components/format-datepicker/format-datepicker.component';
 
 @Component({
   selector: 'app-people-add-dialog',
   templateUrl: './people-add-dialog.html',
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class PeopleAddDialogComponent implements OnInit {
   form: FormGroup;

@@ -1,16 +1,16 @@
 import { Component, OnInit, OnChanges, ViewChild, TemplateRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Input } from '@angular/core';
-import { PeopleData } from '../models/people-data';
-import { BaseDataService } from '../services/base-data.service';
-import { DialogService } from '../services/dialog.service';
+import { PeopleData } from '../../models/people-data';
+import { BaseDataService } from '../../services/base-data.service';
+import { DialogService } from '../../services/dialog.service';
 import { AppListPeopleModel } from './list-people.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ComponentType } from '@angular/cdk/portal';
 import { PeopleAddDialogComponent } from 'src/app/people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from 'src/app/people/people-view-dialog/people-view-dialog.component';
-import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 
 /**

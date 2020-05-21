@@ -23,10 +23,14 @@
     <mat-label>{{ 'email' | translate }}</mat-label>
     <input matInput  formControlName="email">
   </mat-form-field>
+
   <mat-form-field>
     <mat-label>{{ 'birth-date' | translate }}</mat-label>
-    <input matInput  formControlName="birthDate" type="date">
+    <input matInput [matDatepicker]="picker" formControlName="birthDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+
   <mat-form-field>
     <mat-label>{{'groups' | translate}}</mat-label>
     <mat-select formControlName="groups" multiple>
