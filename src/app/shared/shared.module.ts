@@ -16,6 +16,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DialogService } from './services/dialog.service';
 import { PeopleService } from '../people/people.service';
 import { GroupsService } from '../groups/groups.service';
+import { RegisterService } from '../register/register.service';
 
 import { PeopleAddDialogComponent } from '../people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-view-dialog.component';
@@ -28,6 +29,7 @@ import { CustomDatePipe } from './pipes/custom-date.pipe';
 import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { AppListPeopleComponent } from './components/list-people/list-people.component';
+import { OnlyNumberDirective } from './directives/only-number.directive';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -59,6 +61,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
     CustomDatePipe,
 
+    OnlyNumberDirective
+
   ],
   imports: [
     CommonModule,
@@ -83,12 +87,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     MaterialModule,
     FlexLayoutModule,
     RouterModule,
-    TranslateModule
+    TranslateModule,
+    OnlyNumberDirective
   ],
   providers: [
     DialogService,
     PeopleService,
     GroupsService,
+    RegisterService,
     {provide: ErrorStateMatcher, useClass: MyErrorStateMatcher},
     ],
   bootstrap: [],

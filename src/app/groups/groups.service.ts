@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class GroupsService {
 
-  apiUrl = `${environment.apiBaseUrl}groups`;
+  apiUrl = `groups`;
   groupAddedSuccessfully = new Subject<boolean>();
 
   constructor(private baseDataService: BaseDataService) {
@@ -29,7 +29,7 @@ export class GroupsService {
 
   getGroupsWithCountComputed(responseData): Observable<GroupsData[]> {
 
-    const peopleUrl  = `${environment.apiBaseUrl}people`;
+    const peopleUrl  = `people`;
     return this.baseDataService.get(peopleUrl)
       .pipe(
         map(people => {
