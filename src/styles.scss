@@ -8,6 +8,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 html, body { 
     margin: 0;
     height: 100%;
+    background-color: #ecefef;
 }
 
 .custom-alert{
@@ -19,6 +20,13 @@ html, body {
     color: #f44336;
 }
 
+.custom-hint{
+    font-size: 0.8em;
+    padding: 5px;
+    padding-left: 0pc;
+    margin-bottom: 0em !important;
+}
+
 .mat-form-field {
     display: unset !important;
 }
@@ -27,7 +35,7 @@ html, body {
     margin: 0 !important;
 }
 
-.mat-dialog-content {
+.mat-dialog-content:not( #register-form ) {
     background: #ecefef;
     padding-top: 1em!important;
     border-top: 0.5px solid #cfd8d8;
@@ -40,6 +48,23 @@ html, body {
     margin-top:1em;
     margin-bottom:1em;
 }
+
+.btn-primary, .btn-search {
+    color: #fff !important;
+    background-color: #139eab !important;
+    border-color: #139eab !important;
+}
+
+.btn-primary:hover, .btn-search:hover{
+    color: #fff !important;
+    background-color: #0f7e89 !important;
+    border-color: #0e747d !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-search:not(:disabled):not(.disabled).active:focus, .btn-search:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus, .show>.dropdown-toggle.btn-search:focus {
+    box-shadow: 0 0 0 0.2rem rgba(54,173,184,.5) !important;
+}
+
 .cancel-btn{
     color: $primary !important;
     background: transparent !important;

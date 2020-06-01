@@ -3,13 +3,12 @@ import { BaseDataService } from '../shared/services/base-data.service';
 import { PeopleData } from '../shared/models/people-data';
 import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class PeopleService {
 
-  apiUrl = `${environment.apiBaseUrl}people`;
+  apiUrl = `people`;
   personAddedSuccessfully = new Subject<boolean>();
 
   constructor(private baseDataService: BaseDataService) {

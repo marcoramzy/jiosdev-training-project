@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <!-- Content here -->
+    <div class="register-container">
+        <div class="col-12 d-flex">
+            <a _ngcontent-irh-c182="" title="Home" id="home-logo" class="brand mx-auto"><img _ngcontent-irh-c182=""
+                    islocal="true" alt="chmeetings_logo"
+                    src="https://stage.chmeetings.com/assets/images/public-page-logo.png"></a>
+        </div>
+
+        <mat-tab-group mat-stretch-tabs class="stretched-tabs mat-elevation-z4">
+            <mat-tab label="Demo">
+                <div class="ch-background-gray-color">
+                    <div class="col-12 pt-2"> Demo registration is a fully functional account
+                        with demo people' details to try the whole system features.</div>
+                    <app-register-form [isDemo]="boolTrue">
+                    </app-register-form>
+                </div>
+            </mat-tab>
+            <mat-tab label="Permanent">
+                <div class="ch-background-gray-color">
+                    <div class="col-12 pt-2">Permanent registration is to create your own account,
+                        and use it to add all your people' data</div>
+                    <app-register-form [isDemo]="boolFalse">
+                    </app-register-form>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

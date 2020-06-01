@@ -1,0 +1,128 @@
+<form id="register-form" class="container" mat-dialog-content [formGroup]="form" (ngSubmit)="onSaveClick()">
+
+    <div class="col-12 info-fields" *ngIf="!isDemo">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'country' | translate }}</mat-label>
+                    <mat-select formControlName="CountryId">
+                        <mat-option *ngFor="let country of countries" [value]="country.Key">
+                            {{country.Value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 info-fields mb-3">
+
+        <div class="row" *ngIf="!isDemo">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'ch-min-name' | translate }}</mat-label>
+                    <input matInput formControlName="MeetingName">
+
+                    <mat-error class="custom-alert" *ngIf="form.controls.MeetingName.hasError('required')">
+                            {{ 'ch-min-namereq' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-6">
+                <mat-form-field>
+                    <mat-label>{{ 'fname' | translate }}</mat-label>
+                    <input matInput formControlName="FirstName">
+                    
+                    <mat-error class="custom-alert" *ngIf="form.controls.FirstName.hasError('required')">
+                        {{ 'fnamereq' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-md-6">
+                <mat-form-field>
+                    <mat-label>{{ 'lname' | translate }}</mat-label>
+                    <input matInput formControlName="SecondName">
+
+                    <mat-error class="custom-alert" *ngIf="form.controls.SecondName.hasError('required')">
+                        {{ 'lname-req' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!isDemo">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'mobile-phone' | translate }}</mat-label>
+                    <input appOnlyNumber matInput formControlName="Mobile"  maxlength="50">
+                    <mat-error class="custom-alert" *ngIf="form.controls.Mobile.hasError('pattern')">
+                        {{ 'invalid-mob' | translate }}
+                    </mat-error>
+                    <mat-error class="custom-alert" *ngIf="form.controls.Mobile.hasError('minlength') && !form.controls.Mobile.hasError('pattern')">
+                        {{ 'mob-min-error' | translate }}
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'email' | translate }}</mat-label>
+                    <input matInput formControlName="LoginUserEmail">
+
+                    <mat-error class="custom-alert" *ngIf="form.controls.LoginUserEmail.hasError('required')">
+                        {{ 'emailreq' | translate }}
+                    </mat-error>
+                    
+                    <mat-error class="custom-alert" *ngIf="form.controls.LoginUserEmail.hasError('email')">
+                        {{ 'emailinvalid' | translate }}
+                    </mat-error>
+
+                    <mat-error class="custom-alert" *ngIf="form.controls.LoginUserEmail.errors?.isAlreadyExists">
+                        {{ 'email-already-exists' | translate }}
+                    </mat-error>
+                    
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'pass' | translate }}</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="LoginUserPassword"
+                        aria-required="false">
+                    <mat-icon class="clickable-link" matSuffix (click)="hide = !hide">
+                        {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-hint class="custom-hint">{{ 'pass-min-error' | translate }}</mat-hint>
+
+                    <mat-error class="custom-alert" *ngIf="form.controls.LoginUserPassword.hasError('required')">
+                        {{ 'passreq' | translate }}
+                    </mat-error>
+
+                    <mat-error class="custom-alert" *ngIf="form.controls.LoginUserPassword.hasError('minlength')">
+                        {{ 'pass-min-error' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="background: white;">
+        <div *ngIf="!isDemo" id="divRegistrationPolicySection" class="registration-info col-sm-12"><span> By clicking sign up you agree
+                to the <a>Terms &amp;
+                    Conditions </a>and<a> Privacy Policy</a>. </span></div>
+        <div id="divRegistrationSignUp" class="w-100 form-group col-12 p-md-0 mt-3">
+            <button type="submit" id="createChurchService" [disabled]="disableBtn"
+                class="sln-createChurchService btnSubmit btn btn-primary btn-lg btn-block"> Sign Up
+            </button>
+        </div>
+
+    </div>
+</form>
