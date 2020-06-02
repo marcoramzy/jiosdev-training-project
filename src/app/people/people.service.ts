@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BaseDataService } from '../shared/services/base-data.service';
 import { PeopleData } from '../shared/models/people-data';
 import { Observable, throwError, Subject } from 'rxjs';

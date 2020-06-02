@@ -17,6 +17,7 @@ import { DialogService } from './services/dialog.service';
 import { PeopleService } from '../people/people.service';
 import { GroupsService } from '../groups/groups.service';
 import { RegisterService } from '../register/register.service';
+import { CalenderService } from '../calender/calender.service';
 
 import { PeopleAddDialogComponent } from '../people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-view-dialog.component';
@@ -95,6 +96,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     PeopleService,
     GroupsService,
     RegisterService,
+    CalenderService,
     {provide: ErrorStateMatcher, useClass: MyErrorStateMatcher},
     ],
   bootstrap: [],

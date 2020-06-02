@@ -1,9 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BaseDataService } from '../shared/services/base-data.service';
 import { GroupsData } from '../shared/models/groups-data';
 import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 
 @Injectable()

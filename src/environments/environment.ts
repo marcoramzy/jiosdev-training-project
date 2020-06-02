@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   // apiBaseUrl: 'http://localhost:3000/'
-  apiBaseUrl: 'https://api-stage.chmeetings.com/'
+  apiBaseUrl: 'https://api-stage.chmeetings.com/',
+  baseUrl: 'https://stage.chmeetings.com/'
 };
 
 /*
