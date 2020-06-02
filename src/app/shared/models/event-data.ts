@@ -2,8 +2,8 @@ export interface EventData {
     Title: string;
     Description: string;
     IsAllDay: boolean;
-    Start: Date;
-    End: Date;
+    Start: string;
+    End: string;
     StartTimezone: string;
     EndTimezone: string;
     RecurrenceRule: string;

@@ -26,8 +26,9 @@ export class CalenderService {
       );
   }
 
+
   getEvents(startDate: Date, endDate: Date): Observable<EventData[]> {
-    const url = `/35666DC28224AFCA/Public/Calendar/Events?start=${startDate}&end=${endDate}`;
+    const url = `35666DC28224AFCA/Public/Calendar/Events?start=${startDate}&end=${endDate}`;
     return this.baseDataService.get(url)
       .pipe(
         map(responseData => {
