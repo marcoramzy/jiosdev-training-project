@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-    selector: 'app-calender-list',
-    templateUrl: './calender-list.component.html',
-    styleUrls: ['./calender-list.component.scss']
+    selector: 'app-calender-scheduler',
+    templateUrl: './calender-scheduler.component.html',
+    styleUrls: ['./calender-scheduler.component.scss']
 })
-export class CalenderListComponent implements OnInit {
+export class CalenderSchedulerComponent implements OnInit {
 
     form: FormGroup;
     eventData: EventData[];

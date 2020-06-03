@@ -1,0 +1,27 @@
+<form mat-dialog-content [formGroup]="form" (ngSubmit)="onFilterClick()">
+    <div class="row">
+        <div class="col col-3 col-md-3">
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col col-3 col-md-3">
+            <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col col-3 col-md-3">
+            <button class="mat-raised-button save-btn" type="submit">Filter</button>
+        </div>
+    </div>
+    
+</form>
+<div id="example">
+    <div id="grid"></div>
+</div>
