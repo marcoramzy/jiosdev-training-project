@@ -21,98 +21,86 @@ export class CalenderSchedulerComponent implements OnInit {
         private fb: FormBuilder) { }
 
     ngOnInit(): void {
-        const startDate = new Date();
-        const endDate = new Date(startDate.setDate(startDate.getDate() + 7));
-        this.getEvents(this.transformDate(startDate), this.transformDate(endDate));
-        this.initForm(startDate, endDate);
+        this.setupSched();
     }
 
-    initForm(startDate2, endDate) {
-        const startDate = new Date();
-        this.form = this.fb.group({
-            startDate: [startDate],
-            endDate: [endDate]
-        });
-    }
+    setupSched(){
+            function scheduler_view_range(e) {
+                const view = e.sender.view();
 
-    setupGrid(dataSource) {
-        ($('#grid') as any).kendoGrid({
-            dataSource: {
-                data: dataSource,
-                pageSize: 20
-            },
-            height: 550,
-            groupable: true,
-            sortable: true,
-            pageable: {
-                refresh: true,
-                pageSizes: true,
-                buttonCount: 5
-            },
-            columns: [{
-                field: `Title`,
-                title: `Title`
-            }, {
-                field: `Start`,
-                title: `Start Date`
-            }, {
-                // template: this.datePipe.transform('#= data.End #', 'h:mm a'),
-                field: `End`,
-                title: `End Date`
-            }, {
-                field: `Description`,
-                title: `Description`
-            }]
-        });
+                // The view has:
+                // A startDate method which returns the start date of the view.
+                // An endDate method which returns the end date of the view.
 
-    }
+                $('.console').append('<p>' + kendo.format('view:: start: {0:d}; end: {1:d};', view.startDate(), view.endDate()) + '</p>');
+            }
 
-    getEvents(startDate, endDate) {
-        this.calenderService.getEvents(startDate, endDate).pipe(
-            map(res => {
-                // tslint:disable-next-line: forin
-                for (const key in res) {
-                    res[key].Start = this.getShortTime(res[key].Start);
-                    res[key].End = this.getShortTime(res[key].End);
+            $('#scheduler').kendoScheduler({
+                date: new Date(),
+                startTime: new Date(),
+                height: 400,
+                timezone: 'Etc/UTC',
+                views: [
+                    {type: 'day', selected: false},
+                    {type: 'workWeek', selected: false},
+                    {type: 'week', selected: false},
+                    {type: 'month', selected: true},
+                    {type: 'agenda', selected: false},
+                    {type: 'timeline', eventHeight: 50}
+                ],
+                navigate(e) {
+                //   $('.console').append('<p><strong>Navigated from:</strong></p>');
+                //   scheduler_view_range(e);
+                },
+                dataBound(e) {
+                  $('.console').append('<p><strong>Navigated to:</strong></p>');
+                  scheduler_view_range(e);
+                },
+                dataSource: {
+                    batch: true,
+                    transport: {
+                        read: {
+                            url: '//demos.telerik.com/kendo-ui/service/tasks',
+                            dataType: 'jsonp'
+                        },
+                        update: {
+                            url: '//demos.telerik.com/kendo-ui/service/tasks/update',
+                            dataType: 'jsonp'
+                        },
+                        create: {
+                            url: '//demos.telerik.com/kendo-ui/service/tasks/create',
+                            dataType: 'jsonp'
+                        },
+                        destroy: {
+                            url: '//demos.telerik.com/kendo-ui/service/tasks/destroy',
+                            dataType: 'jsonp'
+                        },
+                        parameterMap(options, operation) {
+                            if (operation !== 'read' && options.models) {
+                                return {models: kendo.stringify(options.models)};
+                            }
+                        }
+                    },
+                    schema: {
+                        model: {
+                            id: 'taskID',
+                            fields: {
+                                taskID: { from: 'TaskID', type: 'number' },
+                                title: { from: 'Title', defaultValue: 'No title', validation: { required: true } },
+                                start: { type: 'date', from: 'Start' },
+                                end: { type: 'date', from: 'End' },
+                                startTimezone: { from: 'StartTimezone' },
+                                endTimezone: { from: 'EndTimezone' },
+                                description: { from: 'Description' },
+                                recurrenceId: { from: 'RecurrenceID' },
+                                recurrenceRule: { from: 'RecurrenceRule' },
+                                recurrenceException: { from: 'RecurrenceException' },
+                                ownerId: { from: 'OwnerID', defaultValue: 1 },
+                                isAllDay: { type: 'boolean', from: 'IsAllDay' }
+                            }
+                        }
+                    }
                 }
-                return res;
-            })
-        ).subscribe((res) => {
-            this.eventData = res;
-            this.setupGrid(this.eventData);
-            console.log('getEvents here', res);
-        });
-    }
-
-    transformDate(date) {
-        return this.datePipe.transform(date, 'yyyy-MM-dd');
-    }
-
-    getShortTime(date) {
-        return this.datePipe.transform(date, 'h:mm a');
-    }
-
-    onFilterClick() {
-
-        // $('#grid').data('kendoGrid').setDataSource(this.eventData);
-        // this.setupGrid(this.eventData);
-
-        const { value, valid } = this.form;
-
-        if ( new Date(value.startDate) > new Date(value.endDate) ){
-            this.form.patchValue({
-                endDate: value.startDate
             });
-
-            value.endDate = value.startDate;
-        }
-
-        console.log('value', value);
-        this.getEvents(this.transformDate(value.startDate), this.transformDate(value.endDate));
-
-        if (valid) {
-            // this.groupsService.addGroup(value);
-        }
-    }
-
+      }
 }

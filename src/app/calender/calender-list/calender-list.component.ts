@@ -21,8 +21,11 @@ export class CalenderListComponent implements OnInit {
         private fb: FormBuilder) { }
 
     ngOnInit(): void {
-        const startDate = new Date();
-        const endDate = new Date(startDate.setDate(startDate.getDate() + 7));
+        const initialDate = new Date();
+        const startDate = initialDate.toString();
+        const endDate = new Date(initialDate.setDate(initialDate.getDate() + 7));
+        console.log(startDate);
+        console.log(startDate);
         this.getEvents(this.transformDate(startDate), this.transformDate(endDate));
         this.initForm(startDate, endDate);
     }
@@ -36,7 +39,7 @@ export class CalenderListComponent implements OnInit {
     }
 
     setupGrid(dataSource) {
-        ($('#grid') as any).kendoGrid({
+        $('#grid').kendoGrid({
             dataSource: {
                 data: dataSource,
                 pageSize: 20
@@ -94,9 +97,6 @@ export class CalenderListComponent implements OnInit {
 
     onFilterClick() {
 
-        // $('#grid').data('kendoGrid').setDataSource(this.eventData);
-        // this.setupGrid(this.eventData);
-
         const { value, valid } = this.form;
 
         if ( new Date(value.startDate) > new Date(value.endDate) ){
@@ -111,7 +111,6 @@ export class CalenderListComponent implements OnInit {
         this.getEvents(this.transformDate(value.startDate), this.transformDate(value.endDate));
 
         if (valid) {
-            // this.groupsService.addGroup(value);
         }
     }
 
