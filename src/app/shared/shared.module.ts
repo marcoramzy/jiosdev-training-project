@@ -92,7 +92,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     FlexLayoutModule,
     RouterModule,
     TranslateModule,
-    OnlyNumberDirective
+    OnlyNumberDirective,
+    ReactiveFormsModule
   ],
   providers: [
     DialogService,

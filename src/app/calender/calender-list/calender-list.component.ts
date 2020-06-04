@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CalenderService } from '../calender.service';
 import { DatePipe } from '@angular/common';
-import { EventData } from 'src/app/shared/models/event-data';
 import { map } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { AppCalenderListModel } from './calender-list.model';
 
 @Component({
     selector: 'app-calender-list',
@@ -12,13 +12,14 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class CalenderListComponent implements OnInit {
 
-    form: FormGroup;
-    eventData: EventData[];
+    model: AppCalenderListModel;
 
     constructor(
         private calenderService: CalenderService,
         private datePipe: DatePipe,
-        private fb: FormBuilder) { }
+        private fb: FormBuilder) {
+            this.initModel();
+        }
 
     ngOnInit(): void {
         const initialDate = new Date();
@@ -32,7 +33,7 @@ export class CalenderListComponent implements OnInit {
 
     initForm(startDate2, endDate) {
         const startDate = new Date();
-        this.form = this.fb.group({
+        this.model.form = this.fb.group({
             startDate: [startDate],
             endDate: [endDate]
         });
@@ -81,8 +82,8 @@ export class CalenderListComponent implements OnInit {
                 return res;
             })
         ).subscribe((res) => {
-            this.eventData = res;
-            this.setupGrid(this.eventData);
+            this.model.eventData = res;
+            this.setupGrid(this.model.eventData);
         });
     }
 
@@ -96,10 +97,10 @@ export class CalenderListComponent implements OnInit {
 
     onFilterClick() {
 
-        const { value, valid } = this.form;
+        const { value, valid } = this.model.form;
 
         if ( new Date(value.startDate) > new Date(value.endDate) ){
-            this.form.patchValue({
+            this.model.form.patchValue({
                 endDate: value.startDate
             });
 
@@ -111,6 +112,10 @@ export class CalenderListComponent implements OnInit {
 
         if (valid) {
         }
+    }
+
+    private initModel() {
+        this.model = new AppCalenderListModel();
     }
 
 }
