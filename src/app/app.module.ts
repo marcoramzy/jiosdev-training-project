@@ -42,7 +42,8 @@ export function createTranslateLoader(http: HttpClient) {
   exports: [
     TranslateModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -18,6 +18,7 @@ import { PeopleService } from '../people/people.service';
 import { GroupsService } from '../groups/groups.service';
 import { RegisterService } from '../register/register.service';
 
+import { CalenderService } from '../calender/calender.service';
 import { PeopleAddDialogComponent } from '../people/people-add-dialog/people-add-dialog.component';
 import { PeopleViewDialogComponent } from '../people/people-view-dialog/people-view-dialog.component';
 
@@ -30,6 +31,9 @@ import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { AppListPeopleComponent } from './components/list-people/list-people.component';
 import { OnlyNumberDirective } from './directives/only-number.directive';
+
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/components/format-datepicker/format-datepicker.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -88,14 +92,18 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     FlexLayoutModule,
     RouterModule,
     TranslateModule,
-    OnlyNumberDirective
+    OnlyNumberDirective,
+    ReactiveFormsModule
   ],
   providers: [
     DialogService,
     PeopleService,
     GroupsService,
     RegisterService,
+    CalenderService,
     {provide: ErrorStateMatcher, useClass: MyErrorStateMatcher},
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
     ],
   bootstrap: [],
   schemas: []

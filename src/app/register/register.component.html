@@ -2,7 +2,7 @@
     <!-- Content here -->
     <div class="register-container">
         <div class="col-12 d-flex">
-            <a _ngcontent-irh-c182="" title="Home" id="home-logo" class="brand mx-auto"><img _ngcontent-irh-c182=""
+            <a title="Home" id="home-logo" class="brand mx-auto"><img
                     islocal="true" alt="chmeetings_logo"
                     src="https://stage.chmeetings.com/assets/images/public-page-logo.png"></a>
         </div>
@@ -12,7 +12,7 @@
                 <div class="ch-background-gray-color">
                     <div class="col-12 pt-2"> Demo registration is a fully functional account
                         with demo people' details to try the whole system features.</div>
-                    <app-register-form [isDemo]="boolTrue">
+                    <app-register-form [isDemo]="true">
                     </app-register-form>
                 </div>
             </mat-tab>
@@ -20,7 +20,7 @@
                 <div class="ch-background-gray-color">
                     <div class="col-12 pt-2">Permanent registration is to create your own account,
                         and use it to add all your people' data</div>
-                    <app-register-form [isDemo]="boolFalse">
+                    <app-register-form [isDemo]="false">
                     </app-register-form>
                 </div>
             </mat-tab>

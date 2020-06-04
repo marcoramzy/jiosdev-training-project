@@ -11,8 +11,6 @@ import { SharedModule } from '../shared/shared.module';
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ],
-  exports: [
   ]
 })
 export class PeopleModule { }
