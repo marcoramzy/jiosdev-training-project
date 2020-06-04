@@ -7,32 +7,34 @@ import { CalenderService } from '../calender.service';
 })
 export class CalenderSchedulerComponent implements OnInit {
 
-    constructor(private calenderService: CalenderService) {
+    constructor() {
     }
 
     ngOnInit(): void {
         this.setupScheduler();
     }
 
+    schedulerUpdateDatasource() {
+        const scheduler = $('#scheduler').data('kendoScheduler') as any;
+        setTimeout(() => {
+            scheduler.dataSource.read();
+        }, 10);
+    }
+
+    getStartDate() {
+        const scheduler = $('#scheduler').data('kendoScheduler');
+        const view = scheduler.view() as any;
+        return kendo.format('{0:d}', view.startDate());
+    }
+
+    getEndDate() {
+        const scheduler = $('#scheduler').data('kendoScheduler');
+        const view = scheduler.view() as any;
+        return kendo.format('{0:d}', view.endDate());
+    }
+
     setupScheduler() {
-        function schedulerUpdateDatasource() {
-            const scheduler = $('#scheduler').data('kendoScheduler') as any;
-            setTimeout(() => {
-                scheduler.dataSource.read();
-            }, 10);
-        }
-
-        function getStartDate() {
-            const scheduler = $('#scheduler').data('kendoScheduler');
-            const view = scheduler.view() as any;
-            return kendo.format('{0:d}', view.startDate());
-        }
-
-        function getEndDate() {
-            const scheduler = $('#scheduler').data('kendoScheduler');
-            const view = scheduler.view() as any;
-            return kendo.format('{0:d}', view.endDate());
-        }
+        const self = this;
 
         $('#scheduler').kendoScheduler({
             date: new Date(),
@@ -48,43 +50,68 @@ export class CalenderSchedulerComponent implements OnInit {
                 { type: 'timeline', eventHeight: 50 }
             ],
             navigate() {
-                  schedulerUpdateDatasource();
+                self.schedulerUpdateDatasource();
             },
             dataSource: {
                 batch: true,
                 transport: {
-                    read(options) {
-                        $.ajax({
-                            url: 'https://api-stage.chmeetings.com/35666DC28224AFCA/Public/Calendar/Events?start=' +
-                            getStartDate() + '&end=' + getEndDate(),
-                            dataType: 'json',
-                            data: {
-                                models: kendo.stringify(options.data.models)
-                            },
-                            success(result) {
-                                options.success(result.Data);
-                            }
-                        });
-                    }
+                    read: {
+                        url: 'https://api-stage.chmeetings.com/35666DC28224AFCA/Public/Calendar/Events',
+                        data: () => {
+                            return {
+                                start: self.getStartDate(),
+                                end: self.getEndDate()
+                            };
+                        }
+                    },
                 },
                 schema: {
+                    data: 'Data',
+                    total: 'Total',
+                    errors: 'Errors',
                     model: {
-                        id: 'taskID',
                         fields: {
-                            taskID: { from: 'TaskID', type: 'number' },
-                            title: { from: 'Title', defaultValue: 'No title', validation: { required: true } },
-                            start: { type: 'date', from: 'Start' },
-                            end: { type: 'date', from: 'End' },
-                            startTimezone: { from: 'StartTimezone' },
-                            endTimezone: { from: 'EndTimezone' },
-                            description: { from: 'Description' },
-                            recurrenceId: { from: 'RecurrenceID' },
-                            recurrenceRule: { from: 'RecurrenceRule' },
-                            recurrenceException: { from: 'RecurrenceException' },
-                            ownerId: { from: 'OwnerID', defaultValue: 1 },
-                            isAllDay: { type: 'boolean', from: 'IsAllDay' }
+                          title: {
+                            from: 'Title',
+                            type: 'string'
+                          },
+                          description: {
+                            from: 'Description',
+                            type: 'string'
+                          },
+                          isAllDay: {
+                            from: 'IsAllDay',
+                            type: 'boolean'
+                          },
+                          start: {
+                            from: 'Start',
+                            type: 'date'
+                          },
+                          end: {
+                            from: 'End',
+                            type: 'date'
+                          },
+                          startTimezone: {
+                            from: 'StartTimezone',
+                            type: 'string'
+                          },
+                          endTimezone: {
+                            from: 'EndTimezone',
+                            type: 'string'
+                          },
+                          recurrenceRule: {
+                            from: 'RecurrenceRule',
+                            type: 'string'
+                          },
+                          recurrenceException: {
+                            from: 'RecurrenceException',
+                            type: 'string'
+                          },
+                          OwnerID: {
+                            type: 'number'
+                          }
                         }
-                    }
+                      }
                 }
             }
         });
