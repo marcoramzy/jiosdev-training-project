@@ -83,7 +83,6 @@ export class CalenderListComponent implements OnInit {
         ).subscribe((res) => {
             this.eventData = res;
             this.setupGrid(this.eventData);
-            console.log('getEvents here', res);
         });
     }
 

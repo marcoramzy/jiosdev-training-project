@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CalenderService } from '../calender.service';
-import { DatePipe } from '@angular/common';
-import { EventData } from 'src/app/shared/models/event-data';
-import { map } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
-
 @Component({
     selector: 'app-calender-scheduler',
     templateUrl: './calender-scheduler.component.html',
@@ -12,95 +7,86 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class CalenderSchedulerComponent implements OnInit {
 
-    form: FormGroup;
-    eventData: EventData[];
-
-    constructor(
-        private calenderService: CalenderService,
-        private datePipe: DatePipe,
-        private fb: FormBuilder) { }
-
-    ngOnInit(): void {
-        this.setupSched();
+    constructor(private calenderService: CalenderService) {
     }
 
-    setupSched(){
-            function scheduler_view_range(e) {
-                const view = e.sender.view();
+    ngOnInit(): void {
+        this.setupScheduler();
+    }
 
-                // The view has:
-                // A startDate method which returns the start date of the view.
-                // An endDate method which returns the end date of the view.
+    setupScheduler() {
+        function schedulerUpdateDatasource() {
+            const scheduler = $('#scheduler').data('kendoScheduler') as any;
+            setTimeout(() => {
+                scheduler.dataSource.read();
+            }, 10);
+        }
 
-                $('.console').append('<p>' + kendo.format('view:: start: {0:d}; end: {1:d};', view.startDate(), view.endDate()) + '</p>');
-            }
+        function getStartDate() {
+            const scheduler = $('#scheduler').data('kendoScheduler');
+            const view = scheduler.view() as any;
+            return kendo.format('{0:d}', view.startDate());
+        }
 
-            $('#scheduler').kendoScheduler({
-                date: new Date(),
-                startTime: new Date(),
-                height: 400,
-                timezone: 'Etc/UTC',
-                views: [
-                    {type: 'day', selected: false},
-                    {type: 'workWeek', selected: false},
-                    {type: 'week', selected: false},
-                    {type: 'month', selected: true},
-                    {type: 'agenda', selected: false},
-                    {type: 'timeline', eventHeight: 50}
-                ],
-                navigate(e) {
-                //   $('.console').append('<p><strong>Navigated from:</strong></p>');
-                //   scheduler_view_range(e);
-                },
-                dataBound(e) {
-                  $('.console').append('<p><strong>Navigated to:</strong></p>');
-                  scheduler_view_range(e);
-                },
-                dataSource: {
-                    batch: true,
-                    transport: {
-                        read: {
-                            url: '//demos.telerik.com/kendo-ui/service/tasks',
-                            dataType: 'jsonp'
-                        },
-                        update: {
-                            url: '//demos.telerik.com/kendo-ui/service/tasks/update',
-                            dataType: 'jsonp'
-                        },
-                        create: {
-                            url: '//demos.telerik.com/kendo-ui/service/tasks/create',
-                            dataType: 'jsonp'
-                        },
-                        destroy: {
-                            url: '//demos.telerik.com/kendo-ui/service/tasks/destroy',
-                            dataType: 'jsonp'
-                        },
-                        parameterMap(options, operation) {
-                            if (operation !== 'read' && options.models) {
-                                return {models: kendo.stringify(options.models)};
+        function getEndDate() {
+            const scheduler = $('#scheduler').data('kendoScheduler');
+            const view = scheduler.view() as any;
+            return kendo.format('{0:d}', view.endDate());
+        }
+
+        $('#scheduler').kendoScheduler({
+            date: new Date(),
+            startTime: new Date(),
+            height: 600,
+            timezone: 'Etc/UTC',
+            views: [
+                { type: 'day', selected: false },
+                { type: 'workWeek', selected: false },
+                { type: 'week', selected: false },
+                { type: 'month', selected: true },
+                { type: 'agenda', selected: false },
+                { type: 'timeline', eventHeight: 50 }
+            ],
+            navigate() {
+                  schedulerUpdateDatasource();
+            },
+            dataSource: {
+                batch: true,
+                transport: {
+                    read(options) {
+                        $.ajax({
+                            url: 'https://api-stage.chmeetings.com/35666DC28224AFCA/Public/Calendar/Events?start=' +
+                            getStartDate() + '&end=' + getEndDate(),
+                            dataType: 'json',
+                            data: {
+                                models: kendo.stringify(options.data.models)
+                            },
+                            success(result) {
+                                options.success(result.Data);
                             }
-                        }
-                    },
-                    schema: {
-                        model: {
-                            id: 'taskID',
-                            fields: {
-                                taskID: { from: 'TaskID', type: 'number' },
-                                title: { from: 'Title', defaultValue: 'No title', validation: { required: true } },
-                                start: { type: 'date', from: 'Start' },
-                                end: { type: 'date', from: 'End' },
-                                startTimezone: { from: 'StartTimezone' },
-                                endTimezone: { from: 'EndTimezone' },
-                                description: { from: 'Description' },
-                                recurrenceId: { from: 'RecurrenceID' },
-                                recurrenceRule: { from: 'RecurrenceRule' },
-                                recurrenceException: { from: 'RecurrenceException' },
-                                ownerId: { from: 'OwnerID', defaultValue: 1 },
-                                isAllDay: { type: 'boolean', from: 'IsAllDay' }
-                            }
+                        });
+                    }
+                },
+                schema: {
+                    model: {
+                        id: 'taskID',
+                        fields: {
+                            taskID: { from: 'TaskID', type: 'number' },
+                            title: { from: 'Title', defaultValue: 'No title', validation: { required: true } },
+                            start: { type: 'date', from: 'Start' },
+                            end: { type: 'date', from: 'End' },
+                            startTimezone: { from: 'StartTimezone' },
+                            endTimezone: { from: 'EndTimezone' },
+                            description: { from: 'Description' },
+                            recurrenceId: { from: 'RecurrenceID' },
+                            recurrenceRule: { from: 'RecurrenceRule' },
+                            recurrenceException: { from: 'RecurrenceException' },
+                            ownerId: { from: 'OwnerID', defaultValue: 1 },
+                            isAllDay: { type: 'boolean', from: 'IsAllDay' }
                         }
                     }
                 }
-            });
-      }
+            }
+        });
+    }
 }

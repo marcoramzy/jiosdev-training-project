@@ -26,7 +26,6 @@ export class CalenderComponent implements OnInit {
       this.serviceInfo = res;
       this.serviceName = this.serviceInfo.ServiceName;
       this.servicePhotoPath = this.baseUrl + this.serviceInfo.ServicePhotoPath;
-      console.log('getServiceInformation', res);
     });
 
   }

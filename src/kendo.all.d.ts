@@ -3,6 +3,7 @@
 // Definitions by: Telerik <https://github.com/telerik>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
+/// <reference types="jquery" />
 
 /*
  * Please, submit Pull Requests in the telerik/kendo-ui-core repo at
@@ -10027,7 +10028,7 @@ declare namespace kendo.ui {
         messages?: any;
         rules?: any;
         validateOnBlur?: boolean;
-        validationSummary?: boolean | ValidationSummary;
+        validationSummary: boolean | ValidationSummary;
         validate?(e: ValidatorValidateEvent): void;
         validateInput?(e: ValidatorValidateInputEvent): void;
     }
@@ -19909,9 +19910,9 @@ declare namespace kendo {
 
 
     namespace date {
-        var MS_PER_DAY: number;
-        var MS_PER_HOUR: number;
-        var MS_PER_MINUTE: number;
+        var MS_PER_DAY: number;
+        var MS_PER_HOUR: number;
+        var MS_PER_MINUTE: number;
 
         function setDayOfWeek(targetDate: Date, dayOfWeek: number, direction: number): void;
         function dayOfWeek(targetDate: Date, dayOfWeek: number, direction: number): Date;
