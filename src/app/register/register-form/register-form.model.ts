@@ -4,6 +4,6 @@ export class AppRegisterFormModel {
     form: FormGroup;
     countries: any;
     defaultCountryId: number;
-    hide = true;
+    hidePass = true;
     disableBtn = false;
 }

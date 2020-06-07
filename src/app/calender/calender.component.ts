@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalenderService } from '../calender/calender.service';
-import { ServiceInfoData } from '../shared/models/service-info-data';
-import { environment } from 'src/environments/environment';
+import { AppCalenderModel } from './calender.model';
 
 
 @Component({
@@ -10,24 +9,27 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./calender.component.scss']
 })
 export class CalenderComponent implements OnInit {
-  serviceInfo: ServiceInfoData;
-  serviceName: string;
-  servicePhotoPath: string;
-  baseUrl = `${environment.baseUrl}`;
+
+  model: AppCalenderModel;
 
   constructor( private calenderService: CalenderService ) { }
 
   ngOnInit(): void {
+    this.initModel();
     this.getServiceInformation();
   }
 
   getServiceInformation(){
     this.calenderService.getServiceInformation().subscribe((res) => {
-      this.serviceInfo = res;
-      this.serviceName = this.serviceInfo.ServiceName;
-      this.servicePhotoPath = this.baseUrl + this.serviceInfo.ServicePhotoPath;
+      this.model.serviceInfo = res;
+      this.model.serviceName = this.model.serviceInfo.ServiceName;
+      this.model.servicePhotoPath = this.model.baseUrl + this.model.serviceInfo.ServicePhotoPath;
     });
 
+  }
+
+  private initModel() {
+    this.model = new AppCalenderModel();
   }
 
 }

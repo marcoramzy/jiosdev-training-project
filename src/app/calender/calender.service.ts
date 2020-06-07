@@ -4,16 +4,19 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { EventData } from '../shared/models/event-data';
 import { ServiceInfoData } from '../shared/models/service-info-data';
+import { DatePipe } from '@angular/common';
+import { FormatsConstants } from '../shared/constants/formats.constants';
 
 
 @Injectable()
 export class CalenderService {
+  ChurchId = '35666DC28224AFCA';
 
-  constructor(private baseDataService: BaseDataService) {
+  constructor(private baseDataService: BaseDataService, private datePipe: DatePipe) {
   }
 
   getServiceInformation(): Observable<ServiceInfoData> {
-    const url = `Public/Calendar/ListCalendars?chId=35666DC28224AFCA`;
+    const url = `Public/Calendar/ListCalendars?chId=${this.ChurchId}`;
     return this.baseDataService.get(url)
       .pipe(
         map(responseData => {
@@ -28,7 +31,7 @@ export class CalenderService {
 
 
   getEvents(startDate: Date, endDate: Date): Observable<EventData[]> {
-    const url = `35666DC28224AFCA/Public/Calendar/Events?start=${startDate}&end=${endDate}`;
+    const url = `${this.ChurchId}/Public/Calendar/Events?start=${this.transformDate(startDate)}&end=${this.transformDate(endDate)}`;
     return this.baseDataService.get(url)
       .pipe(
         map(responseData => {
@@ -39,6 +42,10 @@ export class CalenderService {
           return throwError(errorRes);
         })
       );
+  }
+
+  transformDate(date) {
+      return this.datePipe.transform(date, FormatsConstants.yearMonthDayDashFormat);
   }
 
 }

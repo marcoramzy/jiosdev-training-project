@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { AppCalenderListModel } from './calender-list.model';
+import { FormatsConstants } from 'src/app/shared/constants/formats.constants';
 
 @Component({
     selector: 'app-calender-list',
@@ -25,13 +26,11 @@ export class CalenderListComponent implements OnInit {
         const initialDate = new Date();
         const startDate = initialDate.toString();
         const endDate = new Date(initialDate.setDate(initialDate.getDate() + 7));
-        console.log(startDate);
-        console.log(startDate);
-        this.getEvents(this.transformDate(startDate), this.transformDate(endDate));
-        this.initForm(startDate, endDate);
+        this.getEvents(startDate, endDate);
+        this.initForm(endDate);
     }
 
-    initForm(startDate2, endDate) {
+    initForm(endDate: Date) {
         const startDate = new Date();
         this.model.form = this.fb.group({
             startDate: [startDate],
@@ -87,12 +86,8 @@ export class CalenderListComponent implements OnInit {
         });
     }
 
-    transformDate(date) {
-        return this.datePipe.transform(date, 'yyyy-MM-dd');
-    }
-
     getShortTime(date) {
-        return this.datePipe.transform(date, 'h:mm a');
+        return this.datePipe.transform(date, FormatsConstants.timeAmPmFormat);
     }
 
     onFilterClick() {
@@ -108,7 +103,7 @@ export class CalenderListComponent implements OnInit {
         }
 
         console.log('value', value);
-        this.getEvents(this.transformDate(value.startDate), this.transformDate(value.endDate));
+        this.getEvents(value.startDate, value.endDate);
 
         if (valid) {
         }

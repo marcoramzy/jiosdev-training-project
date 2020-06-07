@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CalenderService } from '../calender.service';
+import { environment } from 'src/environments/environment';
+
+
 @Component({
     selector: 'app-calender-scheduler',
     templateUrl: './calender-scheduler.component.html',
     styleUrls: ['./calender-scheduler.component.scss']
 })
 export class CalenderSchedulerComponent implements OnInit {
+
+    apiBaseUrl = `${environment.apiBaseUrl}`;
+    ChurchId = '35666DC28224AFCA';
 
     constructor() {
     }
@@ -15,7 +21,7 @@ export class CalenderSchedulerComponent implements OnInit {
     }
 
     schedulerUpdateDatasource() {
-        const scheduler = $('#scheduler').data('kendoScheduler') as any;
+        const scheduler = $('#scheduler').data('kendoScheduler');
         setTimeout(() => {
             scheduler.dataSource.read();
         }, 10);
@@ -56,7 +62,7 @@ export class CalenderSchedulerComponent implements OnInit {
                 batch: true,
                 transport: {
                     read: {
-                        url: 'https://api-stage.chmeetings.com/35666DC28224AFCA/Public/Calendar/Events',
+                        url: `${this.apiBaseUrl}${this.ChurchId}/Public/Calendar/Events`,
                         data: () => {
                             return {
                                 start: self.getStartDate(),

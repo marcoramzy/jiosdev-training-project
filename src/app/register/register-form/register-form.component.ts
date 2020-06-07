@@ -17,7 +17,7 @@ export class RegisterFormComponent implements OnInit {
 
   @Input() isDemo;
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService , private router: Router) {
+  constructor(private fb: FormBuilder, private registerService: RegisterService, private router: Router) {
     this.initModel();
   }
 
@@ -28,43 +28,37 @@ export class RegisterFormComponent implements OnInit {
   initForm() {
 
     if (this.isDemo) {
-      this.setupForm([6], [[], [Validators.required]], [[], [Validators.required]],
-        [this.isDemo], [[], [Validators.required, Validators.minLength(6)]], ['Demo'], [],
-        [[], [Validators.email, Validators.required], this.validateEmailViaServer.bind(this)]);
+      this.setupForm( this.isDemo);
     }
     else {
       this.getCountries();
-
-      this.setupForm([], [[], [Validators.required]], [[], [Validators.required]], [this.isDemo],
-        [[], [Validators.required, Validators.minLength(6)]], [[], [Validators.required]],
-        [null, [Validators.pattern('^[0-9]*'), Validators.minLength(10)]],
-        [[], [Validators.email, Validators.required], this.validateEmailViaServer.bind(this)] );
+      this.setupForm( this.isDemo);
     }
 
   }
 
-  setupForm(countryId, firstName, secondName, isDemo, loginUserPassword, meetingName, mobile, loginUserEmail){
+  setupForm(isDemo: boolean) {
     this.model.form = this.fb.group({
-      CountryId: countryId,
-      FirstName: firstName,
-      SecondName: secondName,
-      IsDemo: isDemo,
-      LoginUserPassword: loginUserPassword,
-      MeetingName: meetingName,
-      Mobile: mobile,
-      LoginUserEmail: loginUserEmail,
+      CountryId: isDemo ? [6] : [],
+      FirstName: [[], [Validators.required]],
+      SecondName: [[], [Validators.required]],
+      IsDemo: [isDemo],
+      LoginUserPassword: [[], [Validators.required, Validators.minLength(6)]],
+      MeetingName: isDemo ? ['Demo'] : [[], [Validators.required]],
+      Mobile: isDemo ? [] : [null, [Validators.pattern('^[0-9]*'), Validators.minLength(10)]],
+      LoginUserEmail: [[], [Validators.email, Validators.required], this.validateEmailViaServer.bind(this)],
     });
   }
 
-  getCountries(){
-      this.registerService.getCountries().subscribe((value) => {
-        console.log('Countries', value);
-        this.model.countries = value;
-        this.model.defaultCountryId = value.filter(country => country.IsDefault === true)[0].Key;
-        this.model.form.patchValue({
-          CountryId: this.model.defaultCountryId
-        });
+  getCountries() {
+    this.registerService.getCountries().subscribe((value) => {
+      console.log('Countries', value);
+      this.model.countries = value;
+      this.model.defaultCountryId = value.filter(country => country.IsDefault === true)[0].Key;
+      this.model.form.patchValue({
+        CountryId: this.model.defaultCountryId
       });
+    });
   }
 
   validateEmailViaServer({ value }: AbstractControl): Observable<ValidationErrors | null> {
@@ -83,24 +77,24 @@ export class RegisterFormComponent implements OnInit {
     this.model.disableBtn = true;
     const { value, valid } = this.model.form;
     if (valid) {
-      if (value.Mobile === ''){
+      if (value.Mobile === '') {
         value.Mobile = null;
       }
       console.log('value', value);
       this.registerService.register(value).subscribe(
         res => {
-            console.log('res', res);
-            if ( res?.Token){
-              this.router.navigate(['/dashboard']);
-            }
-            this.model.disableBtn = false;
+          console.log('res', res);
+          if (res?.Token) {
+            this.router.navigate(['/dashboard']);
+          }
+          this.model.disableBtn = false;
         },
         error => {
           this.model.disableBtn = false;
         }
       );
     }
-    else{
+    else {
       this.model.disableBtn = false;
     }
   }
