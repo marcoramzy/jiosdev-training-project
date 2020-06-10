@@ -15,15 +15,15 @@ export class SidenavListComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.GetCurrentUserSettings();
+    this.getCurrentUserSettings();
   }
 
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   }
 
-  GetCurrentUserSettings(){
-    this.authService.GetCurrentUserSettings().subscribe(
+  getCurrentUserSettings(){
+    this.authService.getCurrentUserSettings().subscribe(
       (res) => {
         console.log('ResultData', res.ResultData);
         this.CurrentChurchServiceName = res.ResultData.CurrentChurchServiceName;

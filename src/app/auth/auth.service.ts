@@ -36,7 +36,32 @@ export class AuthService {
     return this.storageService.get('token');
   }
 
-  GetCurrentUserSettings(){
+  getRefreshUserToken(refreshToken, accessToken){
+    const url = `A7640AB420A47E4C/Account/RefreshUserToken`;
+    return this.baseDataService.create(url, { Key : refreshToken , Value : accessToken }).toPromise().then(
+        (res) => {
+          if (res.Type === 'success'){
+            console.log('HEREEEEEEEE', res);
+            this.setNewToken(JSON.parse(res.ResultData));
+
+          }
+
+        }
+    );
+  }
+
+  setNewToken(token){
+    const initialDate = new Date();
+    const expiryDate  = new Date(initialDate.setSeconds(initialDate.getSeconds() + token.expires_in));
+
+    const newToken =  token;
+    newToken.expiry_date = expiryDate;
+    console.log('newToken', newToken);
+
+    this.storageService.set('token', newToken);
+  }
+
+  getCurrentUserSettings(){
     const url = `A7640AB420A47E4C/Account/GetCurrentUserSettings`;
     return this.baseDataService.get(url);
       // .pipe(

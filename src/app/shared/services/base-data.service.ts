@@ -18,7 +18,6 @@ export class BaseDataService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        authorization : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6MH0.eyJzdWIiOiJ0ZXN0aW5nQHRlc3RpbmcuY29tIiwianRpIjoiZDU2N2I1ZDUtN2U1MC00Y2VkLWI5NTUtZTFmYzg0Zjc5NWI3IiwiaWF0IjoxNTkxNzQ4NTY2LCJyb2wiOiJhcGlfYWNjZXNzIiwiaWQiOiIyNTg4NDAiLCJyb2xlcyI6IiIsIm5iZiI6MTU5MTc0ODU2NSwiZXhwIjoxNTkxNzQ5NDY1fQ.lGXPE7elrgBS0NTEnegbSddxgKQ43COWWCXLA_-DhFw'
       })
     };
     return httpsOptions;
