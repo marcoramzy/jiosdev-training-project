@@ -12,7 +12,7 @@ export class DashboardService {
   }
 
   getStatistics(): Observable<any> {
-    const url  = `A7640AB420A47E4C/Core/Dashboard/GetStatistics`;
+    const url  = `Core/Dashboard/GetStatistics`;
     return this.baseDataService.get(url)
       .pipe(
         map(responseData => {

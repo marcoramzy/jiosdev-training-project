@@ -3,63 +3,41 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } fr
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // const token: string = localStorage.getItem('token');
-
-        // if (token) {
-        //     request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
-        // }
-
-        // if (!request.headers.has('Content-Type')) {
-        //     request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
-        // }
-
-        // request = request.clone({ headers: request.headers.set('Accept', 'application/json') });
-
-
-        ///////////////////////////////////////////////////////////////
-        // let token: string = localStorage.getItem('token');
-
-
-        // this.storageService.get('token').then(
-        //     (res) => {
-        //         console.log('JwtInterceptor token', res.access_token);
-        //         token =  res.access_token;
-        //         if (token) {
-        //             request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
-        //         }
-        //     }
-        // );
-
-        // return next.handle(request).pipe(
-        //     map((event: HttpEvent<any>) => {
-        //         if (event instanceof HttpResponse) {
-        //             console.log('JwtInterceptor event--->>>', event);
-        //         }
-        //         return event;
-        // }));
-        //////////////////////////////////////////////////
 
         return from(this.authService.isLoggedIn())
             .pipe(
                 switchMap(token => {
 
                     if (token?.access_token) {
-                        console.log('JwtInterceptor token', token.access_token);
 
-                        const headers = request.headers.set('Authorization', 'Bearer ' + token.access_token);
-                        //   .append('Content-Type', 'application/json');
-                        const requestClone = request.clone({
-                            headers
-                        });
-                        return next.handle(requestClone);
+                        return from(this.authService.getChurchServiceId())
+                            .pipe(
+                                switchMap(churchServiceId => {
+
+                                    console.log('request', request);
+                                    const newUrl = this.addServiceIdToReqUrl(request.url, churchServiceId);
+                                    request = request.clone({ url: newUrl });
+
+                                    console.log('JwtInterceptor token', token.access_token);
+
+                                    const headers = request.headers.set('Authorization', 'Bearer ' + token.access_token);
+                                    const requestClone = request.clone({
+                                        headers
+                                    });
+
+                                    return next.handle(requestClone);
+                        }));
+
+
                     }
-                    else{
+                    else {
                         return next.handle(request);
                     }
 
@@ -67,4 +45,24 @@ export class JwtInterceptor implements HttpInterceptor {
             );
 
     }
+
+    private addServiceIdToReqUrl(requestUrl: string, serviceId: string): string {
+        const apiBaseUrl = `${environment.apiBaseUrl}`;
+
+        const positionIndicator = apiBaseUrl;
+        const position = requestUrl.indexOf(positionIndicator);
+
+        if (requestUrl.search(positionIndicator) !== -1) {
+
+            const baseUrl: string = requestUrl.substr(0, position + positionIndicator.length);
+
+            const restUrl: string = requestUrl.substr(position + positionIndicator.length);
+
+            const newUrl = baseUrl + serviceId + '/' + restUrl;
+
+            return newUrl;
+        }
+        return requestUrl;
+    }
+
 }

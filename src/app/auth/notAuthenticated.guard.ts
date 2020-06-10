@@ -21,14 +21,5 @@ export class NotAuthenticatedGuard implements CanActivate {
         }
     });
 
-    // const isLoggedIn = this.authService.isLoggedIn();
-    // if (!isLoggedIn) {
-    //     console.log('Is not logged in');
-    //     return true;
-    // } else {
-    //     console.log('Is logged in');
-    //     this.router.navigate(['/products']);
-    // }
-
   }
 }

@@ -10,11 +10,6 @@ export class StorageService {
 
     get(item: string){
         return this.storage.get(item);
-        // token
-        // church_service_id
-        // .then((ChurchServiceId) => {
-        //     console.log('ChurchServiceId: ' + ChurchServiceId);
-        // });
     }
 
     set(item: string, value: any){

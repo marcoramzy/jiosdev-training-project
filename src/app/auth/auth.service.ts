@@ -13,16 +13,7 @@ export class AuthService {
 
   constructor(private router: Router , private storageService: StorageService, private baseDataService: BaseDataService) {}
 
-  /*public login(userInfo: User){
-    this.user.next(userInfo);
-    this.storageService.setToken(userInfo); //"access_token"
-    this.router.navigateByUrl('/products');
-  }
-
-  public async isLoggedIn(){
-    return (await this.storageService.getToken() ) !== null;
-  }
-
+  /*
   public logout(){
     this.user.next(null);
     localStorage.removeItem('ACCESS_TOKEN');
@@ -30,14 +21,16 @@ export class AuthService {
     this.router.navigate(['/Account']);
   }*/
 
-  ///////////////////////////////////////
-
   public isLoggedIn(){
     return this.storageService.get('token');
   }
 
+  getChurchServiceId(){
+    return this.storageService.get('church_service_id');
+  }
+
   getRefreshUserToken(refreshToken, accessToken){
-    const url = `A7640AB420A47E4C/Account/RefreshUserToken`;
+    const url = `Account/RefreshUserToken`;
     return this.baseDataService.create(url, { Key : refreshToken , Value : accessToken }).toPromise().then(
         (res) => {
           if (res.Type === 'success'){
@@ -62,16 +55,8 @@ export class AuthService {
   }
 
   getCurrentUserSettings(){
-    const url = `A7640AB420A47E4C/Account/GetCurrentUserSettings`;
+    const url = `Account/GetCurrentUserSettings`;
     return this.baseDataService.get(url);
-      // .pipe(
-      //   map(responseData => {
-      //     console.log('responseData', responseData);
-      //   }),
-      //   catchError(errorRes => {
-      //     return throwError(errorRes);
-      //   })
-      // );
   }
 
   getCountries(): Observable<CountryData[]> {
