@@ -35,7 +35,7 @@ html, body {
     margin: 0 !important;
 }
 
-.mat-dialog-content:not( #register-form ) {
+.mat-dialog-content:not( #register-form ):not( #login-form ) {
     background: #ecefef;
     padding-top: 1em!important;
     border-top: 0.5px solid #cfd8d8;

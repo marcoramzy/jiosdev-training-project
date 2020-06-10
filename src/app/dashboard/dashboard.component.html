@@ -1,5 +1,4 @@
-<app-layout>
-  <div class="mat-cards-container">
+<!-- <div class="mat-cards-container">
     <mat-card class="example-card square" routerLink="/people">
       <mat-card-header class="content">
         <mat-card-title>{{peopleCount}}</mat-card-title>
@@ -17,5 +16,39 @@
 
   <h3 class="m-half-em"><span>{{ 'birthdays-this-month' | translate }}</span></h3>
 
-  <app-list-people [peopleDataSource]="peopleBirthDateDataSource" class="m-half-em" [isPeoplePage]="isPeoplePage"></app-list-people>
-</app-layout>
+  <app-list-people [peopleDataSource]="peopleBirthDateDataSource" class="m-half-em" [isPeoplePage]="isPeoplePage"></app-list-people> -->
+
+<div class="ch-container mt-2 mt-md-3 col-lg-0">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <div class="mat-cards-container" >
+            
+            <mat-card class="example-card square" *ngFor="let ChurchServiceCard of ChurchServiceCards; index as i;">
+              <mat-card-header class="content">
+                <mat-card-title>{{ChurchServiceCard.CardValue}}</mat-card-title>
+                <mat-card-subtitle>{{ ChurchServiceCard.CardTitle }}</mat-card-subtitle>
+              </mat-card-header>
+            </mat-card>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+
+          <div class="mat-cards-container">
+            <mat-card class="example-card square" *ngFor="let ProgressCard of ProgressCards; index as i;">
+              <mat-card-header class="content">
+                <mat-card-title>{{ProgressCard.CardValue}}</mat-card-title>
+                <mat-card-subtitle>{{ ProgressCard.CardTitle }}</mat-card-subtitle>
+              </mat-card-header>
+            </mat-card>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { GroupsService } from '../groups/groups.service';
 import { BaseDataService } from '../shared/services/base-data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,37 +15,28 @@ import { Subject } from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   destroyed = new Subject();
-  isPeoplePage = false;
-  peopleCount = 0;
-  groupsCount = 0;
-  peopleBirthDateDataSource: PeopleData[];
+  ChurchServiceCards: any[];
+  ProgressCards: any[];
 
-  constructor(private peopleService: PeopleService, private groupsService: GroupsService, private baseDataService: BaseDataService) {
+  constructor(private dashboardService: DashboardService) {
   }
 
   ngOnInit() {
-    this.peopleService.getPeopleCount().subscribe((value) => {
-      this.peopleCount = value;
-    });
 
-    this.groupsService.getGroupsCount().subscribe((value) => {
-      this.groupsCount = value;
-    });
-
-    this.peopleService.getPeopleWithBirthdaysThisMonth().subscribe((value) => {
-      this.peopleBirthDateDataSource = value;
-    });
-
-    /// Refresh Table (Record Added)
-    this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
-      () => {
-        this.peopleService.getPeopleWithBirthdaysThisMonth().subscribe((value) => {
-          this.peopleBirthDateDataSource = value;
-        });
-      }
-    );
+    this.getStatistics();
 
   }
+
+  getStatistics(){
+      this.dashboardService.getStatistics().pipe(takeUntil(this.destroyed)).subscribe(
+        (res) => {
+          console.log('getStatistics: ', res);
+          this.ChurchServiceCards = res.ResultData.ChurchServiceCards;
+          this.ProgressCards = res.ResultData.ProgressCards;
+        }
+      );
+  }
+  // ResultData ChurchServiceCards ProgressCards
 
   ngOnDestroy(): void {
     this.destroyed.next();

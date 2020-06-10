@@ -1,0 +1,63 @@
+<form id="login-form" class="container" mat-dialog-content [formGroup]="model.form" (ngSubmit)="onSaveClick()">
+
+    <div class="col-12 info-fields mb-3">
+
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'email' | translate }}</mat-label>
+                    <input matInput formControlName="UserName">
+
+                    <mat-error class="custom-alert" *ngIf="model.form.controls.UserName.hasError('required')">
+                        {{ 'emailreq' | translate }}
+                    </mat-error>
+
+                    <mat-error class="custom-alert" *ngIf="model.form.controls.UserName.hasError('email')">
+                        {{ 'emailinvalid' | translate }}
+                    </mat-error>
+
+                    <mat-error class="custom-alert" *ngIf="model.form.controls.UserName.errors?.isAlreadyExists">
+                        {{ 'email-already-exists' | translate }}
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <mat-form-field>
+                    <mat-label>{{ 'pass' | translate }}</mat-label>
+                    <input matInput [type]="model.hidePass ? 'password' : 'text'" formControlName="Password">
+                    <mat-icon class="clickable-link" matSuffix (click)="model.hidePass = !model.hidePass">
+                        {{model.hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-hint class="custom-hint">{{ 'pass-min-error' | translate }}</mat-hint>
+
+                    <mat-error class="custom-alert" *ngIf="model.form.controls.Password.hasError('required')">
+                        {{ 'passreq' | translate }}
+                    </mat-error>
+
+                    <mat-error class="custom-alert" *ngIf="model.form.controls.Password.hasError('minlength')">
+                        {{ 'pass-min-error' | translate }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="model.errorMsg" role="alert" class="validation-summary-errors alert alert-warning" >
+        <ul>
+            <li> {{ model.errorMsg }} </li>
+        </ul>
+    </div>
+
+    <div class="row bg-white">
+        <div class="w-100 form-group col-12 p-md-0 mt-3">
+            <button type="submit" id="createChurchService" [disabled]="model.disableBtn"
+                class="sln-createChurchService btnSubmit btn btn-primary btn-lg btn-block"> Log In
+            </button>
+        </div>
+    </div>
+
+</form>

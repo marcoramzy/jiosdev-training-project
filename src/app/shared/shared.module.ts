@@ -16,7 +16,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DialogService } from './services/dialog.service';
 import { PeopleService } from '../people/people.service';
 import { GroupsService } from '../groups/groups.service';
-import { RegisterService } from '../register/register.service';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 import { CalenderService } from '../calender/calender.service';
 import { PeopleAddDialogComponent } from '../people/people-add-dialog/people-add-dialog.component';
@@ -99,7 +99,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     DialogService,
     PeopleService,
     GroupsService,
-    RegisterService,
+    DashboardService,
     CalenderService,
     {provide: ErrorStateMatcher, useClass: MyErrorStateMatcher},
     {provide: DateAdapter, useClass: AppDateAdapter},

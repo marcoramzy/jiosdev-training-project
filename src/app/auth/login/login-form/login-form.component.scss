@@ -1,0 +1,36 @@
+.info-fields {
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#createChurchService {
+    padding: 8px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.registration-info{
+    text-transform: capitalize;
+    margin: 16px 0;
+    margin-bottom: 0;
+}
+
+.validation-summary-errors {
+    color: #e80c4d;
+    font-weight: 600;
+    line-height: 1.1em;
+    margin-top: 10px;
+}
+
+.validation-summary-errors li {
+    font-size: 14px;
+}
+
+
+.validation-summary-errors ul {
+    margin-bottom: 0;
+}
