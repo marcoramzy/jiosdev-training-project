@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { User } from './user.model';
+import { LoginData } from '../shared/models/user-data';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { BaseDataService } from '../shared/services/base-data.service';
 import { CountryData } from '../shared/models/country-data';
 import { map, catchError } from 'rxjs/operators';
 import { StorageService } from '../core/services/storage.service';
+import { TokenData } from '../shared/models/token-data';
+import { RegisterData } from '../shared/models/register-data';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<LoginData>(null);
 
   constructor(private router: Router , private storageService: StorageService, private baseDataService: BaseDataService) {}
 
@@ -20,15 +22,15 @@ export class AuthService {
     this.router.navigate(['/Account']);
   }
 
-  public isLoggedIn(){
+  public isLoggedIn(): Promise<TokenData>{
     return this.storageService.get('token');
   }
 
-  getChurchServiceId(){
+  getChurchServiceId(): Promise<string>{
     return this.storageService.get('church_service_id');
   }
 
-  getRefreshUserToken(refreshToken, accessToken){
+  getRefreshUserToken(refreshToken: string, accessToken: string){
     const url = `Account/RefreshUserToken`;
     return this.baseDataService.create(url, { Key : refreshToken , Value : accessToken }).toPromise().then(
         (res) => {
@@ -39,7 +41,7 @@ export class AuthService {
     );
   }
 
-  setNewToken(token){
+  setNewToken(token: TokenData){
     const initialDate = new Date();
     const expiryDate  = new Date(initialDate.setSeconds(initialDate.getSeconds() + token.expires_in));
 
@@ -68,7 +70,7 @@ export class AuthService {
       );
   }
 
-  isEmailAvailable(value): Observable<boolean> {
+  isEmailAvailable(value: string): Observable<boolean> {
     const url = `Account/RegisterationEmailAvailable?email=${value}`;
     return this.baseDataService.get(url)
       .pipe(
@@ -81,7 +83,7 @@ export class AuthService {
       );
   }
 
-  register(value): Observable<any> {
+  register(value: RegisterData): Observable<any> {
     const url = `Account/Register`;
     return this.baseDataService.create(url, value)
       .pipe(
@@ -95,7 +97,7 @@ export class AuthService {
       );
   }
 
-  login(value): Observable<any> {
+  login(value: LoginData): Observable<any> {
     const url = `Account/Login`;
     return this.baseDataService.create(url, value)
       .pipe(

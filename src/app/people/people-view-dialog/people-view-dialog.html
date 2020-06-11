@@ -1,24 +1,24 @@
-<h1 mat-dialog-title>{{ personName }}</h1>
+<h1 mat-dialog-title>{{ model.personName }}</h1>
 <div id="people-view-dialog" class="view-dialog" mat-dialog-content>
 
   <div class="row">
     <mat-label>{{ 'mobile' | translate }}</mat-label>
-    <div [ngClass]="peopleData.Mobile?'':'display-none'">
-      {{peopleData.Mobile}}
+    <div [ngClass]="model.peopleData.Mobile?'':'display-none'">
+      {{model.peopleData.Mobile}}
     </div>
-    <p *ngIf="!peopleData.Mobile" class="empty-value">ــــــــ</p>
+    <p *ngIf="!model.peopleData.Mobile" class="empty-value">ــــــــ</p>
   </div>
 
   <div class="row">
     <mat-label>{{ 'email' | translate }}</mat-label>
-    <div [ngClass]="peopleData.Email?'':'display-none'">{{peopleData.Email}}</div>
-    <p *ngIf="!peopleData.Email" class="empty-value">ــــــــ</p>
+    <div [ngClass]="model.peopleData.Email?'':'display-none'">{{model.peopleData.Email}}</div>
+    <p *ngIf="!model.peopleData.Email" class="empty-value">ــــــــ</p>
   </div>
 
   <div class="row">
     <mat-label>{{ 'birth-date' | translate }}</mat-label>
-    <div [ngClass]="peopleData.Birthdate?'':'display-none'">{{peopleData.Birthdate | customDate}}</div>
-    <p *ngIf="!peopleData.Birthdate" class="empty-value">ــــــــ</p>
+    <div [ngClass]="model.peopleData.Birthdate?'':'display-none'">{{model.peopleData.Birthdate | customDate}}</div>
+    <p *ngIf="!model.peopleData.Birthdate" class="empty-value">ــــــــ</p>
   </div>
 
 </div>

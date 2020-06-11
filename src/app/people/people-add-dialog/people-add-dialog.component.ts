@@ -8,14 +8,6 @@ import { PeopleService } from '../people.service';
 import { GroupsService } from '../../groups/groups.service';
 import { UrlsConstants } from 'src/app/shared/constants/urls.constants';
 
-class FileSnippet {
-  static readonly IMAGE_SIZE = { width: 950, height: 720 };
-
-  pending = false;
-  status = 'INIT';
-
-  constructor(public src: string, public file: File) { }
-}
 
 @Component({
   selector: 'app-people-add-dialog',

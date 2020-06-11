@@ -5,7 +5,7 @@
         <div class="form-group">
           <div class="mat-cards-container" >
             
-            <mat-card class="example-card square" *ngFor="let ChurchServiceCard of ChurchServiceCards; index as i;">
+            <mat-card class="example-card square" *ngFor="let ChurchServiceCard of model.ChurchServiceCards; index as i;">
               <mat-card-header class="content">
                 <mat-card-title>{{ChurchServiceCard.CardValue}}</mat-card-title>
                 <mat-card-subtitle>{{ ChurchServiceCard.CardTitle }}</mat-card-subtitle>
@@ -19,7 +19,7 @@
         <div class="form-group">
 
           <div class="mat-cards-container">
-            <mat-card class="example-card square" *ngFor="let ProgressCard of ProgressCards; index as i;">
+            <mat-card class="example-card square" *ngFor="let ProgressCard of model.ProgressCards; index as i;">
               <mat-card-header class="content">
                 <mat-card-title>{{ProgressCard.CardValue}}</mat-card-title>
                 <mat-card-subtitle>{{ ProgressCard.CardTitle }}</mat-card-subtitle>

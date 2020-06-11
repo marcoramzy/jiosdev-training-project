@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { DashboardService } from './dashboard.service';
+import { AppDashboardModel } from './dashboard.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,11 +10,10 @@ import { DashboardService } from './dashboard.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  destroyed = new Subject();
-  ChurchServiceCards: any[];
-  ProgressCards: any[];
+  model: AppDashboardModel;
 
   constructor(private dashboardService: DashboardService) {
+    this.initModel();
   }
 
   ngOnInit() {
@@ -24,18 +23,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getStatistics(){
-      this.dashboardService.getStatistics().pipe(takeUntil(this.destroyed)).subscribe(
+      this.dashboardService.getStatistics().pipe(takeUntil(this.model.destroyed)).subscribe(
         (res) => {
           console.log('getStatistics: ', res);
-          this.ChurchServiceCards = res.ResultData.ChurchServiceCards;
-          this.ProgressCards = res.ResultData.ProgressCards;
+          this.model.ChurchServiceCards = res.ResultData.ChurchServiceCards;
+          this.model.ProgressCards = res.ResultData.ProgressCards;
         }
       );
   }
 
   ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete();
+    this.model.destroyed.next();
+    this.model.destroyed.complete();
+  }
+
+  private initModel() {
+    this.model = new AppDashboardModel();
   }
 
 }
