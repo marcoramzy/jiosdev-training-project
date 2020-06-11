@@ -3,11 +3,11 @@
 <form id="people-add-dialog" mat-dialog-content [formGroup]="form" (ngSubmit)="onSaveClick()">
 
   <div class="photo-container d-flex flex-column false justify-content-center">
-    <ch-uploader-wz-crop>
-      <input #imageInput type="file" id="uploaderInput" class="item-img file center-block" accept="image/*" (change)='processFile(imageInput)'>
+    <div>
+      <input formControlName="PhotoFile" #imageInput type="file" id="uploaderInput" class="item-img file center-block" accept="image/*" (change)='processFile(imageInput)'>
 
       <!-- <input type='file' accept='image/*' (change)='processFile($event)'> -->
-    </ch-uploader-wz-crop>
+    </div>
     <label class="cabinet px-lg-1 mb-2">
       <!-- <img class="circle-image" src="https://stage.chmeetings.com/assets/images/Unknown.png"> -->
       <img class="circle-image" [src]="imageSource">
@@ -60,39 +60,42 @@
   <!-- <app-image-upload></app-image-upload> -->
   <mat-form-field class="display-none">
     <mat-label>{{ 'id' | translate }}</mat-label>
-    <input matInput formControlName="id" type="number" min="0">
+    <input matInput formControlName="Id" type="number" min="0">
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'fname' | translate }}</mat-label>
-    <input matInput formControlName="firstName">
-    <mat-error class=" custom-alert" *ngIf="form.controls.firstName.hasError('required')">
-      {{ 'fnamereq' | translate }}
-    </mat-error>
-  </mat-form-field>
+  <div formGroupName="Name">
+      <mat-form-field>
+        <mat-label>{{ 'fname' | translate }}</mat-label>
+        <input matInput formControlName="FirstName">
+        <!-- <mat-error class=" custom-alert" *ngIf="form.controls.Name.controls.FirstName.hasError('required')">
+          {{ 'fnamereq' | translate }}
+        </mat-error> -->
+      </mat-form-field>
 
+      <mat-form-field>
+        <mat-label>{{ 'lname' | translate }}</mat-label>
+        <input matInput formControlName="SecondName">
+        <!-- <mat-error class=" custom-alert" *ngIf="form.controls.Name.controls.SecondName.hasError('required')">
+          {{ 'lname-req' | translate }}
+        </mat-error> -->
+    </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>{{ 'lname' | translate }}</mat-label>
-    <input matInput formControlName="lastName">
-    <mat-error class=" custom-alert" *ngIf="form.controls.lastName.hasError('required')">
-      {{ 'lname-req' | translate }}
-    </mat-error>
-  </mat-form-field>
+  
 
 
   <mat-form-field>
     <mat-label>{{ 'mobile' | translate }}</mat-label>
-    <input matInput formControlName="mobile">
+    <input matInput formControlName="Mobile">
   </mat-form-field>
   <mat-form-field>
     <mat-label>{{ 'email' | translate }}</mat-label>
-    <input matInput formControlName="email">
+    <input matInput formControlName="Email">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>{{ 'birth-date' | translate }}</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="birthDate">
+    <input matInput [matDatepicker]="picker" formControlName="Birthdate">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
@@ -108,9 +111,9 @@
   <div class="form-group">
     <mat-label>Gender</mat-label>
     <div class="mt-2">
-      <mat-radio-group formControlName="gender" aria-label="Gender">
-        <mat-radio-button class="mr-3" value="1">Male</mat-radio-button>
-        <mat-radio-button value="2">Female</mat-radio-button>
+      <mat-radio-group formControlName="Gender" aria-label="Gender">
+        <mat-radio-button class="mr-3" [value]="1">Male</mat-radio-button>
+        <mat-radio-button [value]="2">Female</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -123,7 +126,7 @@
   </mat-form-field> -->
 
   <div class="modal-actions-container">
-    <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+    <button class="mat-raised-button cancel-btn" (click)="onNoClick()" type="button">{{ 'cancel' | translate }}</button>
     <button class="mat-raised-button save-btn" type="submit">{{ 'save' | translate }}</button>
   </div>
 

@@ -139,6 +139,7 @@ html, body {
         font-weight: 500 !important;
         margin-bottom: .3em !important;
         display: flex !important;
+        margin-right: 0.5em;
     }
     
     .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
@@ -167,4 +168,8 @@ html, body {
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: $primary !important;
+}
+
+button{
+    outline: none !important;
 }

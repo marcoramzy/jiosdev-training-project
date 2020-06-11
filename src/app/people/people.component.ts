@@ -68,9 +68,10 @@ export class PeopleComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     this.dialogService.openDialog(PeopleAddDialogComponent, {
-      id: this.peopleData.id, firstName: this.peopleData.firstName
-      , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate, photo: this.peopleData.photo, gender: this.peopleData.gender,
+      Id: this.peopleData.Id,
+      Name: {FirstName: this.peopleData?.Name?.FirstName, SecondName: this.peopleData?.Name?.SecondName},
+      Mobile: this.peopleData.Mobile, Email: this.peopleData.Email
+      , Birthdate: this.peopleData.Birthdate, PhotoFile: this.peopleData.PhotoFile, Gender: this.peopleData.Gender,
     }, { size: 'lg' }, true);
   }
 

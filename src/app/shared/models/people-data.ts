@@ -1,10 +1,11 @@
 export interface PeopleData {
-    id ?: number;
-    firstName: string;
-    lastName: string;
-    mobile: number;
-    email: string;
-    birthDate: Date;
-    photo: string;
-    gender: string;
+    Id ?: number;
+    FullName ?: string;
+    Name: {FirstName: string, SecondName: string};
+    Mobile: number;
+    Email: string;
+    Birthdate: Date;
+    PhotoFile: string;
+    PhotoPath?: string;
+    Gender: string;
 }

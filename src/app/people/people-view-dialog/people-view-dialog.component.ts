@@ -51,9 +51,9 @@ export class PeopleViewDialogComponent implements OnInit {
 
     this.getPersonId(data);
     this.peopleService.getPeopleById(this.personId).subscribe((res) => {
-      this.personName = res.firstName + ' ' + res.lastName;
+      this.personName = res.FullName;
       this.peopleData = res;
-      this.checkGroupsExistance(res.groups);
+      // this.checkGroupsExistance(res.groups);
 
     });
 
@@ -61,15 +61,16 @@ export class PeopleViewDialogComponent implements OnInit {
 
   openDialog(dialogComponent: ComponentType<any> | TemplateRef<any>): void {
     this.dialogService.openDialog(dialogComponent, {
-      id: this.peopleData.id, firstName: this.peopleData.firstName
-      , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
+      Id: this.peopleData.Id,
+      Name: {FirstName: this.peopleData?.Name?.FirstName, SecondName: this.peopleData?.Name?.SecondName},
+      Mobile: this.peopleData.Mobile, Email: this.peopleData.Email
+      , Birthdate: this.peopleData.Birthdate, PhotoFile: this.peopleData.PhotoFile, Gender: this.peopleData.Gender,
     }, { size: 'md' }, true);
   }
 
   getPersonId(data: PeopleData | any){
-    if (data.id !== undefined) {
-      this.personId = data.id;
+    if (data.Id !== undefined) {
+      this.personId = data.Id;
     }
     else if (data.leader_id !== undefined) {
       this.personId = data.leader_id;
