@@ -13,13 +13,12 @@ export class AuthService {
 
   constructor(private router: Router , private storageService: StorageService, private baseDataService: BaseDataService) {}
 
-  /*
   public logout(){
-    this.user.next(null);
-    localStorage.removeItem('ACCESS_TOKEN');
-    this.storageService.removeToken();
+    this.storageService.remove('token');
+    this.storageService.remove('church_service_id');
+
     this.router.navigate(['/Account']);
-  }*/
+  }
 
   public isLoggedIn(){
     return this.storageService.get('token');

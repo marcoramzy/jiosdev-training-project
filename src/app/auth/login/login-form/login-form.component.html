@@ -54,8 +54,17 @@
 
     <div class="row bg-white">
         <div class="w-100 form-group col-12 p-md-0 mt-3">
-            <button type="submit" id="createChurchService" [disabled]="model.disableBtn"
-                class="sln-createChurchService btnSubmit btn btn-primary btn-lg btn-block"> Log In
+            <button mat-stroked-button type="submit" id="createChurchService" [disabled]="model.disableBtn"
+                class="sln-createChurchService btnSubmit btn btn-primary btn-lg btn-block loginBtns"> {{ 'login' | translate }}
+            </button>
+        </div>
+
+        <div class="w-100 mb-2 text-center ch-new-user"><small><b >{{ 'new-user' | translate }}</b></small></div>
+
+        <div class="w-100 form-group col-12 p-md-0">
+            <button mat-stroked-button color="primary"
+                class="btn-lg btn-block loginBtns" (click)="goToSignUpForm()"> 
+                {{ 'sign-up-now' | translate }}
             </button>
         </div>
     </div>

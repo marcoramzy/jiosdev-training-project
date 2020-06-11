@@ -1,7 +1,7 @@
 <mat-nav-list>
 
     <div id="accountlogo" class="d-flex w-100 accountlogo pb-4"><a class="account-name-image ng-star-inserted"><img
-                class="img-church-logo" src="https://stage.chmeetings.com/assets/images/church-default-photo.png"></a>
+                class="img-church-logo" src="/assets/images/church-default-photo.png"></a>
         <div class="d-flex flex-column mx-2 px-1"><span class="user-name">Hello {{CurrentMemberFullName}}</span><span
                 class="church-name">{{CurrentChurchServiceName}}</span></div>
     </div>
@@ -16,5 +16,9 @@
     <a [routerLinkActive]="" [ngClass]="rla3.isActive?'active':''" #rla3="routerLinkActive" mat-list-item
         routerLink="/groups" (click)="onSidenavClose()">
         <mat-icon>groups</mat-icon><span class="nav-caption">{{ 'groups' | translate }}</span>
+    </a>
+
+    <a  mat-list-item (click)="logout()">
+        <mat-icon class="font-weight-bold">logout</mat-icon><span class="nav-caption">{{ 'logout' | translate }}</span>
     </a>
 </mat-nav-list>

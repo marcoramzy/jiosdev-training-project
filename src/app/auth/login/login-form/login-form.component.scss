@@ -1,3 +1,5 @@
+@import "../../../../app/shared/styles/variables";
+
 .info-fields {
     background-color: #fff;
     border-radius: 5px;
@@ -7,10 +9,20 @@
     padding-right: 0 !important;
 }
 
-#createChurchService {
-    padding: 8px;
-    font-size: 1.25rem;
+.loginBtns {
     font-weight: 700;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    outline: none;
+    border-color: $primary !important;
+}
+
+.ch-new-user{
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: 17px;
+    color: #9b9b9b;
 }
 
 .registration-info{

@@ -45,6 +45,21 @@
     "pass-min-error":"Password must be at least 6 characters long",
     "mob-min-error":"Mobile Number must be at least 10 characters long",
     "email-already-exists":"Email already exists",
-    "invalid-mob":"Mobile Number is not valid"
+    "invalid-mob":"Mobile Number is not valid",
+    "logout":"Log Out",
+    "login":"Log In",
+    "new-user":"New User?",
+    "sign-up-now":"Sign Up Now!",
+    "demo-reg-paragraph":"Demo registration is a fully functional account with demo people' details to try the whole system features.",
+    "permanent-reg-paragraph":"Permanent registration is to create your own account, and use it to add all your people' data",
+    "sign-up":"Sign Up",
+    "already-signed-up":"Already signed up?",
+    "login-here":"Login here",
+    "by-clicking-signup":"By clicking sign up you agree to the",
+    "terms":"Terms",
+    "conditions":"Conditions",
+    "and":"and",
+    "privacy-policy":"Privacy Policy"
+    
 
 }

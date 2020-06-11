@@ -72,6 +72,10 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
+  goToSignUpForm(){
+    this.router.navigate(['/Account/Register']);
+  }
+
   private initModel() {
     this.model = new AppLoginFormModel();
   }

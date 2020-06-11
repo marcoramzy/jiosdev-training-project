@@ -99,6 +99,11 @@ export class RegisterFormComponent implements OnInit {
     }
   }
 
+  goToLoginForm(){
+    this.router.navigate(['/Account/Login']);
+
+  }
+
   private initModel() {
     this.model = new AppRegisterFormModel();
   }

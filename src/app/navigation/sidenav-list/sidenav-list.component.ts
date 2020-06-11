@@ -22,6 +22,10 @@ export class SidenavListComponent implements OnInit {
     this.sidenavClose.emit();
   }
 
+  logout(){
+    this.authService.logout();
+  }
+
   getCurrentUserSettings(){
     this.authService.getCurrentUserSettings().subscribe(
       (res) => {
