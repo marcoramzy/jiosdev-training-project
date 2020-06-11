@@ -7,7 +7,7 @@ import { GroupsData } from 'src/app/shared/models/groups-data';
 import { PeopleService } from '../people.service';
 import { GroupsService } from '../../groups/groups.service';
 import { UrlsConstants } from 'src/app/shared/constants/urls.constants';
-
+import { FileSnippet } from 'src/app/shared/classes/file-snippet';
 
 @Component({
   selector: 'app-people-add-dialog',
@@ -33,7 +33,6 @@ export class PeopleAddDialogComponent implements OnInit {
   constructor(
     fb: FormBuilder,
     private peopleService: PeopleService,
-    private groupsService: GroupsService,
     public dialogRef: MatDialogRef<PeopleAddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
 

@@ -1,4 +1,4 @@
-class FileSnippet {
+export class FileSnippet {
   static readonly IMAGE_SIZE = { width: 950, height: 721 };
 
   pending = false;
