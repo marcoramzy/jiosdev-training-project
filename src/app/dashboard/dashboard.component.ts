@@ -1,8 +1,4 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import { PeopleData } from '../shared/models/people-data';
-import { PeopleService } from '../people/people.service';
-import { GroupsService } from '../groups/groups.service';
-import { BaseDataService } from '../shared/services/base-data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DashboardService } from './dashboard.service';
@@ -36,7 +32,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       );
   }
-  // ResultData ChurchServiceCards ProgressCards
 
   ngOnDestroy(): void {
     this.destroyed.next();

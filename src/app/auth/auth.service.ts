@@ -33,11 +33,8 @@ export class AuthService {
     return this.baseDataService.create(url, { Key : refreshToken , Value : accessToken }).toPromise().then(
         (res) => {
           if (res.Type === 'success'){
-            console.log('HEREEEEEEEE', res);
             this.setNewToken(JSON.parse(res.ResultData));
-
           }
-
         }
     );
   }

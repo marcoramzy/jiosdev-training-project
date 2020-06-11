@@ -8,7 +8,6 @@ import { map, catchError } from 'rxjs/operators';
 @Injectable()
 export class PeopleService {
 
-  apiUrl = `people`;
   personAddedSuccessfully = new Subject<boolean>();
 
   constructor(private baseDataService: BaseDataService) {
@@ -37,8 +36,6 @@ export class PeopleService {
   }
 
   getPeopleById(id: number): Observable<PeopleData> {
-    // const url = `${this.apiUrl}/${id}`;
-    // const url = `Core/Member/MemberDashboard?id=${1558580}`;
     const url = `Core/Member/MemberDashboard?id=${id}`;
     return this.baseDataService.getById(url)
       .pipe(
@@ -54,97 +51,6 @@ export class PeopleService {
           return throwError(errorRes);
         })
       );
-  }
-
-  getPeopleByGorupId(id: number): Observable<PeopleData[]> {
-    return this.baseDataService.getById(this.apiUrl)
-      .pipe(
-        map(responseData => {
-          console.log('responseData', responseData);
-          const peopleArray: PeopleData[] = [];
-          for (const key of Object.keys(responseData)) {
-
-            for (const group in responseData[key].groups) {
-              if (responseData[key].groups[group].toString() === id.toString()) {
-                peopleArray.push(responseData[key]);
-                // break;
-              }
-            }
-          }
-          console.log('peopleArray', peopleArray);
-          return peopleArray;
-        }),
-        catchError(errorRes => {
-          return throwError(errorRes);
-        })
-      );
-  }
-
-  getPeopleWithBirthdaysThisMonth(): Observable<PeopleData[]> {
-    return this.baseDataService.get(this.apiUrl)
-      .pipe(
-        map(responseData => {
-
-          const now = new Date().getMonth();
-          const peopleArray: PeopleData[] = [];
-          for (const key of Object.keys(responseData)) {
-
-            let sameMonth = false;
-            const birthDate = new Date(responseData[key].birthDate).getMonth();
-            sameMonth = birthDate === now;
-            if (sameMonth) {
-              peopleArray.push(responseData[key]);
-            }
-          }
-          return peopleArray;
-        }),
-        catchError(errorRes => {
-          return throwError(errorRes);
-        })
-      );
-  }
-
-  getPeopleCount(): Observable<number> {
-    return this.baseDataService.get(this.apiUrl).pipe(
-      map(responseData => {
-        console.log('responseData', responseData);
-        let peopleCount = 0;
-        for (const key of Object.keys(responseData)) {
-          peopleCount++;
-        }
-        console.log('peopleCount', peopleCount);
-        return peopleCount;
-      }),
-      catchError(errorRes => {
-        return throwError(errorRes);
-      })
-    );
-  }
-
-  addPersonOld(data: PeopleData) {
-
-    this.getPeople().subscribe(
-      (people) => {
-        if (people != null && people !== []) {
-          const lastId = people[people.length - 1].Id;
-          data.Id = lastId + 1;
-        }
-        else {
-          data.Id = 1;
-        }
-
-        this.baseDataService.create(this.apiUrl, data)
-          .subscribe(
-            responseData => {
-              this.personAddedSuccessfully.next(true);
-            },
-            error => {
-              console.log('Error: ', error.message);
-            }
-          );
-
-      }
-    );
   }
 
   addPerson(data: PeopleData) {
@@ -164,8 +70,6 @@ export class PeopleService {
   }
 
   editPerson(id: number, data: PeopleData) {
-    // const url = `${this.apiUrl}/${id}`;
-    // const url = `${this.apiUrl}/${id}`;
     const url = `Core/Member/Update`;
 
     this.baseDataService.create(url, data)
@@ -180,7 +84,6 @@ export class PeopleService {
   }
 
   deletePerson(id: number) {
-    // const url = `${this.apiUrl}/${id}`;
     const url = `Core/Member/Delete/${id}`;
 
     this.baseDataService.delete(url)

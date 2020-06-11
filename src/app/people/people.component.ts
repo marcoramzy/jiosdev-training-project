@@ -58,12 +58,6 @@ export class PeopleComponent implements OnInit, OnDestroy {
             this.peopleDataSource = value;
           });
       }
-      else // People list data filtered by groupId
-      {
-          this.peopleService.getPeopleByGorupId(+groupId).subscribe((value) => {
-            this.peopleDataSource = value;
-          });
-      }
   }
 
   openDialog(): void {

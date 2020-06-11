@@ -27,7 +27,6 @@ export class DialogService {
             disableClose
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log('resultttttt', result);
             if (result !== undefined) {
                 console.log('dialog was closed - Saved Status');
             }

@@ -6,6 +6,7 @@ import { PeopleData } from 'src/app/shared/models/people-data';
 import { GroupsData } from 'src/app/shared/models/groups-data';
 import { PeopleService } from '../people.service';
 import { GroupsService } from '../../groups/groups.service';
+import { UrlsConstants } from 'src/app/shared/constants/urls.constants';
 
 class FileSnippet {
   static readonly IMAGE_SIZE = { width: 950, height: 720 };
@@ -28,7 +29,7 @@ export class PeopleAddDialogComponent implements OnInit {
   groupsList: GroupsData[] = [];
   editMode = false;
   selectedFile: FileSnippet;
-  defaultImageSrc = '/assets/images/Unknown.png';
+  defaultImageSrc = UrlsConstants.defaultImageSrc;
   imageSource;
   defaultImage = true;
   PhotoFile = null;
@@ -97,6 +98,10 @@ export class PeopleAddDialogComponent implements OnInit {
       if (this.originalPhotoPath != null){
         value.PhotoPath = this.originalPhotoPath;
       }
+      if (value.Gender == null){
+        value.Gender = 3;
+      }
+
       if (this.editMode === false) // Add
       {
         console.log('people add form data', value);
