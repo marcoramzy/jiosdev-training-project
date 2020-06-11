@@ -78,7 +78,6 @@ export class PeopleAddDialogComponent implements OnInit {
 
   onSaveClick() {
     this.model.formSubmitted = true;
-    // let { value, valid } = this.model.form;
     let { value, valid } = this.model.form;
     if (valid) {
 
