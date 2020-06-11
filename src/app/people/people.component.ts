@@ -70,8 +70,8 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.dialogService.openDialog(PeopleAddDialogComponent, {
       id: this.peopleData.id, firstName: this.peopleData.firstName
       , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
-    }, { size: 'md' }, true);
+      , birthDate: this.peopleData.birthDate, photo: this.peopleData.photo, gender: this.peopleData.gender,
+    }, { size: 'lg' }, true);
   }
 
 }

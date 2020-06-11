@@ -34,6 +34,7 @@ import { OnlyNumberDirective } from './directives/only-number.directive';
 
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/components/format-datepicker/format-datepicker.component';
+import { ImageUploadModule } from './components/image-upload/image-upload.module';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -82,7 +83,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
           deps: [HttpClient]
       },
       defaultLanguage: 'en'
-  })
+  }),
+  ImageUploadModule
   ],
   exports: [
     LayoutComponent,
@@ -93,7 +95,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     RouterModule,
     TranslateModule,
     OnlyNumberDirective,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageUploadModule
   ],
   providers: [
     DialogService,
