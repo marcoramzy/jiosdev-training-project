@@ -3,11 +3,9 @@ import { Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PeopleData } from 'src/app/shared/models/people-data';
-import { GroupsData } from 'src/app/shared/models/groups-data';
 import { PeopleService } from '../people.service';
-import { GroupsService } from '../../groups/groups.service';
-import { UrlsConstants } from 'src/app/shared/constants/urls.constants';
 import { FileSnippet } from 'src/app/shared/classes/file-snippet';
+import { AppPeopleAddDialogModel } from './people-add-dialog.model';
 
 @Component({
   selector: 'app-people-add-dialog',
@@ -16,16 +14,18 @@ import { FileSnippet } from 'src/app/shared/classes/file-snippet';
 
 })
 export class PeopleAddDialogComponent implements OnInit {
-  form: FormGroup;
-  formSubmitted = false;
-  groupsList: GroupsData[] = [];
-  editMode = false;
-  selectedFile: FileSnippet;
-  defaultImageSrc = UrlsConstants.defaultImageSrc;
-  imageSource;
-  defaultImage = true;
-  PhotoFile = null;
-  originalPhotoPath = null;
+  // form: FormGroup;
+  // formSubmitted = false;
+  // groupsList: GroupsData[] = [];
+  // editMode = false;
+  // selectedFile: FileSnippet;
+  // defaultImageSrc = UrlsConstants.defaultImageSrc;
+  // imageSource;
+  // defaultImage = true;
+  // PhotoFile = null;
+  // originalPhotoPath = null;
+
+  model: AppPeopleAddDialogModel;
 
   @ViewChild('imageInput') myInputVariable: ElementRef;
 
@@ -35,8 +35,8 @@ export class PeopleAddDialogComponent implements OnInit {
     private peopleService: PeopleService,
     public dialogRef: MatDialogRef<PeopleAddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
-
-    this.initForm(fb, data);
+      this.initModel();
+      this.initForm(fb, data);
   }
 
   ngOnInit(): void {
@@ -44,14 +44,14 @@ export class PeopleAddDialogComponent implements OnInit {
   }
 
   initForm(fb: FormBuilder, data: PeopleData) {
-    this.imageSource = this.defaultImageSrc;
+    this.model.imageSource = this.model.defaultImageSrc;
     if (data.Id !== undefined) {
-      this.editMode = true;
+      this.model.editMode = true;
 
       this.peopleService.getPeopleById(data.Id).subscribe((res) => {
         if (res.PhotoPath != null){
-          this.originalPhotoPath = res.PhotoPath;
-          this.imageSource = res.PhotoPath;
+          this.model.originalPhotoPath = res.PhotoPath;
+          this.model.imageSource = res.PhotoPath;
         }
         this.setupForm(fb, res);
       });
@@ -62,7 +62,7 @@ export class PeopleAddDialogComponent implements OnInit {
   }
 
   setupForm(fb, data){
-    this.form = fb.group({
+    this.model.form = fb.group({
       Id: [data.Id],
       Name: fb.group({
         FirstName: [data.Name.FirstName, [Validators.required]],
@@ -77,23 +77,14 @@ export class PeopleAddDialogComponent implements OnInit {
   }
 
   onSaveClick() {
-    this.formSubmitted = true;
-    const { value, valid } = this.form;
+    this.model.formSubmitted = true;
+    // let { value, valid } = this.model.form;
+    let { value, valid } = this.model.form;
     if (valid) {
-      if (this.PhotoFile !== null) {
-        value.PhotoFile = this.PhotoFile;
-      }
-      if (value.Id === null) {
-        value.Id = 0;
-      }
-      if (this.originalPhotoPath != null){
-        value.PhotoPath = this.originalPhotoPath;
-      }
-      if (value.Gender == null){
-        value.Gender = 3;
-      }
 
-      if (this.editMode === false) // Add
+      value = this.setDefaultValues(value);
+
+      if (this.model.editMode === false) // Add
       {
         console.log('people add form data', value);
         this.peopleService.addPerson(value);
@@ -107,13 +98,29 @@ export class PeopleAddDialogComponent implements OnInit {
     }
   }
 
+  setDefaultValues(value: PeopleData){
+    if (this.model.PhotoFile !== null) {
+      value.PhotoFile = this.model.PhotoFile;
+    }
+    if (value.Id === null) {
+      value.Id = 0;
+    }
+    if (this.model.originalPhotoPath != null){
+      value.PhotoPath = this.model.originalPhotoPath;
+    }
+    if (value.Gender == null){
+      value.Gender = '3';
+    }
+    return value;
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   processFile(imageInput: any) {
     console.log('imageInput', imageInput);
-    this.selectedFile = undefined;
+    this.model.selectedFile = undefined;
 
     const file = imageInput.files[0];
     console.log('file', file);
@@ -124,12 +131,12 @@ export class PeopleAddDialogComponent implements OnInit {
 
       reader.addEventListener('load', (event: any) => {
 
-        this.selectedFile = new FileSnippet(event.target.result, file);
-        this.selectedFile.src = event.target.result;
-        this.selectedFile.pending = true;
-        this.imageSource = this.selectedFile.src;
-        this.defaultImage = false;
-        this.PhotoFile = event.target.result;
+        this.model.selectedFile = new FileSnippet(event.target.result, file);
+        this.model.selectedFile.src = event.target.result;
+        this.model.selectedFile.pending = true;
+        this.model.imageSource = this.model.selectedFile.src;
+        this.model.defaultImage = false;
+        this.model.PhotoFile = event.target.result;
 
       });
 
@@ -141,10 +148,14 @@ export class PeopleAddDialogComponent implements OnInit {
   }
 
   deleteImage() {
-    this.defaultImage = true;
-    this.imageSource = this.defaultImageSrc;
+    this.model.defaultImage = true;
+    this.model.imageSource = this.model.defaultImageSrc;
     this.myInputVariable.nativeElement.value = '';
-    this.PhotoFile = null;
+    this.model.PhotoFile = null;
+  }
+
+  private initModel() {
+    this.model = new AppPeopleAddDialogModel();
   }
 
 }

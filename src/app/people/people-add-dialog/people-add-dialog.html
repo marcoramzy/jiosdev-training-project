@@ -1,52 +1,23 @@
-<h1 mat-dialog-title *ngIf="!editMode">{{ 'add-person' | translate }}</h1>
-<h1 mat-dialog-title *ngIf="editMode">{{ 'edit-person' | translate }}</h1>
-<form id="people-add-dialog" mat-dialog-content [formGroup]="form" (ngSubmit)="onSaveClick()">
+<h1 mat-dialog-title *ngIf="!model.editMode">{{ 'add-person' | translate }}</h1>
+<h1 mat-dialog-title *ngIf="model.editMode">{{ 'edit-person' | translate }}</h1>
+<form id="people-add-dialog" mat-dialog-content [formGroup]="model.form" (ngSubmit)="onSaveClick()">
 
   <div class="photo-container d-flex flex-column false justify-content-center">
     <div>
       <input formControlName="PhotoFile" #imageInput type="file" id="uploaderInput" class="item-img file center-block" accept="image/*" (change)='processFile(imageInput)'>
-
-      <!-- <input type='file' accept='image/*' (change)='processFile($event)'> -->
     </div>
     <label class="cabinet px-lg-1 mb-2">
-      <!-- <img class="circle-image" src="https://stage.chmeetings.com/assets/images/Unknown.png"> -->
-      <img class="circle-image" [src]="imageSource">
+      <img class="circle-image" [src]="model.imageSource">
       <div class="photo-actions">
         
         <div class="dropdown">
-          <!-- <a id="editProfilePicture" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <mat-icon class=" d-block">edit</mat-icon>
-          </a>
-          
-          <div class="dropdown-menu" hidden=""><a id="editPhoto" class="dropdown-item">Edit</a>
-            <div class="dropdown-divider"></div><a id="removePhoto" class="dropdown-item">Delete</a>
-          </div> -->
-
-          <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon class="clickable-link">more_horiz</mat-icon>
-          </button> -->
-          <!-- <a class='edit-container' mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon class="clickable-link color-white">edit</mat-icon>
-          </a> -->
-          <label *ngIf="defaultImage"  id="editProfilePicture" class='edit-container' for="uploaderInput"><mat-icon class="clickable-link color-white">edit</mat-icon></label>
-          <label *ngIf="!defaultImage" id="editProfilePicture" class='edit-container' [matMenuTriggerFor]="menu"><mat-icon class="clickable-link color-white">edit</mat-icon></label>
+          <label *ngIf="model.defaultImage"  id="editProfilePicture" class='edit-container' for="uploaderInput"><mat-icon class="clickable-link color-white">edit</mat-icon></label>
+          <label *ngIf="!model.defaultImage" id="editProfilePicture" class='edit-container' [matMenuTriggerFor]="menu"><mat-icon class="clickable-link color-white">edit</mat-icon></label>
           <mat-menu #menu>
-            <!-- (click)="onEditPerson(row)" -->
-                <!-- <a  mat-menu-item >
-                <mat-icon>edit</mat-icon>
-                <span>{{ 'edit' | translate }}</span>
-                </a> -->
                 <label  mat-menu-item for="uploaderInput">
                   <mat-icon>edit</mat-icon>
                   <span>{{ 'edit' | translate }}</span>
                 </label>
-                
-                <!-- (click)="onDeletePerson(row.id)" -->
-                <!-- <a  mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>{{ 'delete' | translate }}</span>
-                </a> -->
                 <label  mat-menu-item (click)="deleteImage()">
                   <mat-icon>delete</mat-icon>
                   <span>{{ 'delete' | translate }}</span>
@@ -57,7 +28,6 @@
     </label>
   </div>
 
-  <!-- <app-image-upload></app-image-upload> -->
   <mat-form-field class="display-none">
     <mat-label>{{ 'id' | translate }}</mat-label>
     <input matInput formControlName="Id" type="number" min="0">
@@ -67,21 +37,13 @@
       <mat-form-field>
         <mat-label>{{ 'fname' | translate }}</mat-label>
         <input matInput formControlName="FirstName">
-        <!-- <mat-error class=" custom-alert" *ngIf="form.controls.Name.controls.FirstName.hasError('required')">
-          {{ 'fnamereq' | translate }}
-        </mat-error> -->
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ 'lname' | translate }}</mat-label>
         <input matInput formControlName="SecondName">
-        <!-- <mat-error class=" custom-alert" *ngIf="form.controls.Name.controls.SecondName.hasError('required')">
-          {{ 'lname-req' | translate }}
-        </mat-error> -->
-    </mat-form-field>
-    </div>
-
-  
+      </mat-form-field>
+  </div>
 
 
   <mat-form-field>
@@ -100,14 +62,6 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <!-- <mat-form-field> -->
-  <!-- <mat-label>Gender</mat-label>
-  <mat-radio-group formControlName="gender" aria-label="Gender">
-    <mat-radio-button value="1">Male</mat-radio-button>
-    <mat-radio-button value="2">Female</mat-radio-button>
-  </mat-radio-group> -->
-  <!-- </mat-form-field> -->
-
   <div class="form-group">
     <mat-label>Gender</mat-label>
     <div class="mt-2">
@@ -117,13 +71,6 @@
       </mat-radio-group>
     </div>
   </div>
-
-  <!-- <mat-form-field>
-    <mat-radio-group formControlName="gender" aria-label="Gender">
-      <mat-radio-button value="1">Male</mat-radio-button>
-      <mat-radio-button value="2">Female</mat-radio-button>
-    </mat-radio-group>
-  </mat-form-field> -->
 
   <div class="modal-actions-container">
     <button class="mat-raised-button cancel-btn" (click)="onNoClick()" type="button">{{ 'cancel' | translate }}</button>
