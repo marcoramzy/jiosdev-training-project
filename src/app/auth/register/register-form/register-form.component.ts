@@ -5,6 +5,7 @@ import { debounceTime, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AppRegisterFormModel } from './register-form.model';
 import { AuthService } from '../../auth.service';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-register-form',
@@ -17,7 +18,7 @@ export class RegisterFormComponent implements OnInit {
 
   @Input() isDemo;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private storageService: StorageService) {
     this.initModel();
   }
 
@@ -84,9 +85,14 @@ export class RegisterFormComponent implements OnInit {
       this.authService.register(value).subscribe(
         res => {
           console.log('res', res);
-          if (res?.Token) {
+          if (res?.Type === 'success') {
+            this.storageService.set('church_service_id', res.ResultData.ChurchServiceId);
+
+            this.authService.setNewToken(JSON.parse(res.ResultData.Token));
+
             this.router.navigate(['/dashboard']);
           }
+
           this.model.disableBtn = false;
         },
         error => {

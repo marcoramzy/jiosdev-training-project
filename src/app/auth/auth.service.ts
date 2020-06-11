@@ -90,7 +90,7 @@ export class AuthService {
       .pipe(
         map(responseData => {
           console.log('responseData', responseData);
-          return responseData.ResultData;
+          return responseData;
         }),
         catchError(errorRes => {
           return throwError(errorRes);

@@ -49,7 +49,6 @@ export class LoginFormComponent implements OnInit {
         res => {
           console.log('res', res);
           if (res?.Type === 'success') {
-            // this.storageService.set('token', JSON.parse(res.ResultData.Token));
             this.storageService.set('church_service_id', res.ResultData.ChurchServiceId);
 
             this.authService.setNewToken(JSON.parse(res.ResultData.Token));
