@@ -37,11 +37,17 @@
       <mat-form-field>
         <mat-label>{{ 'fname' | translate }}</mat-label>
         <input matInput formControlName="FirstName">
+            <mat-error class=" custom-alert" *ngIf="model.form?.controls.Name.controls.FirstName.hasError('required')">
+              {{ 'fnamereq' | translate }}
+            </mat-error> 
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ 'lname' | translate }}</mat-label>
         <input matInput formControlName="SecondName">
+            <mat-error class=" custom-alert" *ngIf="model.form?.controls.Name.controls.SecondName.hasError('required')">
+              {{ 'lname-req' | translate }}
+            </mat-error> 
       </mat-form-field>
   </div>
 
