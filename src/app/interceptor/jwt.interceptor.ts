@@ -11,7 +11,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        return from(this.authService.isLoggedIn())
+        return from(this.authService.getToken())
             .pipe(
                 switchMap(token => {
 

@@ -22,7 +22,7 @@ export class AuthService {
     this.router.navigate(['/Account']);
   }
 
-  public isLoggedIn(): Promise<TokenData>{
+  public getToken(): Promise<TokenData>{
     return this.storageService.get('token');
   }
 

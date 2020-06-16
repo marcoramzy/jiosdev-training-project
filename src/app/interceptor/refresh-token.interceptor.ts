@@ -17,7 +17,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.isValidRequestForInterceptor(request.url)) {
-            return from(this.authService.isLoggedIn())
+            return from(this.authService.getToken())
                 .pipe(
                     switchMap(token => {
 

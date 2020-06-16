@@ -26,21 +26,19 @@ export class PeopleViewDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PeopleViewDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PeopleData) {
       this.initModel();
-      this.initData(fb, data);
+      this.initData(data);
   }
 
   ngOnInit(): void {
     console.log('Groups View Dialog On Init');
   }
 
-  initData(fb: FormBuilder, data: PeopleData | any) {
+  initData(data: PeopleData | any) {
 
     this.getPersonId(data);
     this.peopleService.getPeopleById(this.model.personId).subscribe((res) => {
       this.model.personName = res.FullName;
       this.model.peopleData = res;
-      // this.checkGroupsExistance(res.groups);
-
     });
 
   }

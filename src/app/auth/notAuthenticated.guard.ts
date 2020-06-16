@@ -11,8 +11,8 @@ export class NotAuthenticatedGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    return this.authService.isLoggedIn().then((isLoggedIn) => {
-        if (!isLoggedIn) {
+    return this.authService.getToken().then((getToken) => {
+        if (!getToken) {
           console.log('Is not logged in');
           return true;
         } else {

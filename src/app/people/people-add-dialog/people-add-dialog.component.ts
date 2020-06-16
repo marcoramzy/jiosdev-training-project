@@ -14,16 +14,6 @@ import { AppPeopleAddDialogModel } from './people-add-dialog.model';
 
 })
 export class PeopleAddDialogComponent implements OnInit {
-  // form: FormGroup;
-  // formSubmitted = false;
-  // groupsList: GroupsData[] = [];
-  // editMode = false;
-  // selectedFile: FileSnippet;
-  // defaultImageSrc = UrlsConstants.defaultImageSrc;
-  // imageSource;
-  // defaultImage = true;
-  // PhotoFile = null;
-  // originalPhotoPath = null;
 
   model: AppPeopleAddDialogModel;
 
@@ -76,7 +66,7 @@ export class PeopleAddDialogComponent implements OnInit {
     });
   }
 
-  onSaveClick() {
+  savePerson() {
     this.model.formSubmitted = true;
     let { value, valid } = this.model.form;
     if (valid) {
@@ -90,7 +80,7 @@ export class PeopleAddDialogComponent implements OnInit {
       }
       else // Edit
       {
-        this.peopleService.editPerson(value.Id, value);
+        this.peopleService.editPerson(value);
       }
 
       this.dialogRef.close(value);

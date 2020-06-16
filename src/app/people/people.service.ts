@@ -69,7 +69,7 @@ export class PeopleService {
       );
   }
 
-  editPerson(id: number, data: PeopleData) {
+  editPerson(data: PeopleData) {
     const url = `Core/Member/Update`;
 
     this.baseDataService.create(url, data)

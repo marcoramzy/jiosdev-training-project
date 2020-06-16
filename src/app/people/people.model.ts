@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 
 export class AppPeopleModel {
     destroyed = new Subject();
-    isPeoplePage = true;
     peopleData: PeopleData = {} as PeopleData;
     peopleDataSource: PeopleData[];
 }

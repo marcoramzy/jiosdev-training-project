@@ -8,7 +8,7 @@ export class AppPeopleAddDialogModel {
     editMode = false;
     selectedFile: FileSnippet;
     defaultImageSrc = UrlsConstants.defaultImageSrc;
-    imageSource;
+    imageSource: string;
     defaultImage = true;
     PhotoFile = null;
     originalPhotoPath = null;

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -13,8 +13,6 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MaterialModule } from './material/material.module';
 import { IonicStorageModule } from '@ionic/storage';
-import { JwtInterceptor } from './interceptor/jwt.interceptor';
-import { RefreshTokenInterceptor } from './interceptor/refresh-token.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,9 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
   exports: [
     TranslateModule
   ],
-  providers: [DatePipe,
-    { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  providers: [DatePipe
   ],
   bootstrap: [AppComponent]
 })

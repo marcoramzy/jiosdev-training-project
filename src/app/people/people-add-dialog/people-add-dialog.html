@@ -1,6 +1,6 @@
 <h1 mat-dialog-title *ngIf="!model.editMode">{{ 'add-person' | translate }}</h1>
 <h1 mat-dialog-title *ngIf="model.editMode">{{ 'edit-person' | translate }}</h1>
-<form id="people-add-dialog" mat-dialog-content [formGroup]="model.form" (ngSubmit)="onSaveClick()">
+<form id="people-add-dialog" mat-dialog-content [formGroup]="model.form" (ngSubmit)="savePerson()">
 
   <div class="photo-container d-flex flex-column false justify-content-center">
     <div>
