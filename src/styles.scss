@@ -35,7 +35,7 @@ html, body {
     margin: 0 !important;
 }
 
-.mat-dialog-content:not( #register-form ) {
+.mat-dialog-content:not( #register-form ):not( #login-form ) {
     background: #ecefef;
     padding-top: 1em!important;
     border-top: 0.5px solid #cfd8d8;
@@ -139,6 +139,7 @@ html, body {
         font-weight: 500 !important;
         margin-bottom: .3em !important;
         display: flex !important;
+        margin-right: 0.5em;
     }
     
     .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{
@@ -159,4 +160,16 @@ html, body {
         margin-top: 1em;
         margin-bottom: 1em;
     }
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: $primary !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $primary !important;
+}
+
+button{
+    outline: none !important;
 }

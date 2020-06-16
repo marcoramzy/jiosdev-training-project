@@ -21,3 +21,38 @@
     align-self: center;
   }
   
+
+  .member-profile-photo {
+    transition: all .3s ease-in-out;
+    border-radius: 50%;
+    height: 50px;
+  }
+
+  .member-column-container .member-profile-photo {
+      display: flex;
+      background-position: 50%;
+      align-items: center;
+  }
+  .member-profile-photo {
+      // display: flex;
+      display: inline-block;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-right: 0.3em;
+      background-position: 50%;
+      align-items: center;
+      transition: all .3s ease-in-out;
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+  }
+
+  .member-photo {
+      width: 50px!important;
+      height: 50px!important;
+      background-size: 50px 50px;
+      border: 2px solid rgba(0,0,0,.1);
+      border-radius: 50%;
+      opacity: 1;
+      transition: opacity .2s ease-in-out;
+  }

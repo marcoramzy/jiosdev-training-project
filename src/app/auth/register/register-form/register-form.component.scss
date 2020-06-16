@@ -1,0 +1,38 @@
+@import "../../../../app/shared/styles/variables";
+
+.info-fields {
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+#createChurchService {
+    padding: 8px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.registration-info{
+    text-transform: capitalize;
+    margin: 16px 0;
+    margin-bottom: 0;
+}
+
+.already-registered {
+    text-align: center;
+    color: #9b9b9b;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: 17px;
+}
+
+.login-here-btn{
+    color: $primary;
+}
+
+.login-here-btn:hover {
+    color: $primary;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,0 +1,50 @@
+@import "../../../app/shared/styles/variables";
+
+.photo-container{
+  align-items: center;
+}
+
+.photo-container .center-block {
+  display: none;
+}
+
+.photo-container .circle-image {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgba(0,0,0,.1);
+}
+
+.photo-container .photo-actions {
+  text-align: center;
+  margin-top: -45px;
+}
+
+.photo-container label.cabinet {
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+
+.photo-container #editProfilePicture {
+  color: #fff;
+  background-color: #139eab;
+  padding: 6px;
+  border-radius: 20px;
+  width: 35px;
+  min-height: 35px;
+  // display: inline-block;
+  display: inline-flex;
+}
+
+.mat-icon {
+  font-size: 22px;
+}
+
+.color-white{
+  color: white !important;
+}
+
+.edit-container{
+  background: $primary;
+}

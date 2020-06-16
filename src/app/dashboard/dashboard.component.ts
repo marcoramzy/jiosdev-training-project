@@ -1,10 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import { PeopleData } from '../shared/models/people-data';
-import { PeopleService } from '../people/people.service';
-import { GroupsService } from '../groups/groups.service';
-import { BaseDataService } from '../shared/services/base-data.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { DashboardService } from './dashboard.service';
+import { AppDashboardModel } from './dashboard.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,42 +10,35 @@ import { Subject } from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  destroyed = new Subject();
-  isPeoplePage = false;
-  peopleCount = 0;
-  groupsCount = 0;
-  peopleBirthDateDataSource: PeopleData[];
+  model: AppDashboardModel;
 
-  constructor(private peopleService: PeopleService, private groupsService: GroupsService, private baseDataService: BaseDataService) {
+  constructor(private dashboardService: DashboardService) {
+    this.initModel();
   }
 
   ngOnInit() {
-    this.peopleService.getPeopleCount().subscribe((value) => {
-      this.peopleCount = value;
-    });
 
-    this.groupsService.getGroupsCount().subscribe((value) => {
-      this.groupsCount = value;
-    });
-
-    this.peopleService.getPeopleWithBirthdaysThisMonth().subscribe((value) => {
-      this.peopleBirthDateDataSource = value;
-    });
-
-    /// Refresh Table (Record Added)
-    this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
-      () => {
-        this.peopleService.getPeopleWithBirthdaysThisMonth().subscribe((value) => {
-          this.peopleBirthDateDataSource = value;
-        });
-      }
-    );
+    this.getStatistics();
 
   }
 
+  getStatistics(){
+      this.dashboardService.getStatistics().pipe(takeUntil(this.model.destroyed)).subscribe(
+        (res) => {
+          console.log('getStatistics: ', res);
+          this.model.ChurchServiceCards = res.ResultData.ChurchServiceCards;
+          this.model.ProgressCards = res.ResultData.ProgressCards;
+        }
+      );
+  }
+
   ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete();
+    this.model.destroyed.next();
+    this.model.destroyed.complete();
+  }
+
+  private initModel() {
+    this.model = new AppDashboardModel();
   }
 
 }

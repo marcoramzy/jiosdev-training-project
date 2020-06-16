@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MaterialModule } from './material/material.module';
+import { IonicStorageModule } from '@ionic/storage';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,7 +38,8 @@ export function createTranslateLoader(http: HttpClient) {
             deps: [HttpClient]
         },
         defaultLanguage: 'en'
-    })
+    }),
+    IonicStorageModule.forRoot()
   ],
   exports: [
     TranslateModule

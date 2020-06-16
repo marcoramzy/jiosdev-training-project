@@ -1,41 +1,29 @@
-<h1 mat-dialog-title>{{ personName }}</h1>
+<h1 mat-dialog-title>{{ model.personName }}</h1>
 <div id="people-view-dialog" class="view-dialog" mat-dialog-content>
 
   <div class="row">
     <mat-label>{{ 'mobile' | translate }}</mat-label>
-    <div [ngClass]="peopleData.mobile?'':'display-none'">
-      {{peopleData.mobile}}
+    <div [ngClass]="model.peopleData.Mobile?'':'display-none'">
+      {{model.peopleData.Mobile}}
     </div>
-    <p *ngIf="!peopleData.mobile" class="empty-value">ــــــــ</p>
+    <p *ngIf="!model.peopleData.Mobile" class="empty-value">ــــــــ</p>
   </div>
 
   <div class="row">
     <mat-label>{{ 'email' | translate }}</mat-label>
-    <div [ngClass]="peopleData.email?'':'display-none'">{{peopleData.email}}</div>
-    <p *ngIf="!peopleData.email" class="empty-value">ــــــــ</p>
+    <div [ngClass]="model.peopleData.Email?'':'display-none'">{{model.peopleData.Email}}</div>
+    <p *ngIf="!model.peopleData.Email" class="empty-value">ــــــــ</p>
   </div>
 
   <div class="row">
     <mat-label>{{ 'birth-date' | translate }}</mat-label>
-    <div [ngClass]="peopleData.birthDate?'':'display-none'">{{peopleData.birthDate | customDate}}</div>
-    <p *ngIf="!peopleData.birthDate" class="empty-value">ــــــــ</p>
-  </div>
-
-  <div class="row">
-    <mat-label>{{'groups' | translate}}</mat-label>
-    <mat-form-field>
-      <mat-select [ngClass]="groupsExists?'':'display-none'" [(ngModel)]="peopleData.groups" multiple disabled>
-        <mat-option *ngFor="let g of groupsList" [value]="g.id">
-          {{g.name}}
-        </mat-option>
-      </mat-select>
-      <p *ngIf="!groupsExists" class="empty-value">ــــــــ</p>
-    </mat-form-field>
+    <div [ngClass]="model.peopleData.Birthdate?'':'display-none'">{{model.peopleData.Birthdate | customDate}}</div>
+    <p *ngIf="!model.peopleData.Birthdate" class="empty-value">ــــــــ</p>
   </div>
 
 </div>
 
 <div style="justify-content: space-around; display: flex; margin-top:1em;">
-  <button class="mat-raised-button cancel-btn" (click)="onNoClick()">{{ 'cancel' | translate }}</button>
+  <button class="mat-raised-button cancel-btn" (click)="onNoClick()" type="button">{{ 'cancel' | translate }}</button>
   <button class="mat-raised-button save-btn" (click)="onEditClick()">{{ 'edit' | translate }}</button>
 </div>

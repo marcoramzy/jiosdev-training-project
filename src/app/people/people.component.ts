@@ -1,12 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { DialogService } from '../shared/services/dialog.service';
-import { PeopleData } from '../shared/models/people-data';
 import { PeopleService } from './people.service';
-import { BaseDataService } from '../shared/services/base-data.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import { PeopleAddDialogComponent } from './people-add-dialog/people-add-dialog.component';
+import { AppPeopleModel } from './people.model';
 
 
 @Component({
@@ -16,16 +14,13 @@ import { PeopleAddDialogComponent } from './people-add-dialog/people-add-dialog.
 })
 export class PeopleComponent implements OnInit, OnDestroy {
 
-  destroyed = new Subject();
-  isPeoplePage = true;
-  peopleData: PeopleData = {} as PeopleData;
-  peopleDataSource: PeopleData[];
+  model: AppPeopleModel;
 
   constructor(
     public dialogService: DialogService,
     private peopleService: PeopleService,
     private route: ActivatedRoute) {
-
+      this.initModel();
   }
 
   ngOnInit() {
@@ -38,7 +33,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
     });
 
     /// Refresh Table (Record Added)
-    this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.destroyed)).subscribe(
+    this.peopleService.personAddedSuccessfully.pipe(takeUntil(this.model.destroyed)).subscribe(
       () => {
         this.getPeopleData(groupId);
       }
@@ -47,31 +42,30 @@ export class PeopleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroyed.next();
-    this.destroyed.complete();
+    this.model.destroyed.next();
+    this.model.destroyed.complete();
   }
 
   getPeopleData(groupId){
       if ( (groupId === undefined) || (groupId === null) ) // People Normal list data
       {
           this.peopleService.getPeople().subscribe((value) => {
-            this.peopleDataSource = value;
-          });
-      }
-      else // People list data filtered by groupId
-      {
-          this.peopleService.getPeopleByGorupId(+groupId).subscribe((value) => {
-            this.peopleDataSource = value;
+            this.model.peopleDataSource = value;
           });
       }
   }
 
   openDialog(): void {
     this.dialogService.openDialog(PeopleAddDialogComponent, {
-      id: this.peopleData.id, firstName: this.peopleData.firstName
-      , lastName: this.peopleData.lastName, mobile: this.peopleData.mobile, email: this.peopleData.email
-      , birthDate: this.peopleData.birthDate, groups: this.peopleData.groups
-    }, { size: 'md' }, true);
+      Id: this.model.peopleData.Id,
+      Name: {FirstName: this.model.peopleData?.Name?.FirstName, SecondName: this.model.peopleData?.Name?.SecondName},
+      Mobile: this.model.peopleData.Mobile, Email: this.model.peopleData.Email
+      , Birthdate: this.model.peopleData.Birthdate, PhotoFile: this.model.peopleData.PhotoFile, Gender: this.model.peopleData.Gender,
+    }, { size: 'lg' }, true);
+  }
+
+  private initModel() {
+    this.model = new AppPeopleModel();
   }
 
 }

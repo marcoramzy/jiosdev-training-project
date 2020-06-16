@@ -70,9 +70,10 @@ export class AppListPeopleComponent implements OnInit, OnChanges {
 
   openDialog(dialogComponent: ComponentType<any> | TemplateRef<any>, peopleData?): void {
     this.dialogService.openDialog(dialogComponent, {
-      id: peopleData.id, firstName: peopleData.firstName
-      , lastName: peopleData.lastName, mobile: peopleData.mobile, email: peopleData.email
-      , birthDate: peopleData.birthDate, groups: peopleData.groups
+      Id: peopleData.Id,
+      Name: {FirstName: peopleData?.Name?.FirstName, SecondName: peopleData?.Name?.SecondName},
+      Mobile: peopleData.Mobile, Email: peopleData.Email
+      , Birthdate: peopleData.Birthdate, PhotoFile: peopleData.PhotoFile, Gender: peopleData?.Gender,
     }, { size: 'md' }, true);
   }
 
