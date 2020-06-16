@@ -43,26 +43,41 @@ export class PeopleAddDialogComponent implements OnInit {
           this.model.originalPhotoPath = res.PhotoPath;
           this.model.imageSource = res.PhotoPath;
         }
-        this.setupForm(fb, res);
+
+        console.log('res', res.Gender);
+
+        this.model.form.patchValue({
+              Id: res.Id,
+              Name: ({
+              FirstName: res.Name.FirstName,
+              SecondName: res.Name.SecondName,
+              }),
+              Mobile: res.Mobile,
+              Email: res.Email,
+              Birthdate: res.Birthdate,
+              PhotoFile: res.PhotoFile,
+              Gender: res.Gender,
+        });
+
       });
     }
 
-    this.setupForm(fb, data);
+    this.setupForm(fb);
 
   }
 
-  setupForm(fb, data){
+  setupForm(fb){
     this.model.form = fb.group({
-      Id: [data.Id],
+      Id: [],
       Name: fb.group({
-        FirstName: [data.Name.FirstName, [Validators.required]],
-        SecondName: [data.Name.SecondName, [Validators.required]]
+        FirstName: [, [Validators.required]],
+        SecondName: [, [Validators.required]]
       }),
-      Mobile: [data.Mobile],
-      Email: [data.Email],
-      Birthdate: [data.Birthdate],
-      PhotoFile: [data.PhotoFile],
-      Gender: [data.Gender],
+      Mobile: [],
+      Email: [],
+      Birthdate: [],
+      PhotoFile: [],
+      Gender: [],
     });
   }
 
