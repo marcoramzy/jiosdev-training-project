@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, from, BehaviorSubject } from 'rxjs';
+import { switchMap, filter, take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { StorageService } from '../core/services/storage.service';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
     urlsToNotUse: Array<string>;
+
+    private isRefreshing = false;
+    private refreshTokenCheckFinished: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     constructor(private authService: AuthService, private storageService: StorageService) {
         this.urlsToNotUse = [
@@ -17,7 +20,10 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.isValidRequestForInterceptor(request.url)) {
-            return from(this.authService.getToken())
+
+            if (!this.isRefreshing){
+                this.isRefreshing = true;
+                return from(this.authService.getToken())
                 .pipe(
                     switchMap(token => {
 
@@ -33,21 +39,37 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                                 return from(this.authService.getRefreshUserToken(token.refresh_token, token.access_token))
                                     .pipe(
                                         switchMap(res => {
+                                            this.isRefreshing = false;
+                                            this.refreshTokenCheckFinished.next(true);
                                             return next.handle(request);
                                 }));
 
                             }
                             else {
+                                this.isRefreshing = false;
+                                this.refreshTokenCheckFinished.next(true);
                                 return next.handle(request);
                             }
 
                         }
                         else {
+                            this.isRefreshing = false;
+                            this.refreshTokenCheckFinished.next(true);
                             return next.handle(request);
                         }
 
                     })
                 );
+            }
+            else{
+                // waiting list ..waiting for first url check is done!
+                return this.refreshTokenCheckFinished.pipe(
+                    filter(token => token === true),
+                    take(1),
+                    switchMap(() => {
+                      return next.handle(request);
+                }));
+            }
         }
         return next.handle(request);
     }
